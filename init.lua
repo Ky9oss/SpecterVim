@@ -129,9 +129,6 @@ vim.lsp.config("asm_lsp", {
 })
 
 vim.lsp.config("roslyn", {
-  on_attach = function()
-    print("This will run when the server attaches!")
-  end,
   settings = {
     ["csharp|inlay_hints"] = {
       csharp_enable_inlay_hints_for_implicit_object_creation = true,
@@ -143,17 +140,6 @@ vim.lsp.config("roslyn", {
   },
 })
 
--- vim.lsp.config("omnisharp", {
---   settings = {
---     omnisharp = {
---       enable_roslyn_analyzers = true,
---       organize_imports_on_format = true,
---       enable_import_completion = true,
---     },
---   },
--- })
-
--- vim.lsp.enable('omnisharp')
 vim.lsp.enable('pylsp')
 vim.lsp.enable('rust_analyzer')
 vim.lsp.enable('lua_ls')
