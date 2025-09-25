@@ -1,5 +1,3 @@
 return {
-  "Hoffs/omnisharp-extended-lsp.nvim",
-  -- lazy = true,
-  -- ft = { "cs", "vb" },
+  "Hoffs/omnisharp-extended-lsp.nvim"
 }

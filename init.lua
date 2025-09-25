@@ -128,22 +128,34 @@ vim.lsp.config("asm_lsp", {
   }
 })
 
-local uname = vim.loop.os_uname().sysname
-if uname == "Windows_NT" then
-  local util = require 'lspconfig.util'
-  vim.lsp.config('omnisharp', {
-    cmd = { "OmniSharp.exe", "-z", "--hostPID", "12345", "DotNet:enablePackageRestore=false", "--encoding", "utf-8", "--languageserver" },
-    root_dir = function(bufnr, on_dir)
-      local fname = vim.api.nvim_buf_get_name(bufnr)
-      on_dir(
-        util.root_pattern '*.csproj' (fname)
-        or util.root_pattern '*.sln' (fname)
-        or util.root_pattern 'omnisharp.json' (fname)
-        or util.root_pattern 'function.json' (fname)
-      )
+vim.lsp.config('omnisharp', {
+  handlers = {
+    ["textDocument/definition"] = function(...)
+      return require("omnisharp_extended").handler(...)
     end,
-  })
-end
+  },
+  enable_roslyn_analyzers = true,
+  organize_imports_on_format = true,
+  enable_import_completion = true,
+})
+
+-- local uname = vim.loop.os_uname().sysname
+-- if uname == "Windows_NT" then
+--   local util = require 'lspconfig.util'
+--   -- Omnisharp-Roslyn
+--   vim.lsp.config('omnisharp', {
+--     cmd = { "OmniSharp.exe", "-z", "--hostPID", "12345", "DotNet:enablePackageRestore=false", "--encoding", "utf-8", "--languageserver" },
+--     root_dir = function(bufnr, on_dir)
+--       local fname = vim.api.nvim_buf_get_name(bufnr)
+--       on_dir(
+--         util.root_pattern '*.csproj' (fname)
+--         or util.root_pattern '*.sln' (fname)
+--         or util.root_pattern 'omnisharp.json' (fname)
+--         or util.root_pattern 'function.json' (fname)
+--       )
+--     end,
+--   })
+-- end
 
 
 vim.lsp.enable('pylsp')
