@@ -24,6 +24,7 @@ return {
       python = { "isort", "black" },
       rust = { "rustfmt", lsp_format = "fallback" },
       javascript = { "prettierd", "prettier", stop_after_first = true },
+      cs = { "csharpier" },
     },
     -- Set default options
     default_format_opts = {
@@ -35,6 +36,10 @@ return {
     formatters = {
       shfmt = {
         append_args = { "-i", "2" },
+      },
+      csharpier = {
+        command = "dotnet-csharpier",
+        args = { "--write-stdout" },
       },
     },
   },
