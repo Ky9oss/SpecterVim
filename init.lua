@@ -18,7 +18,7 @@ vim.lsp.config('*', {
       }
     }
   },
-  root_markers = { '.git', '.editorconfig' },
+  root_markers = { '.git', '.editorconfig', '.gitignore' },
 })
 
 vim.lsp.config('rust_analyzer', {
@@ -38,8 +38,7 @@ vim.lsp.config('rust_analyzer', {
 })
 
 vim.lsp.config('pylsp', {
-  on_new_config = function(new_config, root_dir)
-    -- 自动用当前 pyenv 激活的 python
+  on_new_config = function(new_config, root_dir) -- 自动用当前 pyenv 激活的 python
     local python_path = vim.fn.systemlist("pyenv which python")[1]
     if vim.fn.filereadable(python_path) == 1 then
       new_config.settings.pylsp.configurationSources = { "pycodestyle" }
@@ -131,8 +130,18 @@ vim.lsp.config("asm_lsp", {
 
 local uname = vim.loop.os_uname().sysname
 if uname == "Windows_NT" then
+  local util = require 'lspconfig.util'
   vim.lsp.config('omnisharp', {
-    cmd = { "OmniSharp.exe", "-z", "--hostPID", "12345", "DotNet:enablePackageRestore=false", "--encoding", "utf-8", "--languageserver" }
+    cmd = { "OmniSharp.exe", "-z", "--hostPID", "12345", "DotNet:enablePackageRestore=false", "--encoding", "utf-8", "--languageserver" },
+    root_dir = function(bufnr, on_dir)
+      local fname = vim.api.nvim_buf_get_name(bufnr)
+      on_dir(
+        util.root_pattern '*.csproj' (fname)
+        or util.root_pattern '*.sln' (fname)
+        or util.root_pattern 'omnisharp.json' (fname)
+        or util.root_pattern 'function.json' (fname)
+      )
+    end,
   })
 end
 
