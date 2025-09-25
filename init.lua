@@ -112,21 +112,24 @@ vim.lsp.config('lua_ls', {
 })
 
 vim.lsp.config("asm_lsp", {
-  cmd = { "asm-lsp" },
-  filetypes = { "asm", "s", "S" },
-  settings = {
-    default_config = {
-      assembler = "gas",
-      instruction_set = "x86/x86-64",
+  default_config = {
+    cmd = { "asm-lsp" },
+    filetypes = { "asm", "s", "S" },
+    settings = {
+      default_config = {
+        assembler = "gas",
+        instruction_set = "x86/x86-64",
+      },
+      opts = {
+        compiler = "gcc",
+        diagnostics = true,
+        default_diagnostics = true,
+      },
     },
-    opts = {
-      compiler = "gcc",
-      diagnostics = true,
-      default_diagnostics = true,
-    },
-  },
+  }
 })
 
+local uname = vim.loop.os_uname().sysname
 if uname == "Windows_NT" then
   vim.lsp.config('omnisharp', {
     cmd = { "OmniSharp.exe", "-z", "--hostPID", "12345", "DotNet:enablePackageRestore=false", "--encoding", "utf-8", "--languageserver" }
@@ -139,6 +142,7 @@ vim.lsp.enable('rust_analyzer')
 vim.lsp.enable('lua_ls')
 vim.lsp.enable('asm_lsp')
 vim.lsp.enable('bashls')
+vim.lsp.enable('omnisharp')
 
 require("check-enviroment")
 require("keys")
