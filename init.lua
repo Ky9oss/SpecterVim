@@ -129,9 +129,6 @@ vim.lsp.config("asm_lsp", {
 })
 
 vim.lsp.config("omnisharp", {
-  handlers = {
-    ["textDocument/definition"] = require('omnisharp_extended').definition_handler,
-  },
   settings = {
     omnisharp = {
       enable_roslyn_analyzers = true,
