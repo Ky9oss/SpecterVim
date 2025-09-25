@@ -128,6 +128,19 @@ vim.lsp.config("asm_lsp", {
   }
 })
 
+vim.lsp.config("omnisharp", {
+  handlers = {
+    ["textDocument/definition"] = require('omnisharp_extended').definition_handler,
+  },
+  settings = {
+    omnisharp = {
+      enable_roslyn_analyzers = true,
+      organize_imports_on_format = true,
+      enable_import_completion = true,
+    },
+  },
+})
+
 vim.lsp.enable('pylsp')
 vim.lsp.enable('rust_analyzer')
 vim.lsp.enable('lua_ls')
