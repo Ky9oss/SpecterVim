@@ -9,5 +9,9 @@ return {
       },
     },
     ensure_installed = { "csharpier", "netcoredbg" },
+    registries = {
+      "github:mason-org/mason-registry",
+      "github:Crashdummyy/mason-registry",
+    },
   }
 }
