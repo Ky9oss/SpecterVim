@@ -67,11 +67,7 @@ return {
           keys = {
             {
               "gd",
-              LazyVim.has("telescope.nvim") and function()
-                require("omnisharp_extended").telescope_lsp_definitions()
-              end or function()
-                require("omnisharp_extended").lsp_definitions()
-              end,
+              require("omnisharp_extended").telescope_lsp_definitions()
               desc = "Goto Definition",
             },
           },
