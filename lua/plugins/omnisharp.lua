@@ -67,7 +67,7 @@ return {
           keys = {
             {
               "gd",
-              require("omnisharp_extended").telescope_lsp_definitions()
+              require("omnisharp_extended").telescope_lsp_definitions(),
               desc = "Goto Definition",
             },
           },
