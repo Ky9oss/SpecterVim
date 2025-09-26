@@ -14,5 +14,10 @@
 - [x] Add markdown preview plugin
 - [x] Add conform.nvim for code formatting
 
+# 2025-09-26
+
+## Features
+- [x] Enable more LSP
+- [x] Add vsplit in telescope
 
 

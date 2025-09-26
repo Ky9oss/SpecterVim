@@ -25,6 +25,7 @@ return {
       rust = { "rustfmt", lsp_format = "fallback" },
       javascript = { "prettierd", "prettier", stop_after_first = true },
       cs = { "csharpier" },
+      astro = { "prettier" },
     },
     -- Set default options
     default_format_opts = {
