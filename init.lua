@@ -128,17 +128,17 @@ vim.lsp.config("asm_lsp", {
   }
 })
 
-vim.lsp.config("roslyn", {
-  settings = {
-    ["csharp|inlay_hints"] = {
-      csharp_enable_inlay_hints_for_implicit_object_creation = true,
-      csharp_enable_inlay_hints_for_implicit_variable_types = true,
-    },
-    ["csharp|code_lens"] = {
-      dotnet_enable_references_code_lens = true,
-    },
-  },
-})
+-- vim.lsp.config("roslyn", {
+--   settings = {
+--     ["csharp|inlay_hints"] = {
+--       csharp_enable_inlay_hints_for_implicit_object_creation = true,
+--       csharp_enable_inlay_hints_for_implicit_variable_types = true,
+--     },
+--     ["csharp|code_lens"] = {
+--       dotnet_enable_references_code_lens = true,
+--     },
+--   },
+-- })
 
 vim.lsp.enable('pylsp')
 vim.lsp.enable('rust_analyzer')
@@ -148,6 +148,8 @@ vim.lsp.enable('astro')
 vim.lsp.enable('asm_lsp')
 vim.lsp.enable('bashls')
 vim.lsp.enable('roslyn')
+vim.lsp.enable('svelte')
+vim.lsp.enable('omnisharp')
 
 require("check-enviroment")
 require("keys")

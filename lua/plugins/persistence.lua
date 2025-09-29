@@ -1,10 +1,10 @@
 return {
   "folke/persistence.nvim",
-  event = "BufReadPre", -- this will only start session saving when an actual file was opened
+  event = "BufReadPre",                             -- this will only start session saving when an actual file was opened
   opts = {
-      dir = vim.fn.stdpath("state") .. "/sessions/", -- directory where session files are saved
-      need = 1,
-      branch = true, -- use git branch to save session
+    dir = vim.fn.stdpath("state") .. "/sessions",   -- directory where session files are saved
+    need = 1,
+    branch = true,                                  -- use git branch to save session
   },
   config = function()
     vim.keymap.set("n", "<leader>qs", function() require("persistence").save() end)
@@ -18,5 +18,5 @@ return {
       end,
     })
   end
-  
+
 }
