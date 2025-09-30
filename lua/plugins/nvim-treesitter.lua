@@ -1,23 +1,65 @@
 -- Treesitter-based highlighting
 return {
   "nvim-treesitter/nvim-treesitter",
-  branch = 'master',
-  lazy = false,
-  build = ":TSUpdate",
-  config = function()
-    require('nvim-treesitter.configs').setup {
-      ensure_installed = { "rust", "c", "python", "lua", "markdown", "javascript", "c_sharp" },
-      auto_install = true,
-      highlight = {
-        enable = true,
-        additional_vim_regex_highlighting = false,
-      },
-      ident = { enable = true },
-      rainbow = {
-        enable = true,
-        extended_mode = true,
-        max_file_lines = nil,
-      }
-    }
+  branch = "main",
+  version = false,             -- last release is way too old and doesn't work on Windows
+  lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
+  event = { "VeryLazy" },
+  cmd = { "TSUpdate", "TSInstall", "TSLog", "TSUninstall" },
+  opts_extend = { "ensure_installed" },
+  ---@class lazyvim.TSConfig: TSConfig
+  opts = {
+    -- LazyVim config for treesitter
+    indent = { enable = true },
+    highlight = {
+      enable = true,
+      -- disable = { "javascript.min" },
+    },
+    folds = { enable = true },
+    ensure_installed = {
+      "bash",
+      "c",
+      "css",
+      "c_sharp",
+      "rust",
+      "diff",
+      "html",
+      "javascript",
+      "jsdoc",
+      "json",
+      "jsonc",
+      "lua",
+      "luadoc",
+      "luap",
+      "markdown",
+      "markdown_inline",
+      "printf",
+      "python",
+      "query",
+      "regex",
+      "toml",
+      "tsx",
+      "typescript",
+      "vim",
+      "vimdoc",
+      "xml",
+      "yaml",
+    },
+  },
+  config = function(_, opts)
+    local TS = require("nvim-treesitter")
+
+    -- setup treesitter
+    TS.setup(opts)
+
+    -- vim.api.nvim_create_autocmd("FileType", {
+    --   group = vim.api.nvim_create_augroup("lazyvim_treesitter", { clear = true }),
+    --   callback = function(ev)
+    --     -- highlighting
+    --     if vim.tbl_get(opts, "highlight", "enable") ~= false then
+    --       pcall(vim.treesitter.start)
+    --     end
+    --   end,
+    -- })
   end
 }

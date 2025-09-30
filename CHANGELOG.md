@@ -21,3 +21,7 @@
 - [x] Add vsplit in telescope
 
 
+# 2025-09-30
+
+## Bug Fixes
+- Fix nvim-treesitter slowness in large files.

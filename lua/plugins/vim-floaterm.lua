@@ -19,6 +19,5 @@ return {
     -- 映射 <leader>sh
     vim.keymap.set('n', '<leader>sh', _G.toggle_floaterm, { noremap = true, silent = true })
     vim.keymap.set("t", "<Esc>", "<C-\\><C-n>:q<CR>")
-
   end
 }
