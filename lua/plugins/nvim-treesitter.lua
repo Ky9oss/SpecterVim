@@ -36,6 +36,7 @@ return {
       "printf",
       "python",
       "query",
+      "razor",
       "regex",
       "toml",
       "tsx",
