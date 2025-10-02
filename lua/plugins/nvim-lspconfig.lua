@@ -12,10 +12,19 @@ return {
       root_markers = { '.git', '.editorconfig', '.gitignore' },
     })
 
+    vim.lsp.config('denols', {
+      root_markers = { '.git', '.editorconfig', '.gitignore', 'deno.json', 'deno.jsonc' },
+    })
+
     -- vim.lsp.config("eslint", {
-    --   settings = {
-    --     workingDirectories = { mode = "auto" },
-    --   }
+    --   servers = {
+    --     eslint = {
+    --       settings = {
+    --         -- helps eslint find the eslintrc when it's placed in a subfolder instead of the cwd root
+    --         workingDirectories = { mode = "auto" },
+    --       },
+    --     },
+    --   },
     -- })
 
     vim.lsp.config('rust_analyzer', {
@@ -125,18 +134,18 @@ return {
       }
     })
 
-    -- vim.lsp.config("roslyn", {
-    --   settings = {
-    --     ["csharp|inlay_hints"] = {
-    --       csharp_enable_inlay_hints_for_implicit_object_creation = true,
-    --       csharp_enable_inlay_hints_for_implicit_variable_types = true,
-    --     },
-    --     ["csharp|code_lens"] = {
-    --       dotnet_enable_references_code_lens = true,
-    --     },
-    --   },
-    -- })
+    local capabilities = vim.lsp.protocol.make_client_capabilities()
+    capabilities.textDocument.completion.completionItem.snippetSupport = true
 
+    vim.lsp.config('html', {
+      capabilities = capabilities,
+    })
+    vim.lsp.config('cssls', {
+      capabilities = capabilities,
+    })
+
+    vim.lsp.enable('cssls')
+    vim.lsp.enable('html')
     vim.lsp.enable('pylsp')
     vim.lsp.enable('rust_analyzer')
     vim.lsp.enable('lua_ls')
@@ -144,9 +153,6 @@ return {
     vim.lsp.enable('astro')
     vim.lsp.enable('asm_lsp')
     vim.lsp.enable('bashls')
-    -- vim.lsp.enable('roslyn')
     vim.lsp.enable('svelte')
-    vim.lsp.enable('eslint')
-    -- vim.lsp.enable('omnisharp')
   end,
 }
