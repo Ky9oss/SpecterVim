@@ -25,3 +25,13 @@
 
 ## Bug Fixes
 - Fix nvim-treesitter slowness in large files.
+
+
+# 2025-10-05
+
+## Bug Fixes
+- Fix persistence error when use 'ql'
+- Fix editorconfig error in initing for project
+
+## Features
+- [x] Add nvim-notify to replace vim.notify

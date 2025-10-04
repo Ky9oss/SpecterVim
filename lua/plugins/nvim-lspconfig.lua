@@ -16,17 +16,6 @@ return {
       root_markers = { '.git', '.editorconfig', '.gitignore', 'deno.json', 'deno.jsonc' },
     })
 
-    -- vim.lsp.config("eslint", {
-    --   servers = {
-    --     eslint = {
-    --       settings = {
-    --         -- helps eslint find the eslintrc when it's placed in a subfolder instead of the cwd root
-    --         workingDirectories = { mode = "auto" },
-    --       },
-    --     },
-    --   },
-    -- })
-
     vim.lsp.config('rust_analyzer', {
       settings = {
         ['rust-analyzer'] = {
@@ -61,6 +50,7 @@ return {
         },
       },
     })
+
 
     vim.lsp.config('lua_ls', {
       on_init = function(client)

@@ -9,11 +9,9 @@ return {
   opts_extend = { "ensure_installed" },
   ---@class lazyvim.TSConfig: TSConfig
   opts = {
-    -- LazyVim config for treesitter
     indent = { enable = true },
     highlight = {
       enable = true,
-      -- disable = { "javascript.min" },
     },
     folds = { enable = true },
     ensure_installed = {
@@ -33,11 +31,13 @@ return {
       "luap",
       "markdown",
       "markdown_inline",
+      "ninja",
       "printf",
       "python",
       "query",
       "razor",
       "regex",
+      "rst",
       "toml",
       "tsx",
       "typescript",
@@ -52,15 +52,5 @@ return {
 
     -- setup treesitter
     TS.setup(opts)
-
-    -- vim.api.nvim_create_autocmd("FileType", {
-    --   group = vim.api.nvim_create_augroup("lazyvim_treesitter", { clear = true }),
-    --   callback = function(ev)
-    --     -- highlighting
-    --     if vim.tbl_get(opts, "highlight", "enable") ~= false then
-    --       pcall(vim.treesitter.start)
-    --     end
-    --   end,
-    -- })
   end
 }

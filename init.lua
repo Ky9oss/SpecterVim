@@ -9,5 +9,4 @@ vim.cmd([[
 ]])
 
 require("config.lazy")
-require("check-enviroment")
 require("keys")
