@@ -29,9 +29,11 @@ return {
         end
       end,
       rust = { "rustfmt", lsp_format = "fallback" },
-      -- javascript = { "prettierd", "prettier", stop_after_first = true },
       cs = { "csharpier" },
       astro = { "prettier" },
+      yaml = { "prettier" },
+      toml = { "prettier" },
+      markdown = { "prettier" },
       javascript = { "biome" },
       graphql = { "biome" },
       javascriptreact = { "biome" },
