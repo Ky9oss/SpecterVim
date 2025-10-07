@@ -11,9 +11,52 @@ return {
     -- optionally enable 24-bit colour
     vim.opt.termguicolors = true
 
+    -- 自定义装饰器类
+    ---@class MyCustomDecorator : UserDecorator
+    ---@field enabled boolean
+    ---@field highlight_range string
+    ---@field icon_placement string
+    local MyCustomDecorator = require("nvim-tree.api").decorator.UserDecorator:extend()
+    function MyCustomDecorator:new()
+      self.enabled         = true
+      self.highlight_range = "all" -- 或者 "all", "icon", "none"
+      self.icon_placement  = "after"
+      self.my_icon_node    = { str = ">", hl = { "DevIconNushell" } }
+    end
+
+    -- 自定义高亮逻辑
+    ---@param node any
+    ---@return string|nil
+    function MyCustomDecorator:highlight_group(node)
+      local target_files = {
+        vim.api.nvim_buf_get_name(0),
+      }
+      for _, target_path in ipairs(target_files) do
+        if node.absolute_path == target_path then
+          return "Substitute" -- 高亮样式，可更换
+        end
+      end
+      return nil
+    end
+
+    function MyCustomDecorator:icon_node(node)
+      local target_files = {
+        vim.api.nvim_buf_get_name(0),
+      }
+      for _, target_path in ipairs(target_files) do
+        if node.absolute_path == target_path then
+          return self.my_icon_node
+        end
+      end
+      return nil
+    end
+
     require("nvim-tree").setup({
       disable_netrw = true,
       hijack_netrw = true,
+
+      respect_buf_cwd = true,
+      sync_root_with_cwd = true,
 
       sort = {
         sorter = "case_sensitive",
@@ -32,7 +75,7 @@ return {
         highlight_hidden = "name",
         root_folder_modifier = ":t",
         special_files = { "Cargo.toml", "Makefile", "README.md", "readme.md" },
-        -- root_folder_label = ":p",
+        root_folder_label = ":p",
         icons = {
           show = {
             git = false,
@@ -46,9 +89,10 @@ return {
           "Open",
           "Hidden",
           "Modified",
-          -- "Bookmark",
+          "Bookmark",
           "Diagnostics",
           "Copied",
+          MyCustomDecorator,
           "Cut",
         },
       },
@@ -60,10 +104,10 @@ return {
           quit_on_open = false, -- 打开文件后不关闭 tree
         },
       },
-      -- git = {
-      --   enable = true,
-      --   timeout = 200 -- (in ms)
-      -- },
+      git = {
+        enable = true,
+        timeout = 200 -- (in ms)
+      },
     })
 
     -- auto open nvim-tree
@@ -74,7 +118,6 @@ return {
       -- buffer is a [No Name]
       local no_name = data.file == "" and vim.bo[data.buf].buftype == ""
 
-
       if real_file and not no_name then
         local dir = vim.fn.fnamemodify(data.file, ":p:h")
         vim.cmd.cd(dir)
@@ -83,7 +126,6 @@ return {
         require("nvim-tree.api").tree.open()
       else
         require("nvim-tree.api").tree.open()
-        -- return
       end
     end
 
@@ -91,7 +133,7 @@ return {
 
 
     -- 查找和聚焦目录（with telescope）
-    function find_directory_and_focus()
+    local function find_directory_and_focus()
       local actions = require("telescope.actions")
       local action_state = require("telescope.actions.state")
 
@@ -114,17 +156,5 @@ return {
     end
 
     vim.keymap.set("n", "fd", find_directory_and_focus)
-
-    -- highlight the focused file
-    -- local api = require("nvim-tree.api")
-    --
-    -- vim.api.nvim_create_autocmd("BufEnter", {
-    --   nested = true,
-    --   callback = function()
-    --     if (vim.fn.bufname() == "NvimTree_1") then return end
-    --
-    --     api.tree.find_file({ buf = vim.fn.bufnr() })
-    --   end,
-    -- })
   end
 }

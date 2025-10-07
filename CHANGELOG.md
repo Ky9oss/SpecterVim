@@ -35,3 +35,12 @@
 
 ## Features
 - [x] Add nvim-notify to replace vim.notify
+
+
+# 2025-10-07
+
+## Bug Fixes
+- Fix error in treesitter.nvim
+
+## Features
+- Add custom decorator in nvim-tree
