@@ -17,6 +17,7 @@ return {
     ---@field highlight_range string
     ---@field icon_placement string
     local MyCustomDecorator = require("nvim-tree.api").decorator.UserDecorator:extend()
+
     function MyCustomDecorator:new()
       self.enabled         = true
       self.highlight_range = "all" -- 或者 "all", "icon", "none"
@@ -92,8 +93,8 @@ return {
           "Bookmark",
           "Diagnostics",
           "Copied",
-          MyCustomDecorator,
           "Cut",
+          MyCustomDecorator,
         },
       },
       filters = {
