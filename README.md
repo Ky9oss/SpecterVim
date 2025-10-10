@@ -24,3 +24,10 @@ git clone https://github.com/Ky9oss/SpecterVim ~/.config/nvim
 Move-Item -Path "$env:USERPROFILE\AppData\Local\nvim" -Destination "$env:USERPROFILE\AppData\Local\nvim_bak"
 git clone https://github.com/Ky9oss/SpecterVim "$env:USERPROFILE\AppData\Local\nvim"
 ```
+
+## Features
+
+| Plugins     | Introduction                                                      | Usage  |
+|-------------|-------------------------------------------------------------------|--------|
+| fidget.nvim | Extensible UI for LSP progress messages. | <Skip> |
+

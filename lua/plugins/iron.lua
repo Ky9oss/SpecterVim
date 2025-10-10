@@ -13,7 +13,13 @@ return {
         repl_definition = {
           sh = {
             -- Can be a table or a function that -- returns a table (see below)
-            command = { "zsh" }
+            command = function()
+              if vim.fn.has("win32") == 1 then
+                return { "powershell.exe" }
+              else
+                return { "zsh" }
+              end
+            end
           },
           python = {
             command = { "python3" }, -- or { "ipython", "--no-autoindent" }
