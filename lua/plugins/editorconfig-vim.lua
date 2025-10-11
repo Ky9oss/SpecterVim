@@ -3,29 +3,19 @@ return {
   config = function()
     local project = require("project_nvim.project")
 
-    -- 创建默认 EditorConfig 内容
-    local default_editorconfig = [[
-root = true
-
-[*]
-indent_style = space
-indent_size = 4
-tab_width = 4
-end_of_line = lf
-insert_final_newline = true
-
-[*.lua]
-indent_size = 2
-tab_width = 2
-max_line_length = 120
-
-[{Makefile,**/Makefile,runtime/doc/*.txt,*.md}]
-indent_style = tab
-indent_size = 4
-]]
-
     vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
       callback = function()
+        local default_editorconfig = ([[
+            root = true
+
+            [*]
+            indent_style = space
+            indent_size = 4
+            tab_width = 4
+            end_of_line = lf
+            insert_final_newline = true
+        ]]):gsub("^%s+", ""):gsub("\n%s+", "\n")
+
         local editorconfig_exists = vim.fn.findfile(".editorconfig", ".;") ~= ""
         if not editorconfig_exists then
           local project_root = project.get_project_root()
@@ -39,9 +29,9 @@ indent_size = 4
             if f then
               f:write(default_editorconfig)
               f:close()
-              vim.notify(".editorconfig 自动创建完成", "info")
+              vim.notify(".editorconfig created automatically", "info")
             else
-              vim.notify("无法创建 .editorconfig", "error")
+              vim.notify("Failed to create .editorconfig", "error")
             end
           end
         end
