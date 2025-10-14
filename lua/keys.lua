@@ -7,16 +7,6 @@ vim.api.nvim_set_keymap("n", "<leader>v", "<cmd>DapStepOver<CR>", { noremap = tr
 
 -- lspsaga
 vim.keymap.set('n', 'K', '<cmd>Lspsaga hover_doc<CR>', { noremap = true, silent = true })
--- vim.api.nvim_create_autocmd("LspAttach", {
---   callback = function(ev)
---     -- 给所有 LSP buffer 强制设置
---     vim.keymap.set('n', 'K', '<cmd>Lspsaga hover_doc<CR>', {
---       buffer = ev.buf,
---       noremap = true,
---       silent = true,
---     })
---   end,
--- })
 
 -- Copy
 vim.keymap.set("n", "y", '"+y')

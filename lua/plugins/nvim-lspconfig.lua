@@ -134,6 +134,7 @@ return {
       capabilities = capabilities,
     })
 
+
     vim.lsp.enable('cssls')
     vim.lsp.enable('html')
     vim.lsp.enable('pylsp')

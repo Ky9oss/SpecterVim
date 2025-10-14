@@ -1,3 +1,7 @@
+# 2025-10-10
+## Feautures
+- Add LSP support for pwsh
+
 # 2025-10-07
 
 ## Bug Fixes
