@@ -32,24 +32,6 @@ return {
       }
     })
 
-    vim.lsp.config('pylsp', {
-      on_new_config = function(new_config, root_dir) -- 自动用当前 pyenv 激活的 python
-        local python_path = vim.fn.systemlist("pyenv which python")[1]
-        if vim.fn.filereadable(python_path) == 1 then
-          new_config.settings.pylsp.configurationSources = { "pycodestyle" }
-          new_config.settings.pylsp.plugins.jedi = { environment = python_path }
-        end
-      end,
-      settings = {
-        pylsp = {
-          plugins = {
-            pycodestyle = { enabled = false },
-            mccabe = { enabled = false },
-            mypy = { enabled = true },
-          },
-        },
-      },
-    })
 
 
     vim.lsp.config('lua_ls', {
@@ -134,10 +116,34 @@ return {
       capabilities = capabilities,
     })
 
+    -- python
+    if vim.fn.has("win32") == 1 then
+      vim.lsp.enable('ruff')
+    else
+      vim.lsp.config('pylsp', {
+        on_new_config = function(new_config, root_dir) -- 自动用当前 pyenv 激活的 python
+          local python_path = vim.fn.systemlist("pyenv which python")[1]
+          if vim.fn.filereadable(python_path) == 1 then
+            new_config.settings.pylsp.configurationSources = { "pycodestyle" }
+            new_config.settings.pylsp.plugins.jedi = { environment = python_path }
+          end
+        end,
+        settings = {
+          pylsp = {
+            plugins = {
+              pycodestyle = { enabled = false },
+              mccabe = { enabled = false },
+              mypy = { enabled = true },
+            },
+          },
+        },
+      })
+      vim.lsp.enable('pylsp')
+    end
+
 
     vim.lsp.enable('cssls')
     vim.lsp.enable('html')
-    vim.lsp.enable('pylsp')
     vim.lsp.enable('rust_analyzer')
     vim.lsp.enable('lua_ls')
     vim.lsp.enable('ts_ls')
