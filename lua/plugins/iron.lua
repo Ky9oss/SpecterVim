@@ -4,6 +4,11 @@ return {
     local iron = require("iron.core")
     local view = require("iron.view")
     local common = require("iron.fts.common")
+    local ll = require 'iron.lowlevel'
+
+    local executable = function(exe)
+      return vim.api.nvim_call_function('executable', { exe }) == 1
+    end
 
     iron.setup {
       config = {
@@ -22,13 +27,15 @@ return {
             end
           },
           python = {
-            command = function()
-              if vim.fn.has("win32") == 1 then
-                return { "python" }
-              else
-                return { "python3" } -- or { "ipython", "--no-autoindent" }
-              end
-            end,
+            -- command = function()
+            --   if vim.fn.has("win32") == 1 then
+            --     return { "python" }
+            --   else
+            --     return { "python3" } -- or { "ipython", "--no-autoindent" }
+            --   end
+            -- end,
+            command = executable('python3') and 'python3' or 'python',
+            -- command = { "ipython", "--no-autoindent", "--colors=Linux" },
             format = common.bracketed_paste_python,
             block_dividers = { "# %%", "#%%" },
             env = { PYTHON_BASIC_REPL = "1" } --this is needed for python3.13 and up.
@@ -96,6 +103,8 @@ return {
         italic = true
       },
       ignore_blank_lines = true, -- ignore blank lines when sending visual select lines
+
+      highlight_last = "IronLastSent",
     }
 
     vim.keymap.set('n', '<space>rf', '<cmd>IronFocus<cr>')
