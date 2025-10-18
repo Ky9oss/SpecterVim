@@ -22,7 +22,13 @@ return {
             end
           },
           python = {
-            command = { "python3" }, -- or { "ipython", "--no-autoindent" }
+            command = function()
+              if vim.fn.has("win32") == 1 then
+                return { "python" }
+              else
+                return { "python3" } -- or { "ipython", "--no-autoindent" }
+              end
+            end,
             format = common.bracketed_paste_python,
             block_dividers = { "# %%", "#%%" },
             env = { PYTHON_BASIC_REPL = "1" } --this is needed for python3.13 and up.
