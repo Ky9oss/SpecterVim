@@ -1,10 +1,10 @@
 return {
   'Vigemus/iron.nvim',
+  dev = false,
   config = function()
     local iron = require("iron.core")
     local view = require("iron.view")
     local common = require("iron.fts.common")
-    local ll = require 'iron.lowlevel'
 
     local executable = function(exe)
       return vim.api.nvim_call_function('executable', { exe }) == 1
@@ -27,21 +27,13 @@ return {
             end
           },
           python = {
-            -- command = function()
-            --   if vim.fn.has("win32") == 1 then
-            --     return { "python" }
-            --   else
-            --     return { "python3" } -- or { "ipython", "--no-autoindent" }
-            --   end
-            -- end,
-            command = executable('python3') and 'python3' or 'python',
-            -- command = { "ipython", "--no-autoindent", "--colors=Linux" },
+            command = executable('python3') and 'python3' or 'python', -- or { "ipython", "--no-autoindent", "--colors=Linux" }
             format = common.bracketed_paste_python,
             block_dividers = { "# %%", "#%%" },
             env = { PYTHON_BASIC_REPL = "1" } --this is needed for python3.13 and up.
           },
           lua = {
-            command = { "luajit" }, -- or { "ipython", "--no-autoindent" }
+            command = { "luajit" },
           }
         },
         -- set the file type of the newly created repl to ft
@@ -74,28 +66,28 @@ return {
       -- Iron doesn't set keymaps by default anymore.
       -- You can set them here or manually add keymaps to the functions in iron.core
       keymaps = {
-        toggle_repl = "<space>rr", -- toggles the repl open and closed.
+        toggle_repl = "<leader>rr", -- toggles the repl open and closed.
         -- If repl_open_command is a table as above, then the following keymaps are
         -- available
         -- toggle_repl_with_cmd_1 = "<space>rv",
         -- toggle_repl_with_cmd_2 = "<space>rh",
-        restart_repl = "<space>rR", -- calls `IronRestart` to restart the repl
-        send_motion = "<space>sc",
-        visual_send = "<space>sc",
-        send_file = "<space>sf",
-        send_line = "<space>sl",
-        send_paragraph = "<space>sp",
-        send_until_cursor = "<space>su",
-        send_mark = "<space>sm",
-        send_code_block = "<space>sb",
-        send_code_block_and_move = "<space>sn",
-        mark_motion = "<space>mc",
-        mark_visual = "<space>mc",
-        remove_mark = "<space>md",
-        cr = "<space>s<cr>",
-        interrupt = "<space>s<space>",
-        exit = "<space>sq",
-        clear = "<space>cl",
+        restart_repl = "<leader>rR", -- calls `IronRestart` to restart the repl
+        send_motion = "<leader>sc",
+        visual_send = "<leader>sc",
+        send_file = "<leader>sf",
+        send_line = "<leader>sl",
+        send_paragraph = "<leader>sp",
+        send_until_cursor = "<leader>su",
+        send_mark = "<leader>sm",
+        send_code_block = "<leader>sb",
+        send_code_block_and_move = "<leader>sn",
+        mark_motion = "<leader>mc",
+        mark_visual = "<leader>mc",
+        remove_mark = "<leader>md",
+        cr = "<leader>s<cr>",
+        interrupt = "<leader>s<leader>",
+        exit = "<leader>sq",
+        clear = "<leader>cl",
       },
       -- If the highlight is on, you can change how it looks
       -- For the available options, check nvim_set_hl
@@ -107,7 +99,7 @@ return {
       highlight_last = "IronLastSent",
     }
 
-    vim.keymap.set('n', '<space>rf', '<cmd>IronFocus<cr>')
-    vim.keymap.set('n', '<space>rh', '<cmd>IronHide<cr>')
+    vim.keymap.set('n', '<leader>rf', '<cmd>IronFocus<cr>')
+    vim.keymap.set('n', '<leader>rh', '<cmd>IronHide<cr>')
   end
 }
