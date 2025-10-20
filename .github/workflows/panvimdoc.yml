@@ -1,6 +1,14 @@
 name: panvimdoc
 
-on: [push]
+on:
+  push:
+    branches: [main]
+    paths:
+      - README.md 
+      - .github/workflows/panvimdoc.yml 
+
+permissions:
+  contents: write
 
 jobs:
   docs:
@@ -14,7 +22,7 @@ jobs:
           vimdoc: SpecterVim # Output vimdoc project name (required)
           # The following are all optional
           pandoc: "README.md" # Input pandoc file
-          version: "NVIM v0.8.0" # Vim version number
+          version: "NVIM v0.11.4" # Vim version number
           toc: true # Table of contents
           description: "" # Project description used in title (if empty, uses neovim version and current date)
           titledatepattern: "%Y %B %d" # Pattern for the date that used in the title
