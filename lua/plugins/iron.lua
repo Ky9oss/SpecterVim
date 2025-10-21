@@ -1,6 +1,15 @@
 return {
   'Vigemus/iron.nvim',
-  dev = false,
+  dev = true,
+  keys = {
+    {
+      "<leader>rr",
+      function()
+        require("iron.core").toggle_repl()
+      end,
+      desc = "Toggle REPL",
+    },
+  },
   config = function()
     local iron = require("iron.core")
     local view = require("iron.view")
@@ -17,14 +26,10 @@ return {
         -- Your repl definitions come here
         repl_definition = {
           sh = {
-            -- Can be a table or a function that -- returns a table (see below)
-            command = function()
-              if vim.fn.has("win32") == 1 then
-                return { "powershell.exe" }
-              else
-                return { "zsh" }
-              end
-            end
+            command = "bash",
+          },
+          ps1 = {
+            command = "powershell.exe",
           },
           python = {
             command = executable('python3') and 'python3' or 'python', -- or { "ipython", "--no-autoindent", "--colors=Linux" }

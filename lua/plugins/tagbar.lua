@@ -1,3 +1,6 @@
 return {
-  "preservim/tagbar"
+  "preservim/tagbar",
+  config = function()
+    vim.keymap.set("n", "<F8>", ":TagbarToggle<CR>")
+  end
 }

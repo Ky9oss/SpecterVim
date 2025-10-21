@@ -1,6 +1,32 @@
 return {
   "mfussenegger/nvim-dap",
-  opts = {},
+  keys = {
+    -- dap
+    -- vim.api.nvim_set_keymap("n", "<leader>b", "<cmd>DapToggleBreakpoint<CR>", { noremap = true, silent = true })
+    -- vim.api.nvim_set_keymap("n", "<leader>i", "<cmd>DapStepInto<CR>", { noremap = true, silent = true })
+    -- vim.api.nvim_set_keymap("n", "<leader>u", "<cmd>DapStepOut<CR>", { noremap = true, silent = true })
+    -- vim.api.nvim_set_keymap("n", "<leader>v", "<cmd>DapStepOver<CR>", { noremap = true, silent = true })
+    {
+      "<leader>b",
+      "<cmd>DapToggleBreakpoint<CR>",
+      desc = "Toggle Breakpoint",
+    },
+    {
+      "<leader>i",
+      "<cmd>DapStepInto<CR>",
+      desc = "Step Into",
+    },
+    {
+      "<leader>u",
+      "<cmd>DapStepOut<CR>",
+      desc = "Step Out",
+    },
+    {
+      "<leader>v",
+      "<cmd>DapStepOver<CR>",
+      desc = "Step Over",
+    },
+  },
   config = function()
     -- dap for c/c++/rust
     local dap = require('dap')
@@ -109,7 +135,6 @@ return {
         end;
       },
     }
-
 
   end
 }

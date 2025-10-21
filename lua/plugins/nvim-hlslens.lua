@@ -1,8 +1,8 @@
 -- better glance at matched information
 return {
   "kevinhwang91/nvim-hlslens",
+  lazy = false,
   config = function()
-    require('hlslens').setup()
     local kopts = { noremap = true, silent = true }
 
     vim.api.nvim_set_keymap('n', 'n',

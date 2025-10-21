@@ -1,6 +1,15 @@
+# 2025-10-21
+
+## Features
+- Remove nvim-dap-ui
+- Optimize lazy loading for some plugins by lazy.nvim
+
+
 # 2025-10-10
-## Feautures
+
+## Features
 - Add LSP support for pwsh
+
 
 # 2025-10-07
 
@@ -19,7 +28,7 @@
 - Fix editorconfig error in initing for project
 
 ## Features
-- [x] Add nvim-notify to replace vim.notify
+- Add nvim-notify to replace vim.notify
 
 
 # 2025-09-30
@@ -31,19 +40,19 @@
 # 2025-09-26
 
 ## Features
-- [x] Enable more LSP
-- [x] Add vsplit in telescope
+- Enable more LSP
+- Add vsplit in telescope
 
 
 # 2025-09-25
 
 ## Features
-- [x] Migrate plugins from vim-plug to lazy.nvim
-- [x] Deprecate bufferline due to unexpected errors
-- [x] Add LazyDev plugin to enhance Lua LSP
-- [x] Add orgmode for TODO management
-- [x] Add markdown preview plugin
-- [x] Add conform.nvim for code formatting
+- Migrate plugins from vim-plug to lazy.nvim
+- Deprecate bufferline due to unexpected errors
+- Add LazyDev plugin to enhance Lua LSP
+- Add orgmode for TODO management
+- Add markdown preview plugin
+- Add conform.nvim for code formatting
 
 
 # 2025-09-18

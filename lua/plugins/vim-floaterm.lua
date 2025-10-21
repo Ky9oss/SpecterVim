@@ -18,6 +18,7 @@ return {
 
     -- 映射 <leader>sh
     vim.keymap.set('n', '<leader>sh', _G.toggle_floaterm, { noremap = true, silent = true })
+    vim.keymap.set("n", "<leader>nsh", ":FloatermNew --name=myfloat --height=0.8 --width=0.7 --autoclose=2<CR>")
     vim.keymap.set("t", "<Esc>", "<C-\\><C-n>:q<CR>")
   end
 }
