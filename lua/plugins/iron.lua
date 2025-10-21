@@ -13,7 +13,7 @@ return {
   config = function()
     local iron = require("iron.core")
     local view = require("iron.view")
-    local common = require("iron.fts.common")
+    -- local common = require("iron.fts.common")
 
     local executable = function(exe)
       return vim.api.nvim_call_function("executable", { exe }) == 1
@@ -33,9 +33,9 @@ return {
           },
           python = {
             command = executable("python3") and "python3" or "python", -- or { "ipython", "--no-autoindent", "--colors=Linux" }
-            format = common.bracketed_paste_python,
-            block_dividers = { "# %%", "#%%" },
-            env = { PYTHON_BASIC_REPL = "1" }, --this is needed for python3.13 and up.
+            -- format = common.bracketed_paste_python,
+            -- block_dividers = { "# %%", "#%%" },
+            -- env = { PYTHON_BASIC_REPL = "1" }, --this is needed for python3.13 and up.
           },
           lua = {
             command = { "luajit" },

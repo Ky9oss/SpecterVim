@@ -76,6 +76,7 @@ return {
           },
         })
       end,
+      filetypes = { "lua" },
       settings = {
         Lua = {
           diagnostics = {

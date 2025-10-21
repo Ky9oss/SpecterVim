@@ -1,11 +1,10 @@
 -- formatter
 return {
   "stevearc/conform.nvim",
-  event = { "BufWritePre" },
+  -- event = { "BufWritePre" },
   cmd = { "ConformInfo" },
   keys = {
     {
-      -- Customize or remove this keymap to your liking
       "<leader>fm",
       function()
         require("conform").format({ async = true })
@@ -50,17 +49,7 @@ return {
       lsp_format = "fallback",
     },
     -- Set up format-on-save
-    format_on_save = { timeout_ms = 500 },
-    -- Customize formatters
-    formatters = {
-      shfmt = {
-        append_args = { "-i", "2" },
-      },
-      csharpier = {
-        command = "dotnet-csharpier",
-        args = { "--write-stdout" },
-      },
-    },
+    -- format_on_save = { timeout_ms = 500 },
   },
   init = function()
     -- If you want the formatexpr, here is the place to set it

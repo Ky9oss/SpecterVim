@@ -12,7 +12,7 @@ return {
             indent_style = space
             indent_size = 4
             tab_width = 4
-            end_of_line = lf
+            end_of_line = crlf
             insert_final_newline = true
         ]]):gsub("^%s+", ""):gsub("\n%s+", "\n")
 

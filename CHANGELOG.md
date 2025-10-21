@@ -5,6 +5,10 @@
 - Remove nvim-dap-ui
 - Optimize lazy loading for some plugins by lazy.nvim
 
+## Bug
+
+- Fix a error in python REPL with iron.nvim
+
 # 2025-10-10
 
 ## Features

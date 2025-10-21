@@ -15,3 +15,11 @@ vim.keymap.set("v", "y", '"+y')
 vim.keymap.set("v", "Y", '"+Y')
 
 require("config.lazy")
+
+-- LspSaga
+vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", { noremap = true, silent = true })
+
+-- CRLF
+-- vim.opt.fileformats = { "dos", "unix" }
+-- vim.opt.fileformat = "dos"
+-- vim.opt.fixendofline = false
