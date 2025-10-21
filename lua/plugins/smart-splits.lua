@@ -1,13 +1,13 @@
 return {
-  'mrjones2014/smart-splits.nvim',
+  "mrjones2014/smart-splits.nvim",
   otps = {
     ignored_buftypes = {
-      'nofile',
-      'quickfix',
-      'prompt',
+      "nofile",
+      "quickfix",
+      "prompt",
     },
     -- Ignored filetypes (only while resizing)
-    ignored_filetypes = { 'NvimTree' },
+    ignored_filetypes = { "NvimTree" },
     -- the default number of lines/columns to resize by at a time
     default_amount = 3,
     -- Desired behavior when your cursor is at an edge and you
@@ -36,11 +36,11 @@ return {
     -- }
     -- NOTE: `at_edge = 'wrap'` is not supported on Kitty terminal
     -- multiplexer, as there is no way to determine layout via the CLI
-    at_edge = 'wrap',
+    at_edge = "wrap",
     -- Desired behavior when the current window is floating:
     -- 'previous' => Focus previous Vim window and perform action
     -- 'mux' => Always forward action to multiplexer
-    float_win_behavior = 'previous',
+    float_win_behavior = "previous",
     -- when moving cursor between splits left or right,
     -- place the cursor on the same row of the *screen*
     -- regardless of line numbers. False by default.
@@ -57,8 +57,8 @@ return {
     -- and un-ignored on completed. This only applies to resize events,
     -- not cursor movement events.
     ignored_events = {
-      'BufEnter',
-      'WinEnter',
+      "BufEnter",
+      "WinEnter",
     },
     -- enable or disable a multiplexer integration;
     -- automatically determined, unless explicitly disabled or set,
@@ -79,18 +79,17 @@ return {
     -- when the current pane is at the edge of the zellij tab/window
     zellij_move_focus_or_tab = false,
     -- default logging level, one of: 'trace'|'debug'|'info'|'warn'|'error'|'fatal'
-    log_level = 'info',
-
+    log_level = "info",
   },
   config = function()
-    vim.keymap.set('n', '<C-w>H', require('smart-splits').resize_left)
-    vim.keymap.set('n', '<C-w>J', require('smart-splits').resize_down)
-    vim.keymap.set('n', '<C-w>K', require('smart-splits').resize_up)
-    vim.keymap.set('n', '<C-w>L', require('smart-splits').resize_right)
+    vim.keymap.set("n", "<C-w>H", require("smart-splits").resize_left)
+    vim.keymap.set("n", "<C-w>J", require("smart-splits").resize_down)
+    vim.keymap.set("n", "<C-w>K", require("smart-splits").resize_up)
+    vim.keymap.set("n", "<C-w>L", require("smart-splits").resize_right)
 
-    vim.keymap.set('n', '<C-h>', require('smart-splits').move_cursor_left)
-    vim.keymap.set('n', '<C-j>', require('smart-splits').move_cursor_down)
-    vim.keymap.set('n', '<C-k>', require('smart-splits').move_cursor_up)
-    vim.keymap.set('n', '<C-l>', require('smart-splits').move_cursor_right)
-  end
+    vim.keymap.set("n", "<C-h>", require("smart-splits").move_cursor_left)
+    vim.keymap.set("n", "<C-j>", require("smart-splits").move_cursor_down)
+    vim.keymap.set("n", "<C-k>", require("smart-splits").move_cursor_up)
+    vim.keymap.set("n", "<C-l>", require("smart-splits").move_cursor_right)
+  end,
 }

@@ -1,4 +1,4 @@
--- Utils: Useful lua functions 
+-- Utils: Useful lua functions
 return {
-  "nvim-lua/plenary.nvim"
+  "nvim-lua/plenary.nvim",
 }

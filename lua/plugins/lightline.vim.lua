@@ -15,15 +15,14 @@ return {
     vim.g.lightline = {
       active = {
         left = {
-          { "mode",     "paste" },
+          { "mode", "paste" },
           { "readonly", "project_name", "filename", "modified" },
         },
         right = {
           { "lineinfo" },
           { "percent" },
-          { "project", "fileformat", "fileencoding", "filetype" }
-
-        }
+          { "project", "fileformat", "fileencoding", "filetype" },
+        },
       },
       component = {
         project = project_root_path,

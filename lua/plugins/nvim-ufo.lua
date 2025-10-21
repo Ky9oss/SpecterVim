@@ -94,7 +94,7 @@ return {
         return newVirtText
       end,
       provider_selector = function(bufnr, filetype, buftype)
-            return ftMap[filetype] or customizeSelector
+        return ftMap[filetype] or customizeSelector
       end,
     })
   end,

@@ -20,13 +20,7 @@ return {
   opts = {
     -- Define your formatters
     formatters_by_ft = {
-      lua = function(bufnr)
-        if require("conform").get_formatter_info("stylua", bufnr).available then
-          return { "stylua" }
-        else
-          return { "luaformatter" }
-        end
-      end,
+      lua = { "stylua" },
       python = function(bufnr)
         if require("conform").get_formatter_info("ruff", bufnr).available then
           return { "ruff" }

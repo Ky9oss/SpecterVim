@@ -19,7 +19,9 @@ return {
         local editorconfig_exists = vim.fn.findfile(".editorconfig", ".;") ~= ""
         if not editorconfig_exists then
           local project_root = project.get_project_root()
-          if not project_root then return end
+          if not project_root then
+            return
+          end
 
           local editorconfig_path = project_root .. "/.editorconfig"
 
@@ -35,7 +37,7 @@ return {
             end
           end
         end
-      end
+      end,
     })
-  end
+  end,
 }

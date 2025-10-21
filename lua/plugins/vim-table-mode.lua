@@ -16,5 +16,5 @@ return {
               \ <SID>isAtStartOfLine('__') ?
               \ '<c-o>:silent! TableModeDisable<cr>' : '__'
     ]])
-  end
+  end,
 }

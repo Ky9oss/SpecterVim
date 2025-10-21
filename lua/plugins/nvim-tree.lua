@@ -19,10 +19,10 @@ return {
     local MyCustomDecorator = require("nvim-tree.api").decorator.UserDecorator:extend()
 
     function MyCustomDecorator:new()
-      self.enabled         = true
+      self.enabled = true
       self.highlight_range = "all" -- 或者 "all", "icon", "none"
-      self.icon_placement  = "after"
-      self.my_icon_node    = { str = ">", hl = { "DevIconNushell" } }
+      self.icon_placement = "after"
+      self.my_icon_node = { str = ">", hl = { "DevIconNushell" } }
     end
 
     -- 自定义高亮逻辑
@@ -66,7 +66,7 @@ return {
         width = 30,
       },
       update_focused_file = {
-        enable = true,      -- 打开文件时自动高亮
+        enable = true, -- 打开文件时自动高亮
         update_cwd = false, -- 切换目录
       },
       renderer = {
@@ -107,7 +107,7 @@ return {
       },
       git = {
         enable = true,
-        timeout = 200 -- (in ms)
+        timeout = 200, -- (in ms)
       },
     })
 
@@ -122,7 +122,7 @@ return {
       if real_file and not no_name then
         local dir = vim.fn.fnamemodify(data.file, ":p:h")
         vim.cmd.cd(dir)
-        require("nvim-tree.api").tree.toggle({ focus = false, find_file = true, })
+        require("nvim-tree.api").tree.toggle({ focus = false, find_file = true })
       elseif no_name then
         require("nvim-tree.api").tree.open()
       else
@@ -131,6 +131,5 @@ return {
     end
 
     vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
-
-  end
+  end,
 }

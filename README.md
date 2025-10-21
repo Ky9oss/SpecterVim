@@ -15,13 +15,19 @@ A personal Neovim setup built on Lazy.nvim with curated plugins. It's lightweigh
 ## Installation
 
 ### Linux
+
 ```bash
 mv ~/.config/nvim ~/.config/nvim_bak
 git clone https://github.com/Ky9oss/SpecterVim ~/.config/nvim
 ```
 
 ### Windows
+
 ```powershell
+
+# Stylua encountered an unexpected error when installed via Mason on Windows, so we install it using cargo
+cargo install stylua --features luajit
+
 Move-Item -Path "$env:USERPROFILE\AppData\Local\nvim" -Destination "$env:USERPROFILE\AppData\Local\nvim_bak"
 git clone https://github.com/Ky9oss/SpecterVim "$env:USERPROFILE\AppData\Local\nvim"
 ```
@@ -30,5 +36,4 @@ git clone https://github.com/Ky9oss/SpecterVim "$env:USERPROFILE\AppData\Local\n
 
 After that, just open Neovim. All pluggins will be installed automatically.
 
-If you need a proxy to access Github, you can install [proxychains-ng](https://github.com/rofl0r/proxychains-ng) on linux or [proxychains-windows](https://github.com/shunf4/proxychains-windows) on windows, and use `proxychains -q nvim` to install the plugins.
-
+> If you need a proxy to access Github, you can install [proxychains-ng](https://github.com/rofl0r/proxychains-ng) on linux or [proxychains-windows](https://github.com/shunf4/proxychains-windows) on windows, and use `proxychains -q nvim` to install the plugins.
