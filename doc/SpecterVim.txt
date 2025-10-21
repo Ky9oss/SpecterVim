@@ -1,4 +1,4 @@
-*SpecterVim.txt*         For NVIM v0.11.4         Last change: 2025 October 20
+*SpecterVim.txt*         For NVIM v0.11.4         Last change: 2025 October 21
 
 ==============================================================================
 Table of Contents                               *SpecterVim-table-of-contents*
@@ -29,8 +29,9 @@ WINDOWS ~
 <
 
 ------------------------------------------------------------------------------
-After that, just open Neovim. All pluggins will be installed automatically. If
-you need a proxy to access Github, you can install proxychains-ng
+After that, just open Neovim. All pluggins will be installed automatically.
+
+If you need a proxy to access Github, you can install proxychains-ng
 <https://github.com/rofl0r/proxychains-ng> on linux or proxychains-windows
 <https://github.com/shunf4/proxychains-windows> on windows, and use
 `proxychains -q nvim` to install the plugins.
