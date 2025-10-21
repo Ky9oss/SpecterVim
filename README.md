@@ -29,5 +29,6 @@ git clone https://github.com/Ky9oss/SpecterVim "$env:USERPROFILE\AppData\Local\n
 ---
 
 After that, just open Neovim. All pluggins will be installed automatically.
+
 If you need a proxy to access Github, you can install [proxychains-ng](https://github.com/rofl0r/proxychains-ng) on linux or [proxychains-windows](https://github.com/shunf4/proxychains-windows) on windows, and use `proxychains -q nvim` to install the plugins.
 
