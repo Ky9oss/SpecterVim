@@ -29,7 +29,7 @@ return {
             command = "bash",
           },
           ps1 = {
-            command = "powershell.exe",
+            command = "powershell.exe -NoProfile",
           },
           python = {
             command = executable("python3") and "python3" or "python", -- or { "ipython", "--no-autoindent", "--colors=Linux" }

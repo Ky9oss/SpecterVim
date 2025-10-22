@@ -53,7 +53,7 @@ return {
             -- (see `:h lua-module-load`)
             path = {
               "lua/?.lua",
-              "lua/?/init.lua",
+              "lua/?/?.lua",
             },
           },
           -- Make the server aware of Neovim runtime files
