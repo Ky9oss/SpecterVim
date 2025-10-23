@@ -7,7 +7,7 @@
 
 ## Bug
 
-- Fix a error in python REPL with iron.nvim
+- Fix issues about ipython REPL in iron.nvim
 
 # 2025-10-10
 

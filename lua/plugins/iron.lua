@@ -13,7 +13,7 @@ return {
   config = function()
     local iron = require("iron.core")
     local view = require("iron.view")
-    -- local common = require("iron.fts.common")
+    local common = require("iron.fts.common")
 
     local executable = function(exe)
       return vim.api.nvim_call_function("executable", { exe }) == 1
@@ -25,18 +25,18 @@ return {
         scratch_repl = true,
         -- Your repl definitions come here
         repl_definition = {
-          sh = {
-            command = "bash",
-          },
           ps1 = {
-            command = "powershell.exe -NoProfile",
+            command = { "powershell.exe -NoProfile" },
           },
           python = {
-            command = executable("python3") and "python3" or "python", -- or { "ipython", "--no-autoindent", "--colors=Linux" }
-            -- format = common.bracketed_paste_python,
-            -- block_dividers = { "# %%", "#%%" },
+            command = { "python" }, -- or { "ipython", "--no-autoindent", "--colors=Linux" }
+            -- command = { "ipython", "--no-autoindent", "--colors=Linux" }
+            format = common.bracketed_paste_python,
+            block_dividers = { "# %%", "#%%" },
+            is_new_repl = true,
             -- env = { PYTHON_BASIC_REPL = "1" }, --this is needed for python3.13 and up.
           },
+          -- python = require("iron.fts.python").python,
           lua = {
             command = { "luajit" },
           },
