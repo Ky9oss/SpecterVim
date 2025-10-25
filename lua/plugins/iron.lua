@@ -1,6 +1,6 @@
 return {
-  "Vigemus/iron.nvim",
-  dev = true,
+  "Ky9oss/iron.nvim",
+  dev = false,
   keys = {
     {
       "<leader>rr",
@@ -34,7 +34,6 @@ return {
             format = common.bracketed_paste_python,
             block_dividers = { "# %%", "#%%" },
             is_new_repl = true,
-            -- env = { PYTHON_BASIC_REPL = "1" }, --this is needed for python3.13 and up.
           },
           -- python = require("iron.fts.python").python,
           lua = {
@@ -51,7 +50,7 @@ return {
         end,
         -- How the repl window will be displayed
         -- See below for more information
-        repl_open_cmd = view.bottom(10),
+        repl_open_cmd = view.bottom(30),
 
         -- repl_open_cmd can also be an array-style table so that multiple
         -- repl_open_commands can be given.
