@@ -1,6 +1,6 @@
 return {}
--- debugpy 在我的场景里并不好用，尤其是uv启动的程序，他的配置有点奇怪，nvim-dap支持的文档不清晰。
--- Python3.14的PDB对我来说是更好用的方案，直接在新窗口中使用PDB的REPL版本做调试
+-- debugpy 在我的场景里并不好用，尤其是由`uv run`启动的程序在debugpy Launch模式下有些问题，他的配置有点奇怪。
+-- Python3.14的PDB对我来说是更好用的方案
 --
 -- return {
 --   "mfussenegger/nvim-dap-python",
