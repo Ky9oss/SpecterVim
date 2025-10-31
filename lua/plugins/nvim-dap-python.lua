@@ -1,0 +1,25 @@
+return {}
+-- debugpy 在我的场景里并不好用，尤其是uv启动的程序，他的配置有点奇怪，nvim-dap支持的文档不清晰。
+-- Python3.14的PDB对我来说是更好用的方案，直接在新窗口中使用PDB的REPL版本做调试
+--
+-- return {
+--   "mfussenegger/nvim-dap-python",
+--   config = function()
+--     require("dap-python").setup("uv")
+--     table.insert(require("dap").configurations.python, {
+--       type = "python",
+--       request = "launch",
+--       name = "mitmproxy",
+--
+--       -- `program` is what you'd use in `python <program>` in a shell
+--       -- If you need to run the equivalent of `python -m <module>`, replace
+--       -- `program = '${file}` entry with `module = "modulename"
+--       module = "debugpy",
+--       args = { "-m", "uv", "run", "mitmproxy" },
+--       console = "integratedTerminal",
+--
+--       -- Other options:
+--       -- See https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings
+--     })
+--   end,
+-- }
