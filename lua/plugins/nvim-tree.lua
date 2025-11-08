@@ -99,6 +99,7 @@ return {
       },
       filters = {
         dotfiles = false, -- show hidden files
+        git_ignored = false,
       },
       actions = {
         open_file = {
