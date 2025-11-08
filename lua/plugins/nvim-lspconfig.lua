@@ -145,5 +145,6 @@ return {
     vim.lsp.enable("asm_lsp")
     vim.lsp.enable("bashls")
     vim.lsp.enable("svelte")
+    vim.lsp.enable('clangd')
   end,
 }
