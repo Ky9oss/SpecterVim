@@ -6,3 +6,7 @@
 - [ ] stuck when :w in ps1
 - [ ] The first start is too slow in windows
 - [ ] Inject utils model into dev plugins to quickly debug
+
+# New Features
+
+- [ ] Auto load lib in .NET (Visual Studio)
