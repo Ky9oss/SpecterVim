@@ -1,3 +1,9 @@
+# 2025-12-14
+
+## Bug
+
+- The first startup gets stuck on Windows 11 due to orgmode
+
 # 2025-10-21
 
 ## Features
