@@ -1,5 +1,5 @@
 return {
-  "Ky9oss/iron.nvim",
+  "Vigemus/iron.nvim",
   dev = false,
   keys = {
     {
