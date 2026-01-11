@@ -34,15 +34,6 @@ return {
 
     vim.lsp.config("lua_ls", {
       on_init = function(client)
-        -- if client.workspace_folders then
-        --   local path = client.workspace_folders[1].name
-        --   if
-        --     path ~= vim.fn.stdpath("config")
-        --     and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
-        --   then
-        --     return
-        --   end
-        -- end
 
         client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
           runtime = {
@@ -86,24 +77,6 @@ return {
       },
     })
 
-    vim.lsp.config("asm_lsp", {
-      default_config = {
-        cmd = { "asm-lsp" },
-        filetypes = { "asm", "s", "S" },
-        settings = {
-          default_config = {
-            assembler = "fasm",
-            instruction_set = "x86/x86-64",
-          },
-          opts = {
-            compiler = "gcc",
-            diagnostics = true,
-            default_diagnostics = true,
-          },
-        },
-      },
-    })
-
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities.textDocument.completion.completionItem.snippetSupport = true
 
@@ -142,7 +115,6 @@ return {
     vim.lsp.enable("lua_ls")
     vim.lsp.enable("ts_ls")
     vim.lsp.enable("astro")
-    vim.lsp.enable("asm_lsp")
     vim.lsp.enable("bashls")
     vim.lsp.enable("svelte")
     vim.lsp.enable('clangd')
