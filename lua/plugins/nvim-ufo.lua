@@ -1,5 +1,6 @@
 return {
   "kevinhwang91/nvim-ufo",
+  lazy = true,
   keys = {
     -- neovim 自带原生折叠命令：
     --    使用za折叠当前区间

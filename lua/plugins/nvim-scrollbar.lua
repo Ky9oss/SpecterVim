@@ -1,5 +1,6 @@
 return {
   "petertriho/nvim-scrollbar",
+  lazy = false,
   dependencies = {
     "folke/tokyonight.nvim",
   },

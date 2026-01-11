@@ -6,7 +6,8 @@ if vim.fn.has("win32") == 1 then
       bundle_path = vim.fn.stdpath("data") .. "/mason/packages/powershell-editor-services",
       shell = "powershell.exe",
     },
-    lazy = false,
+    lazy = true,
+    event = { "BufEnter *.ps1" }
   }
 else
   return {}

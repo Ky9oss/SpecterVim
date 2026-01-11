@@ -1,5 +1,6 @@
 return {
   "mfussenegger/nvim-dap",
+  lazy = true,
   keys = {
     {
       "<leader>b",
@@ -91,15 +92,6 @@ return {
         program = function()
           return vim.fn.input("Path to dll", vim.fn.getcwd() .. "/bin/Debug/", "file")
         end,
-      },
-    }
-
-    dap.configurations.php = {
-      {
-        type = "php",
-        request = "launch",
-        name = "Listen for Xdebug",
-        port = 9003,
       },
     }
 

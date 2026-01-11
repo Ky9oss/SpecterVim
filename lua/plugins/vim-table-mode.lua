@@ -1,5 +1,7 @@
 return {
   "dhruvasagar/vim-table-mode",
+  lazy = true,
+  cmd = { "TableModeToggle" },
   config = function()
     vim.cmd([[
     function! s:isAtStartOfLine(mapping)

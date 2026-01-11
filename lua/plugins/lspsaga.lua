@@ -1,5 +1,7 @@
 return {
   "nvimdev/lspsaga.nvim",
+  lazy = true,
+  event = { "BufEnter" },
   opts = {
     lightbulb = {
       enable = false,
