@@ -37,3 +37,11 @@
 ## Floaterm
 
 - [ ] Preload shell
+
+## Others
+
+- [ ] No auto `zm`
+
+# New Plugins
+
+- [ ] A translation tool by Goldendict-ng and ECDICT

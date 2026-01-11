@@ -1,2 +1,3 @@
 -- icon
-return { "nvim-tree/nvim-web-devicons", opts = {}, lazy = false }
+-- return { "nvim-tree/nvim-web-devicons", opts = {}, lazy = false }
+return {}

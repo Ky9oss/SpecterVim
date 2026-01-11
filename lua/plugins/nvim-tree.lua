@@ -3,15 +3,8 @@ return {
   opts = {},
   lazy = false,
   config = function()
-    -- nvim-tree
-    -- disable netrw at the very start of your init.lua
-    vim.g.loaded_netrw = 1
-    vim.g.loaded_netrwPlugin = 1
 
-    -- optionally enable 24-bit colour
-    vim.opt.termguicolors = true
-
-    -- 自定义装饰器类
+    -- Custom Decorator
     ---@class MyCustomDecorator : UserDecorator
     ---@field enabled boolean
     ---@field highlight_range string
@@ -20,12 +13,12 @@ return {
 
     function MyCustomDecorator:new()
       self.enabled = true
-      self.highlight_range = "all" -- 或者 "all", "icon", "none"
+      self.highlight_range = "all" -- or "all", "icon", "none"
       self.icon_placement = "after"
       self.my_icon_node = { str = ">", hl = { "DevIconNushell" } }
     end
 
-    -- 自定义高亮逻辑
+    -- Custom Highlight
     ---@param node any
     ---@return string|nil
     function MyCustomDecorator:highlight_group(node)

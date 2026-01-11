@@ -1,6 +1,7 @@
 return {
   "Vigemus/iron.nvim",
   dev = false,
+  lazy = true,
   keys = {
     {
       "<leader>rr",

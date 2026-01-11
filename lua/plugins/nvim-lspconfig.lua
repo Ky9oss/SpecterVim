@@ -92,7 +92,7 @@ return {
         filetypes = { "asm", "s", "S" },
         settings = {
           default_config = {
-            assembler = "gas",
+            assembler = "fasm",
             instruction_set = "x86/x86-64",
           },
           opts = {

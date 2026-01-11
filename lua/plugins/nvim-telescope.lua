@@ -1,6 +1,7 @@
 return {
   "nvim-telescope/telescope.nvim",
   branch = "master",
+  lazy = false,
   dependencies = { "nvim-lua/plenary.nvim" },
   config = function()
     require("telescope").load_extension("projects")

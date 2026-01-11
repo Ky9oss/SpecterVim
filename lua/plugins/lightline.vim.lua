@@ -1,5 +1,6 @@
 return {
   "itchyny/lightline.vim",
+  lazy = false,
   dependencies = { "ahmedkhalf/project.nvim" },
   config = function()
     local project = require("project_nvim.project")

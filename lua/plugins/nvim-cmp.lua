@@ -1,5 +1,7 @@
 return {
   "hrsh7th/nvim-cmp",
+  event = { "BufNew" },
+  lazy = true,
   dependencies = {
     "L3MON4D3/LuaSnip",
     "hrsh7th/cmp-nvim-lsp",
@@ -25,7 +27,6 @@ return {
       },
       -- Installed sources:
       sources = {
-        { name = "orgmode" },
         { name = "path" }, -- file paths
         { name = "nvim_lsp", keyword_length = 3 }, -- from language server
         { name = "nvim_lsp_signature_help" }, -- display function signatures with current parameter emphasized
