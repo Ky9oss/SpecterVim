@@ -3,6 +3,7 @@
 - [ ] Powershell hover_doc error
 - [ ] Powershell do not auto dap
 - [ ] Gets stuck when :w in ps1
+- [ ] Gets stuck when enter asm in linux
 
 # New Features
 
