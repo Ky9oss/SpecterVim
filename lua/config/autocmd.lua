@@ -51,6 +51,15 @@ local function LoadLsp(ev)
 
     vim.lsp.enable("rust_analyzer")
     vim.g.rust_analyzer = true
+
+  elseif ft == "asm" and vim.g.asm_lsp ~= true then
+    vim.lsp.enable("asm_lsp")
+    vim.g.asm_lsp = true
+
+  elseif ft == "lua" and vim.g.lua_ls ~= true then
+    vim.lsp.enable("lua_ls")
+    vim.g.lua_ls = true
+
   end
 end
 
@@ -65,7 +74,7 @@ vim.api.nvim_create_autocmd("User", {
 
 vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
   group = "LoadLspGroup",
-  pattern = { "*.c", "*.h", "*.cpp", "*.rs", "*.py" },
+  pattern = { "*.c", "*.h", "*.cpp", "*.rs", "*.py", "*.asm", "*.lua" },
   callback = LoadLsp,
   desc = "Nvim-lspconfig: Set vim.lsp.config for different language",
 })

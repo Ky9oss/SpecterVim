@@ -10,8 +10,8 @@ vim.opt.encoding = "UTF-8"
 vim.opt.undodir = "~/.local/share/nvim/"
 
 require("config.autocmd")
-require("config.lazy")
 require("config.keymaps")
+require("config.lazy")
 
 
 -- CRLF
