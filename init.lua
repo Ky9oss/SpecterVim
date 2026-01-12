@@ -13,6 +13,7 @@ require("config.autocmd")
 require("config.lazy")
 require("config.keymaps")
 
+
 -- CRLF
 -- vim.opt.fileformats = { "dos", "unix" }
 -- vim.opt.fileformat = "dos"

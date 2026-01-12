@@ -2,6 +2,6 @@
 
 return {
   "windwp/nvim-autopairs",
-  event = "BufEnter",
-  lazy = true,
+  lazy = false,
+  config = true,
 }
