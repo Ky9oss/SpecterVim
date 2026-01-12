@@ -19,7 +19,6 @@ return {
   opts = {
     -- Define your formatters
     formatters_by_ft = {
-      lua = { "luaformatter" },
       python = function(bufnr)
         if require("conform").get_formatter_info("ruff", bufnr).available then
           return { "ruff" }
@@ -43,6 +42,7 @@ return {
       typescriptreact = { "biome" },
       vue = { "biome" },
       css = { "biome" },
+      lua = { "stylua" },
     },
     -- Set default options
     -- default_format_opts = {
