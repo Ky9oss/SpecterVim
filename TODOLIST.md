@@ -1,9 +1,9 @@
 # Fix bugs
 
+- [ ] Gets stuck when enter sharksim3000.asm in linux
 - [ ] Powershell hover_doc error
 - [ ] Powershell do not auto dap
 - [ ] Gets stuck when :w in ps1
-- [ ] Gets stuck when enter asm in linux
 
 # New Features
 
@@ -31,9 +31,8 @@
 
 ## Nvimtree
 
-- [ ] Do not change dir in nvimtree when 'gd'
+- [x] Do not change dir in nvimtree when 'gd'
 - [ ] Limit the length of project names
-- [ ] A Refresh command to refersh the root-dir back to the Project
 
 ## Floaterm
 
