@@ -2,5 +2,5 @@
 return {
   "m-demare/hlargs.nvim",
   lazy = true,
-  cmd = { "BufEnter" },
+  event = { "BufEnter" },
 }

@@ -2,5 +2,5 @@
 return { 
   "danilamihailov/beacon.nvim",
   lazy = true,
-  cmd = { "BufEnter" },
+  event = { "BufEnter" },
 }

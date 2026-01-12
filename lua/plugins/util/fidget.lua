@@ -1,7 +1,7 @@
 return {
   "j-hui/fidget.nvim",
   lazy = true,
-  cmd = { "BufEnter" },
+  event = { "BufEnter" },
   opts = {
     -- options
   },

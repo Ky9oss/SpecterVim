@@ -25,8 +25,13 @@ vim.g.maplocalleader = "\\"
 -- Setup lazy.nvim
 require("lazy").setup({
   spec = {
-    -- import your plugins
     { import = "plugins" },
+    { import = "plugins.lsp" },
+    { import = "plugins.dap" },
+    { import = "plugins.ui" },
+    { import = "plugins.util" },
+    { import = "plugins.code" },
+    { import = "plugins.formatter" },
   },
 
   dev = {

@@ -1,7 +1,7 @@
 -- formatter
 return {
   "stevearc/conform.nvim",
-  lazy = true,
+  lazy = false,
   cmd = { "ConformInfo" },
   keys = {
     {
@@ -19,7 +19,7 @@ return {
   opts = {
     -- Define your formatters
     formatters_by_ft = {
-      lua = { "stylua" },
+      lua = { "luaformatter" },
       python = function(bufnr)
         if require("conform").get_formatter_info("ruff", bufnr).available then
           return { "ruff" }
@@ -45,9 +45,9 @@ return {
       css = { "biome" },
     },
     -- Set default options
-    default_format_opts = {
-      lsp_format = "fallback",
-    },
+    -- default_format_opts = {
+    --   lsp_format = "fallback",
+    -- },
     -- Set up format-on-save
     -- format_on_save = { timeout_ms = 500 },
   },

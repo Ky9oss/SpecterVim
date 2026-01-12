@@ -1,7 +1,8 @@
 return {
   "nvim-tree/nvim-tree.lua",
   opts = {},
-  lazy = false,
+  lazy = true,
+  cmd = { "NvimTreeOpen" },
   config = function()
 
     -- Custom Decorator
@@ -27,7 +28,7 @@ return {
       }
       for _, target_path in ipairs(target_files) do
         if node.absolute_path == target_path then
-          return "Substitute" -- 高亮样式，可更换
+          return "Substitute" -- highlight format
         end
       end
       return nil
