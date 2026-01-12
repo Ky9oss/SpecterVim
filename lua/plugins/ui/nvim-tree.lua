@@ -50,8 +50,8 @@ return {
       disable_netrw = true,
       hijack_netrw = true,
 
-      respect_buf_cwd = true,
-      sync_root_with_cwd = true,
+      respect_buf_cwd = false,
+      sync_root_with_cwd = false,
 
       sort = {
         sorter = "case_sensitive",
@@ -66,7 +66,6 @@ return {
       renderer = {
         group_empty = true,
         highlight_git = true,
-        -- highlight_opened_files = "name", -- 高亮所有打开文件
         highlight_hidden = "name",
         root_folder_modifier = ":t",
         special_files = { "Cargo.toml", "Makefile", "README.md", "readme.md" },
@@ -97,7 +96,7 @@ return {
       },
       actions = {
         open_file = {
-          quit_on_open = false, -- 打开文件后不关闭 tree
+          quit_on_open = false,
         },
       },
       git = {
