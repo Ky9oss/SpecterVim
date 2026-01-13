@@ -63,17 +63,17 @@ local function LoadLsp(ev)
   end
 end
 
--- vim.api.nvim_create_augroup("LoadLspGroup", { clear = true })
+vim.api.nvim_create_augroup("LoadLspGroup", { clear = true })
 
 vim.api.nvim_create_autocmd("User", {
-  -- group = "LoadLspGroup",
+  group = "LoadLspGroup",
   pattern = "NvimLspconfigLoaded",
   callback = LoadLsp, -- callback = function(ev) vim.schedule(LoadLsp(ev)) end,
   desc = "Nvim-lspconfig: Set vim.lsp.config for different language when this plugin has loaded",
 })
 
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-  -- group = "LoadLspGroup",
+vim.api.nvim_create_autocmd({ "BufReadPre" }, {
+  group = "LoadLspGroup",
   pattern = { "*.c", "*.h", "*.cpp", "*.rs", "*.py", "*.asm", "*.lua" },
   callback = LoadLsp,
   desc = "Nvim-lspconfig: Set vim.lsp.config for different language",

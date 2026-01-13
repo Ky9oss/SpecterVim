@@ -7,6 +7,10 @@
 
 # New Features
 
+## About Git
+
+- [ ] New keymap to git push, a tap for what will update
+
 ## About .NET
 
 - [ ] .slnx resolve
