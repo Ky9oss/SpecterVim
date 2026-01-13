@@ -9,7 +9,6 @@ vim.opt.laststatus = 3
 vim.opt.encoding = "UTF-8"
 vim.opt.undodir = "~/.local/share/nvim/"
 
-require("config.autocmd")
 require("config.keymaps")
 require("config.lazy")
 
