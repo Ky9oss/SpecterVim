@@ -16,7 +16,6 @@
 - [ ] Formatter
 - [ ] Runner
 - [ ] (?) Performance Analyzer like Visual Studio 2026 
-- [ ] (?) Database connecter
 
 ## Optimize
 
@@ -33,10 +32,12 @@
 
 - [x] Do not change dir in nvimtree when 'gd'
 - [ ] Limit the length of project names
+- [ ] When enter neovim by `nvim`, auto open nvimtree. When enter neovim by `nvim xxx`, do not auto open nvimtree.
+- [ ] After `:NvimTreeOpen`, always locate to project root dir.
 
 ## Floaterm
 
-- [ ] Preload shell
+- [ ] Preload shell in `VeryLazy`
 
 ## Others
 
@@ -44,4 +45,5 @@
 
 # New Plugins
 
-- [ ] A translation tool by Goldendict-ng and ECDICT
+- [ ] Homepage
+- [ ] Database connecter
