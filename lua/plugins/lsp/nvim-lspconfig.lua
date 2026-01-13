@@ -23,15 +23,15 @@ return {
 
 
     vim.lsp.config("pylsp", {
-      on_new_config = function(new_config, root_dir) -- use python with pyenv
-        if not vim.fn.has("win32") == 1 then
-          local python_path = vim.fn.systemlist("pyenv which python")[1]
-          if vim.fn.filereadable(python_path) == 1 then
-            new_config.settings.pylsp.configurationSources = { "pycodestyle" }
-            new_config.settings.pylsp.plugins.jedi = { environment = python_path }
-          end
-        end
-      end,
+      -- on_new_config = function(new_config, root_dir) -- use python with pyenv
+      --   if not vim.fn.has("win32") == 1 then
+      --     local python_path = vim.fn.systemlist("pyenv which python")[1]
+      --     if vim.fn.filereadable(python_path) == 1 then
+      --       new_config.settings.pylsp.configurationSources = { "pycodestyle" }
+      --       new_config.settings.pylsp.plugins.jedi = { environment = python_path }
+      --     end
+      --   end
+      -- end,
       settings = {
         pylsp = {
           plugins = {
