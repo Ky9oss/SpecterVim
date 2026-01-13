@@ -38,9 +38,10 @@ require("lazy").setup({
     path = vim.fn.stdpath("data") .. "/dev"
   },
 
-  performance = {
-    reset_packpath = false,  -- 默认是 true，会清掉
-  },
+  -- performance = {
+  --   reset_packpath = false,  -- true will clean all packpath suck as ~/.config/nvim/
+  -- },
+
   -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.
   install = { colorscheme = { "tokyonight-night" } },
