@@ -24,6 +24,8 @@ vim.api.nvim_create_user_command("GitPush", function(opts)
         "-m",
         opts.args,
         "&&",
+        "proxychains",
+        "-q",
         "git",
         "push",
         "-u",
