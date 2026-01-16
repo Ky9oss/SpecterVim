@@ -12,7 +12,7 @@
 
 ## About Git
 
-- [ ] New keymap to git push, a tap for what will update
+- [x] New command to git push, a tap for what will update
 
 ## About .NET
 
