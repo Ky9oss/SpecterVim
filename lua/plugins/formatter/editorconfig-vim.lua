@@ -2,7 +2,7 @@ local create_file = function(filename, dcontent)
   local project = require("project_nvim.project")
   local content = dcontent:gsub("^%s+", ""):gsub("\n%s+", "\n")
   local project_root = project.get_project_root()
-  vim.notify = require("notify")
+  -- vim.notify = require("notify")
   if not project_root then
     return
   end

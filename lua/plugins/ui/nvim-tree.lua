@@ -4,7 +4,6 @@ return {
   lazy = true,
   cmd = { "NvimTreeOpen" },
   config = function()
-
     -- Custom Decorator
     ---@class MyCustomDecorator : UserDecorator
     ---@field enabled boolean
@@ -60,16 +59,18 @@ return {
         width = 30,
       },
       update_focused_file = {
-        enable = true, -- 打开文件时自动高亮
-        update_cwd = false, -- 切换目录
+        enable = true, -- auto highlight when open files
+        update_cwd = false, -- change root dir when open files
       },
       renderer = {
         group_empty = true,
         highlight_git = true,
         highlight_hidden = "name",
-        root_folder_modifier = ":t",
         special_files = { "Cargo.toml", "Makefile", "README.md", "readme.md" },
-        root_folder_label = ":p",
+        root_folder_label = function(path)
+          require("../../utils.str")
+          return LimitStr(vim.fn.fnamemodify(path, ":p"), 20)
+        end,
         icons = {
           show = {
             git = false,

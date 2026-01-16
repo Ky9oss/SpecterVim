@@ -26,29 +26,23 @@
 
 ## Optimize
 
-- [ ] E211: File "xxx" no longer available -> close buffer instead of warning
+- [x] ~~E211: File "xxx" no longer available -> nvim-notify~~ nvim-notify just takeover vim.fn.notify(), but error message come from C functions. Use noice.nvim can fix it.
 
 ## Lualine
 
 - [ ] remove project path && add page path
-- [ ] change project name from project.nvim to .git
-- [ ] Limit the length of project names
-- [ ] Show More LSP information, include code-language or runtime versions.
+- [ ] Limit the length of page path
+- [ ] Show More LSP information for current buffer, include LSP name, code-language or runtime versions.
 
 ## Nvimtree
 
 - [x] Do not change dir in nvimtree when 'gd'
-- [ ] Limit the length of project names
+- [x] Limit the length of project names
 - [ ] When enter neovim by `nvim`, auto open nvimtree. When enter neovim by `nvim xxx`, do not auto open nvimtree.
-- [ ] After `:NvimTreeOpen`, always locate to project root dir.
 
 ## Floaterm
 
 - [ ] Preload shell in `VeryLazy`
-
-## Others
-
-- [ ] No auto `zm`
 
 # New Plugins
 
