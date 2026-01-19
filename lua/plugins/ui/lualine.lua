@@ -2,6 +2,14 @@ return {
   "nvim-lualine/lualine.nvim",
   dependencies = { "nvim-tree/nvim-web-devicons" },
   config = function()
+    local function abs_path()
+      require("../../utils.str")
+      return LimitStr(vim.fn.expand("%:p"), 30)
+    end
+    local function lsp_info()
+      require("../../utils.lsp")
+      return GetLspInfo()
+    end
     require("lualine").setup({
       options = {
         icons_enabled = true,
@@ -38,8 +46,9 @@ return {
       sections = {
         lualine_a = { "mode" },
         lualine_b = { "branch", "diff", "diagnostics" },
-        lualine_c = { "filename" },
-        lualine_x = { "encoding", "fileformat", "filetype" },
+        -- lualine_c = { "lsp_status" },
+        lualine_c = { lsp_info },
+        lualine_x = { abs_path, "encoding", "fileformat", "filetype" },
         lualine_y = { "progress" },
         lualine_z = { "location" },
       },

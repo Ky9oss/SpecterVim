@@ -30,8 +30,8 @@
 
 ## Lualine
 
-- [ ] add a length-limited absolute page path
-- [ ] Show More LSP information, include LSP name, code-language or runtime versions for current buffer.
+- [x] add a length-limited absolute page path
+- [x] Show More LSP information, include LSP name, code-language or runtime versions for current buffer.
 
 ## Nvimtree
 
