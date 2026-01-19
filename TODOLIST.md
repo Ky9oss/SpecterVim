@@ -42,7 +42,7 @@
 
 ## Floaterm
 
-- [ ] Preload shell in `VeryLazy`
+- [x] Preload shell in `VeryLazy`
 
 # New Plugins
 

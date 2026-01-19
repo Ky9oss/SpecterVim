@@ -11,3 +11,6 @@ vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", { noremap = true, silent 
 
 -- LspSaga
 vim.keymap.set("n", "<leader>tr", "<cmd>NvimTreeOpen<CR>", { noremap = true, silent = true })
+
+-- This can fix vim-floaterm
+vim.keymap.set("t", "<Esc>", "<C-\\><C-n>:q<CR>")

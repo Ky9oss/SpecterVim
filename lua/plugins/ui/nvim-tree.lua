@@ -1,6 +1,5 @@
 return {
   "nvim-tree/nvim-tree.lua",
-  opts = {},
   lazy = true,
   cmd = { "NvimTreeOpen" },
   config = function()
