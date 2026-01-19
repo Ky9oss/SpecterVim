@@ -10,6 +10,7 @@ vim.opt.encoding = "UTF-8"
 vim.opt.undodir = "~/.local/share/nvim/"
 
 require("config.lazy")
+require("config.autocmds")
 require("config.keymaps")
 require("config.commands")
 

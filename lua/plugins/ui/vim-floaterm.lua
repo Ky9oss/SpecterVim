@@ -1,10 +1,11 @@
 return {
   "voldikss/vim-floaterm",
+  lazy = true,
+  event = { "VeryLazy" },
   config = function()
-    -- 浮动终端状态
     vim.g.myfloat_created = false
 
-    -- <leader>sh, 避免重复FLoatermNew
+    -- <leader>sh
     function _G.toggle_floaterm()
       if not vim.g.myfloat_created then
         if vim.fn.has("win32") == 1 then

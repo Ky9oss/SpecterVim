@@ -38,7 +38,7 @@
 
 - [x] Do not change dir in nvimtree when 'gd'
 - [x] Limit the length of project names
-- [ ] When enter neovim by `nvim`, auto open nvimtree. When enter neovim by `nvim xxx`, do not auto open nvimtree.
+- [x] When enter neovim by `nvim`, auto open nvimtree. When enter neovim by `nvim xxx`, do not auto open nvimtree.
 
 ## Floaterm
 
