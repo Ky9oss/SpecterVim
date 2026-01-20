@@ -10,6 +10,15 @@ return {
       require("../../utils.lsp")
       return GetLspInfo()
     end
+    local function visual_length()
+      local mode = vim.fn.mode()
+      if mode:find("[v]") then
+        local wc = vim.fn.wordcount()
+        local chars = wc.visual_chars or 0
+        return chars
+      end
+      return ""
+    end
     require("lualine").setup({
       options = {
         icons_enabled = true,
@@ -49,7 +58,7 @@ return {
         -- lualine_c = { "lsp_status" },
         lualine_c = { lsp_info },
         lualine_x = { abs_path, "encoding", "fileformat", "filetype" },
-        lualine_y = { "progress" },
+        lualine_y = { visual_length, "progress" },
         lualine_z = { "location" },
       },
       inactive_sections = {

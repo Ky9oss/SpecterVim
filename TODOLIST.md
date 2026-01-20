@@ -22,6 +22,12 @@
 - [ ] Runner
 - [ ] (?) Performance Analyzer like Visual Studio 2026
 
+## Others
+
+- [ ] C to assembly just in time
+- [ ] draft paper
+- [ ] Add ALE to optimize linters
+
 # New Plugins
 
 - [ ] Homepage

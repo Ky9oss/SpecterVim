@@ -5,6 +5,7 @@
 - Add and optimize lualine, floaterm and nvim-tree.
 - User-defined commands: `GitPush`
 - Adjust code structure
+- Show absolute path, lsp infomation and character numbers for visual mode in lualine
 
 # 2025-12-14
 
