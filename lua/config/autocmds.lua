@@ -18,3 +18,14 @@ local function open_nvim_tree(data)
 end
 
 vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
+
+-- auto change CRLF to LF
+vim.api.nvim_create_autocmd("BufReadPost", {
+  pattern = "*",
+  callback = function()
+    if vim.bo.fileformat == "dos" then
+      vim.bo.fileformat = "unix"
+    end
+  end,
+})
+

@@ -6,10 +6,14 @@
 - User-defined commands: `GitPush`
 - Adjust code structure
 - Show absolute path, lsp infomation and character numbers for visual mode in lualine
+- Add `shellcheck` by `ale` for `bash` script.
+
+## Bug Fixes
+- Remove `nvim-treesitter` for `bash` cause error when combine with `shellcheck`
 
 # 2025-12-14
 
-## Bug
+## Bug Fixes
 
 - The first startup gets stuck on Windows 11 due to orgmode
 
@@ -20,7 +24,7 @@
 - Remove nvim-dap-ui
 - Optimize lazy loading for some plugins by lazy.nvim
 
-## Bug
+## Bug Fixes
 
 - Fix issues about ipython REPL in iron.nvim
 

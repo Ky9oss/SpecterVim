@@ -84,13 +84,16 @@ vim.lsp.config("lua_ls", {
     end
 
     client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
+      diagnostics = {
+        globals = { "vim" },
+      },
       runtime = {
         version = "LuaJIT",
 
         -- Tell the language server how to find Lua modules same way as Neovim
         -- (see `:h lua-module-load`)
         path = {
-          "?.lua",
+          "init.lua",
           "lua/?.lua",
           "lua/?/init.lua",
         },
@@ -100,9 +103,9 @@ vim.lsp.config("lua_ls", {
         checkThirdParty = false,
         library = {
           vim.env.VIMRUNTIME,
+          '${3rd}/luv/library',
           -- Depending on the usage, you might want to add additional paths
           -- here.
-          -- '${3rd}/luv/library'
           -- '${3rd}/busted/library'
         },
         -- Or pull in all of 'runtimepath'.
@@ -116,13 +119,14 @@ vim.lsp.config("lua_ls", {
     })
   end,
   settings = {
-    Lua = {},
+    Lua = {
+    },
   },
 })
 
 vim.lsp.enable("lua_ls")
 
 -- CRLF
--- vim.opt.fileformats = { "dos", "unix" }
--- vim.opt.fileformat = "dos"
--- vim.opt.fixendofline = false
+vim.opt.fileformats = { "unix", "dos" }
+vim.opt.fileformat = "unix"
+vim.opt.fixendofline = false
