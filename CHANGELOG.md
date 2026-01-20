@@ -1,3 +1,11 @@
+# 2026-1-20
+
+## Features
+
+- Add and optimize lualine, floaterm and nvim-tree.
+- User-defined commands: `GitPush`
+- Adjust code structure
+
 # 2025-12-14
 
 ## Bug
