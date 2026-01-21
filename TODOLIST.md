@@ -26,7 +26,6 @@
 
 - [ ] C to assembly just in time
 - [ ] draft paper
-- [ ] Add ALE to optimize linters
 
 # New Plugins
 

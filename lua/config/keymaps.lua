@@ -9,8 +9,13 @@ end
 -- LspSaga
 vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", { noremap = true, silent = true })
 
--- LspSaga
+-- NvimTree
 vim.keymap.set("n", "<leader>tr", "<cmd>NvimTreeOpen<CR>", { noremap = true, silent = true })
+
+-- Draft Paper
+vim.keymap.set("n", "<leader>dp", function ()
+  vim.cmd.pedit(vim.fn.stdpath('cache') .. '/draftpaper.txt')
+end, { noremap = true, silent = true })
 
 -- This can fix vim-floaterm
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>:q<CR>")

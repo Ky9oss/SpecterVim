@@ -1,3 +1,9 @@
+# 2026-1-21
+
+## Features
+
+- Add draft paper in keymap `<leader>dp`
+
 # 2026-1-20
 
 ## Features
@@ -9,6 +15,7 @@
 - Add `shellcheck` by `ale` for `bash` script.
 
 ## Bug Fixes
+
 - Remove `nvim-treesitter` for `bash` cause error when combine with `shellcheck`
 
 # 2025-12-14
