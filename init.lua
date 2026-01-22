@@ -8,6 +8,10 @@ vim.opt.number = true
 vim.opt.laststatus = 3
 vim.opt.encoding = "UTF-8"
 vim.opt.undodir = "~/.local/share/nvim/"
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.softtabstop = 4
+vim.opt.expandtab = true
 
 require("config.lazy")
 require("config.autocmds")
@@ -103,7 +107,7 @@ vim.lsp.config("lua_ls", {
         checkThirdParty = false,
         library = {
           vim.env.VIMRUNTIME,
-          '${3rd}/luv/library',
+          "${3rd}/luv/library",
           -- Depending on the usage, you might want to add additional paths
           -- here.
           -- '${3rd}/busted/library'
@@ -119,8 +123,7 @@ vim.lsp.config("lua_ls", {
     })
   end,
   settings = {
-    Lua = {
-    },
+    Lua = {},
   },
 })
 
