@@ -1,5 +1,5 @@
 -- Copy
-if vim.fn.has("win32") == 1 then
+if vim.g.copy_to_system == true then
   vim.keymap.set("n", "y", '"+y')
   vim.keymap.set("n", "Y", '"+Y')
   vim.keymap.set("v", "y", '"+y')

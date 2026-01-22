@@ -1,6 +1,7 @@
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 vim.g.profiler = true -- a neovim lua profiler in snacks.nvim
+vim.g.copy_to_system = true -- duplicate 'y' in keymaps.lua
 
 vim.opt.termguicolors = true
 vim.opt.expandtab = true
