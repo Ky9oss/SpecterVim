@@ -25,7 +25,8 @@
 ## Others
 
 - [ ] C to assembly just in time
-- [ ] draft paper
+- [ ] C to assembly remote in linux
+- [ ] Encore.sh
 
 # New Plugins
 
