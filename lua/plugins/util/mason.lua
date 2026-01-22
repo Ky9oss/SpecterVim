@@ -10,7 +10,7 @@ return {
         package_uninstalled = "",
       },
     },
-    ensure_installed = { "csharpier", "netcoredbg", "prettier" },
+    ensure_installed = { "csharpier", "netcoredbg" },
     registries = {
       "github:mason-org/mason-registry",
       "github:Crashdummyy/mason-registry",

@@ -28,6 +28,8 @@ return {
       end,
       rust = { "rustfmt", lsp_format = "fallback" },
       cs = { "csharpier" },
+      c = { "clang-format" },
+      cpp = { "clang-format" },
       astro = { "prettier" },
       yaml = { "prettier" },
       toml = { "prettier" },
