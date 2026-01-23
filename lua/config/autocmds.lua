@@ -51,6 +51,7 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 
     local default_gitignore = [[
             *.log
+            .env
         ]]
     create_file(".gitignore", default_gitignore)
 
@@ -304,6 +305,14 @@ WhitespaceSensitiveMacros:
         ]]
 
       create_file(".clang_format", clang_format)
+      if vim.fn.has("win32") == 1 then
+        vim.cmd("FloatermNew --name=msvc --height=0.8 --width=0.7 --autoclose=2 cmd.exe")
+        vim.cmd("FloatermHide msvc")
+        vim.cmd("FloatermSend --name=msvc \"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Auxiliary\\Build\\vcvars64.bat\"")
+
+        -- After FloatermHide, current buffer enter modified mode unexpected. So we auto execute <ESC> to fix that.
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", false)
+      end
     else
       local default_editorconfig = [[
             root = true

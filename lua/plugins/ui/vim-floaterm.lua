@@ -9,15 +9,22 @@ return {
       desc = "Toggle to default floaterm.",
     },
     {
+      "<leader>ms",
+      "<cmd>FloatermToggle msvc<cr>",
+      desc = "Toggle to MSVC cmd.",
+    },
+    {
       "<leader>nsh",
       function()
         if vim.fn.has("win32") == 1 then
-          vim.cmd("FloatermNew --height=0.8 --width=0.7 --autoclose=2 powershell.exe")
+          vim.cmd("FloatermKill default")
+          vim.cmd("FloatermNew --name=default --height=0.8 --width=0.7 --autoclose=2 powershell.exe")
         else
-          vim.cmd("FloatermNew --height=0.8 --width=0.7 --autoclose=2")
+          vim.cmd("FloatermKill default")
+          vim.cmd("FloatermNew --name=default --height=0.8 --width=0.7 --autoclose=2")
         end
       end,
-      desc = "Create new floaterm.",
+      desc = "Create new floaterm and close the default term.",
     },
     {
       "<leader>nf",
