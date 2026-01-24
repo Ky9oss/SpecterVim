@@ -2,29 +2,33 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 vim.g.profiler = true -- a neovim lua profiler in snacks.nvim
 vim.g.copy_to_system = true -- duplicate 'y' in keymaps.lua
--- vim.g.clipboard = {
---   name = 'OSC 52',
---   copy = {
---     ['+'] = require('vim.ui.clipboard.osc52').copy('+'),
---     ['*'] = require('vim.ui.clipboard.osc52').copy('*'),
---   },
---   paste = {
---     ['+'] = require('vim.ui.clipboard.osc52').paste('+'),
---     ['*'] = require('vim.ui.clipboard.osc52').paste('*'),
---   },
--- }
-vim.g.clipboard = {
-  name = 'tmux-osc52-fallback',
-  copy = {
-    ['+'] = {'tmux', 'load-buffer', '-w', '-'},
-    ['*'] = {'tmux', 'load-buffer', '-w', '-'},
-  },
-  paste = {
-    ['+'] = {'tmux', 'save-buffer', '-'},
-    ['*'] = {'tmux', 'save-buffer', '-'},
-  },
-  cache_enabled = true,
-}
+
+if vim.env.TMUX == nil or vim.env.TMUX == "" then
+  vim.g.clipboard = {
+    name = "OSC 52",
+    copy = {
+      ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+      ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+    },
+    paste = {
+      ["+"] = require("vim.ui.clipboard.osc52").paste("+"),
+      ["*"] = require("vim.ui.clipboard.osc52").paste("*"),
+    },
+  }
+else
+  vim.g.clipboard = {
+    name = "tmux-osc52-fallback",
+    copy = {
+      ["+"] = { "tmux", "load-buffer", "-w", "-" },
+      ["*"] = { "tmux", "load-buffer", "-w", "-" },
+    },
+    paste = {
+      ["+"] = { "tmux", "save-buffer", "-" },
+      ["*"] = { "tmux", "save-buffer", "-" },
+    },
+    cache_enabled = true,
+  }
+end
 
 vim.opt.termguicolors = true
 vim.opt.expandtab = true
