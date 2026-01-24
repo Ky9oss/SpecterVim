@@ -19,6 +19,14 @@ vim.api.nvim_create_autocmd("BufWrite", {
   end,
 })
 
+-- auto save draftpaper
+vim.api.nvim_create_autocmd("WinLeave", {
+  pattern = "draftpaper.txt",
+  callback = function()
+    vim.cmd.write()
+  end,
+})
+
 local create_file = function(filename, dcontent)
   local project = require("project_nvim.project")
   local content = dcontent:gsub("^%s+", ""):gsub("\n%s+", "\n")
