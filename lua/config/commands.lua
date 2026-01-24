@@ -9,7 +9,7 @@ vim.api.nvim_create_user_command("GitPush", function(opts)
     if project_root_path == nil then
       vim.notify("Can't find the project's root path", vim.log.levels.ERROR)
     else
-      local result = vim.system({
+      vim.system({
         "cmd",
         "/c",
         "cd",
@@ -35,7 +35,7 @@ vim.api.nvim_create_user_command("GitPush", function(opts)
         if obj.code == 0 then
           vim.notify("STDOUT:" .. obj.stdout)
         else
-          vim.notify("[" .. obj.code .. "] " .. "STDERR: " .. obj.stderr)
+          vim.notify("[" .. obj.code .. "] " .. "GitPush Failed! STDERR: " .. obj.stderr, vim.log.levels.ERROR)
         end
       end)
     end
