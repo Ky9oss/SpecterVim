@@ -24,7 +24,6 @@
 
 ## Others
 
-- [ ] draft paper auto save when cursor move or quit
 - [ ] C to assembly just in time
 - [ ] C to assembly remote in linux
 - [ ] Encore.sh

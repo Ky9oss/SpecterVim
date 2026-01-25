@@ -1,7 +1,6 @@
 return {
   "voldikss/vim-floaterm",
-  lazy = true,
-  event = { "VeryLazy" },
+  lazy = false,
   keys = {
     {
       "<leader>sh",
