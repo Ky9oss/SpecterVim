@@ -6,6 +6,7 @@
 
 ## Normal Bugs
 
+- [ ] `gd` in telescope has duplication for every items.
 - [ ] Powershell hover_doc error
 - [ ] Powershell do not auto dap
 - [ ] Gets stuck when :w in ps1
