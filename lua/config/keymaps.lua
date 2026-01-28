@@ -19,3 +19,6 @@ end, { noremap = true, silent = true })
 
 -- This can fix vim-floaterm
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>:q<CR>")
+
+-- Assembly Explorer
+vim.keymap.set("n", "<leader>as", "<cmd>AssemblyExplorer<CR>")
