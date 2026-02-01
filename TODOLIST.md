@@ -25,7 +25,9 @@
 
 ## Others
 
-- [ ] C to assembly just in time
+- [x] C to assembly just in time
+- [ ] Optimize assmebly explorer: 
+  - secondary process to simplify asm
 - [ ] C to assembly remote in linux
 - [ ] Encore.sh
 

@@ -17,6 +17,11 @@ vim.keymap.set("n", "<leader>dp", function ()
   vim.cmd.pedit(vim.fn.stdpath('cache') .. '/draftpaper.txt')
 end, { noremap = true, silent = true })
 
+-- Lua Script 
+vim.keymap.set("n", "<leader>sr", function ()
+  vim.cmd.pedit(vim.fn.stdpath('cache') .. '/_temp_script.lua')
+end, { noremap = true, silent = true })
+
 -- This can fix vim-floaterm
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>:q<CR>")
 
