@@ -136,7 +136,7 @@ function AssemblyExplorerGCC()
         "ssh",
         vim.g.myenv["SSHSERVER"],
         "-p" .. vim.g.myenv["SSHPORT"],
-        "gcc -S  -masm=intel -fno-asynchronous-unwind-tables -fno-exceptions /tmp/nvim_generate_asm.c -o /tmp/nvim_generate_asm.s",
+        "gcc -S -masm=intel -fno-asynchronous-unwind-tables -fno-exceptions /tmp/nvim_generate_asm.c -o /tmp/nvim_generate_asm.s",
       }, { text = true }, function(obj)
         if obj.code == 0 then
           vim.system({
@@ -190,14 +190,14 @@ end
 
 if vim.fn.has("win32") == 1 then
   vim.api.nvim_create_user_command("AssemblyExplorer", function(opts)
-  if opts.args == nil then
-    vim.notify("AssemblyExplorer need 1 argument at least.", vim.log.levels.ERROR)
-  else
-    if string.lower(opts.args) == 'msvc' then
-      AssemblyExplorerMSVC()
-    elseif string.lower(opts.args) == 'gcc' then
-      AssemblyExplorerGCC()
+    if opts.args == nil then
+      vim.notify("AssemblyExplorer need 1 argument at least.", vim.log.levels.ERROR)
+    else
+      if string.lower(opts.args) == "msvc" then
+        AssemblyExplorerMSVC()
+      elseif string.lower(opts.args) == "gcc" then
+        AssemblyExplorerGCC()
+      end
     end
-  end
   end, { desc = "Get assembly for current buffer.", nargs = 1 })
 end
