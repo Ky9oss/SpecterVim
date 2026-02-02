@@ -51,24 +51,26 @@ vim.opt.fixendofline = false
 function _G.load_env(path)
   local env = {}
   local file = io.open(path, "r")
-  if not file then return env end
+  if not file then
+    return env
+  end
 
   local content = file:read("*a")
   file:close()
 
   for line in (content .. "\n"):gmatch("(.-)\n") do
-    line = line:match("^%s*(.-)%s*$")           -- trim
-    if line == "" or line:match("^#") then goto skip end
+    line = line:match("^%s*(.-)%s*$") -- trim
+    if line == "" or line:match("^#") then
+      goto skip
+    end
 
-    local key, value = line:match('^([A-Za-z_][%w_]*)%s*=%s*(.*)$')
-    if not key then goto skip end
+    local key, value = line:match("^([A-Za-z_][%w_]*)%s*=%s*(.*)$")
+    if not key then
+      goto skip
+    end
 
-    value = value:match('^["\']?(.-)["\']?$') or value
-    value = value:gsub('\\"', '"')
-                 :gsub("\\'", "'")
-                 :gsub("\\n", "\n")
-                 :gsub("\\t", "\t")
-                 :gsub("\\\\", "\\")
+    value = value:match("^[\"']?(.-)[\"']?$") or value
+    value = value:gsub('\\"', '"'):gsub("\\'", "'"):gsub("\\n", "\n"):gsub("\\t", "\t"):gsub("\\\\", "\\")
 
     env[key] = value
     ::skip::
@@ -79,11 +81,8 @@ end
 
 vim.g.myenv = _G.load_env(vim.fn.stdpath("config") .. "/.env")
 
-
 require("config.lazy")
 require("config.autocmds")
 require("config.keymaps")
 require("config.commands")
 require("config.lsp")
-
-
