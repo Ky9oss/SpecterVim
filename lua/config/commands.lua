@@ -111,6 +111,7 @@ end
 --
 -- -fno-exceptions  关闭 C++ 异常支持（throw / catch / try 等）
 -- -fno-asynchronous-unwind-tables  阻止生成 异步栈展开表（.eh_frame 段中的 DWARF CFI 信息）
+-- -fstack-protector  金丝雀
 --
 function AssemblyExplorerGCC()
   local asm_bufnr = IsFileVisible("_temp_assembly_explorer_remote_gcc.s")
@@ -135,7 +136,7 @@ function AssemblyExplorerGCC()
         "ssh",
         vim.g.myenv["SSHSERVER"],
         "-p" .. vim.g.myenv["SSHPORT"],
-        "gcc -S -masm=intel -fno-asynchronous-unwind-tables -fno-exceptions /tmp/nvim_generate_asm.c -o /tmp/nvim_generate_asm.s",
+        "gcc -S  -masm=intel -fno-asynchronous-unwind-tables -fno-exceptions /tmp/nvim_generate_asm.c -o /tmp/nvim_generate_asm.s",
       }, { text = true }, function(obj)
         if obj.code == 0 then
           vim.system({

@@ -21,7 +21,7 @@ vim.api.nvim_create_autocmd("BufWrite", {
 
 -- auto save draftpaper
 vim.api.nvim_create_autocmd("WinLeave", {
-  pattern = {"draftpaper.txt", "_temp_script.lua"},
+  pattern = { "draftpaper.txt", "_temp_script.lua" },
   callback = function()
     vim.cmd.write()
   end,
@@ -313,22 +313,52 @@ WhitespaceSensitiveMacros:
 
         ]]
 
-      local clangd = [[
+      if vim.fn.has("win32") == 1 then
+        local clangd = [[
+CompileFlags:
+    Add:
+      - --target=x86_64-pc-windows-msvc
+      - -I./include
+
+
+        ]]
+      else
+        local clangd = [[
 CompileFlags:
     Add: [-I./include]
 
         ]]
+      end
 
       create_file(".clang_format", clang_format)
       create_file(".clangd", clangd)
 
       if vim.fn.has("win32") == 1 then
+        local compile_flags = [[
+-isystem
+C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.29.30133/include
+-isystem
+C:/Program Files (x86)/Windows Kits/10/Include/10.0.26100.0/ucrt
+-isystem
+C:/Program Files (x86)/Windows Kits/10/Include/10.0.26100.0/shared
+-isystem
+C:/Program Files (x86)/Windows Kits/10/Include/10.0.26100.0/um
+
+      ]]
+        create_file("compile_flags.txt", compile_flags)
+      end
+
+      if vim.fn.has("win32") == 1 and vim.g.floaterm_msvc ~= true then
         vim.cmd("FloatermNew --name=msvc --height=0.8 --width=0.7 --autoclose=2 cmd.exe")
         vim.cmd("FloatermHide msvc")
-        vim.cmd("FloatermSend --name=msvc \"C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Auxiliary\\Build\\vcvars64.bat\"")
+        vim.cmd(
+          'FloatermSend --name=msvc "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Auxiliary\\Build\\vcvars64.bat"'
+        )
 
         -- After FloatermHide, current buffer enter modified mode unexpected. So we auto execute <ESC> to fix that.
         vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", false)
+
+        vim.g.floaterm_msvc = true
       end
     else
       local default_editorconfig = [[
