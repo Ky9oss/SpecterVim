@@ -42,123 +42,48 @@ vim.opt.softtabstop = 4
 vim.opt.expandtab = true
 vim.o.autoread = true
 
-require("config.lazy")
-require("config.autocmds")
-require("config.keymaps")
-require("config.commands")
-
-vim.lsp.config("*", {
-  capabilities = {
-    textDocument = {
-      semanticTokens = {
-        multilineTokenSupport = true,
-      },
-    },
-  },
-  root_markers = { ".git", ".editorconfig", ".gitignore" },
-})
-
-vim.lsp.config("clangd", {
-  filetypes = { "c", "cpp" },
-})
-vim.lsp.enable("clangd")
-
-vim.lsp.config("pylsp", {
-  -- on_new_config = function(new_config, root_dir) -- use python with pyenv
-  --   if not vim.fn.has("win32") == 1 then
-  --     local python_path = vim.fn.systemlist("pyenv which python")[1]
-  --     if vim.fn.filereadable(python_path) == 1 then
-  --       new_config.settings.pylsp.configurationSources = { "pycodestyle" }
-  --       new_config.settings.pylsp.plugins.jedi = { environment = python_path }
-  --     end
-  --   end
-  -- end,
-  settings = {
-    pylsp = {
-      plugins = {
-        pycodestyle = { enabled = false },
-        mccabe = { enabled = false },
-        mypy = { enabled = true },
-      },
-    },
-  },
-})
-vim.lsp.enable("pylsp")
-
-vim.lsp.config("rust_analyzer", {
-  settings = {
-    ["rust-analyzer"] = {
-      diagnostics = {
-        enable = false,
-      },
-      cargo = {
-        allFeatures = true,
-      },
-      procMacro = {
-        enable = true,
-      },
-    },
-  },
-})
-vim.lsp.enable("rust_analyzer")
-
-vim.lsp.enable("asm_lsp")
-
-vim.lsp.config("lua_ls", {
-  on_init = function(client)
-    if client.workspace_folders then
-      local path = client.workspace_folders[1].name
-      if
-        path ~= vim.fn.stdpath("config")
-        and (vim.uv.fs_stat(path .. "/.luarc.json") or vim.uv.fs_stat(path .. "/.luarc.jsonc"))
-      then
-        return
-      end
-    end
-
-    client.config.settings.Lua = vim.tbl_deep_extend("force", client.config.settings.Lua, {
-      diagnostics = {
-        globals = { "vim" },
-      },
-      runtime = {
-        version = "LuaJIT",
-
-        -- Tell the language server how to find Lua modules same way as Neovim
-        -- (see `:h lua-module-load`)
-        path = {
-          "init.lua",
-          "lua/?.lua",
-          "lua/?/init.lua",
-        },
-      },
-      -- Make the server aware of Neovim runtime files
-      workspace = {
-        checkThirdParty = false,
-        library = {
-          vim.env.VIMRUNTIME,
-          "${3rd}/luv/library",
-          -- Depending on the usage, you might want to add additional paths
-          -- here.
-          -- '${3rd}/busted/library'
-        },
-        -- Or pull in all of 'runtimepath'.
-        -- NOTE: this is a lot slower and will cause issues when working on
-        -- your own configuration.
-        -- See https://github.com/neovim/nvim-lspconfig/issues/3189
-        -- library = {
-        --   vim.api.nvim_get_runtime_file('', true),
-        -- }
-      },
-    })
-  end,
-  settings = {
-    Lua = {},
-  },
-})
-
-vim.lsp.enable("lua_ls")
-
 -- CRLF
 vim.opt.fileformats = { "unix", "dos" }
 vim.opt.fileformat = "unix"
 vim.opt.fixendofline = false
+
+-- load .env
+function _G.load_env(path)
+  local env = {}
+  local file = io.open(path, "r")
+  if not file then return env end
+
+  local content = file:read("*a")
+  file:close()
+
+  for line in (content .. "\n"):gmatch("(.-)\n") do
+    line = line:match("^%s*(.-)%s*$")           -- trim
+    if line == "" or line:match("^#") then goto skip end
+
+    local key, value = line:match('^([A-Za-z_][%w_]*)%s*=%s*(.*)$')
+    if not key then goto skip end
+
+    value = value:match('^["\']?(.-)["\']?$') or value
+    value = value:gsub('\\"', '"')
+                 :gsub("\\'", "'")
+                 :gsub("\\n", "\n")
+                 :gsub("\\t", "\t")
+                 :gsub("\\\\", "\\")
+
+    env[key] = value
+    ::skip::
+  end
+
+  return env
+end
+
+vim.g.myenv = _G.load_env(vim.fn.stdpath("config") .. "/.env")
+
+
+require("config.lazy")
+require("config.autocmds")
+require("config.keymaps")
+require("config.commands")
+require("config.lsp")
+
+

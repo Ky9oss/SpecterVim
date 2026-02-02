@@ -28,7 +28,7 @@
 - [x] C to assembly just in time
 - [ ] Optimize assmebly explorer: 
   - secondary process to simplify asm
-- [ ] C to assembly remote in linux
+- [x] C to assembly in remote server
 - [ ] Encore.sh
 
 # New Plugins
