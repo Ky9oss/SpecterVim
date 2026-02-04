@@ -26,9 +26,14 @@
 ## Others
 
 - [x] C to assembly just in time
+- [x] C to assembly in remote server
 - [ ] Optimize assmebly explorer: 
   - secondary process to simplify asm
-- [x] C to assembly in remote server
+
+- [ ] A tmux-like custom terminal for radare2 by toggleterm.nvim or alacritty && zellij
+  - info-rich term
+  - full history
+
 - [ ] Encore.sh
 
 # New Plugins
