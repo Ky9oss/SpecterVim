@@ -59,8 +59,8 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
     local ft = vim.bo[ev.buf].filetype
 
     local default_gitignore = [[
-            *.log
-            .env
+*.log
+.env
         ]]
     create_file(".gitignore", default_gitignore)
 

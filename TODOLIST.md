@@ -33,6 +33,7 @@
 - [ ] A tmux-like custom terminal for radare2 by toggleterm.nvim or alacritty && zellij
   - info-rich term
   - full history
+  - always a new default powershell on background to save time from openning powershell
 
 - [ ] Encore.sh
 
