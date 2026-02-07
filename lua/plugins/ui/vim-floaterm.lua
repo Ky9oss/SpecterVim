@@ -32,7 +32,8 @@ return {
           vim.cmd("FloatermKill msvc")
           vim.cmd("FloatermNew --name=msvc --height=0.8 --width=0.7 --autoclose=2 cmd.exe")
           vim.cmd(
-            'FloatermSend --name=msvc "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Auxiliary\\Build\\vcvars64.bat"'
+            -- 'FloatermSend --name=msvc "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Auxiliary\\Build\\vcvars64.bat"'
+            'FloatermSend --name=msvc "vcvars64.bat"'
           )
         end
       end,
@@ -59,7 +60,8 @@ return {
       vim.cmd("FloatermNew --name=msvc --height=0.8 --width=0.7 --autoclose=2 cmd.exe")
       vim.cmd("FloatermHide msvc")
       vim.cmd(
-        'FloatermSend --name=msvc "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Auxiliary\\Build\\vcvars64.bat"'
+        -- 'FloatermSend --name=msvc "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Auxiliary\\Build\\vcvars64.bat"'
+        'FloatermSend --name=msvc vcvars64.bat'
       )
 
       -- After FloatermHide, current buffer enter modified mode unexpected. So we auto execute <ESC> to fix that.
