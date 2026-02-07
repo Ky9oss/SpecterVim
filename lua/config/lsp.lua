@@ -77,7 +77,7 @@ vim.lsp.config("lua_ls", {
         -- Tell the language server how to find Lua modules same way as Neovim
         -- (see `:h lua-module-load`)
         path = {
-          "init.lua",
+          "?.lua",
           "lua/?.lua",
           "lua/?/init.lua",
         },

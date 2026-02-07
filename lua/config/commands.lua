@@ -44,6 +44,69 @@ vim.api.nvim_create_user_command("GitPush", function(opts)
   end
 end, { desc = "Push codes to 'origin' in main branch.", nargs = 1 })
 
+-- filter useless info in msvc assembly
+local function filterMSVC()
+  local kept_lines = {}
+  local buf = 0
+
+  local positions = {}
+
+  -- Get .rdata
+  vim.fn.cursor(1, 1)
+  while true do
+    local start_pos = vim.fn.searchpos([[CONST]] .. "\t" .. [[SEGMENT]], "cW")
+    if start_pos[1] == 0 then
+      break
+    end
+
+    local end_pos = vim.fn.searchpos([[CONST]] .. "\t" .. [[ENDS]], "cnW")
+    if end_pos[1] == 0 then
+      break
+    end
+
+    table.insert(positions, { start = start_pos, end_ = end_pos })
+
+    vim.fn.cursor(end_pos[1], end_pos[2] + 1)
+  end
+
+  -- Get .text
+  vim.fn.cursor(1, 1)
+  while true do
+    local start_pos = vim.fn.searchpos([[_TEXT]] .. "\t" .. [[SEGMENT]], "cW")
+    if start_pos[1] == 0 then
+      break
+    end
+
+    local end_pos = vim.fn.searchpos([[TEXT]] .. "\t" .. [[ENDS]], "cnW")
+    if end_pos[1] == 0 then
+      break
+    end
+
+    local has_ucrt = vim.fn.searchpos([[ucrt]], "cnW", end_pos[1])
+    if has_ucrt[1] == 0 or has_ucrt[1] > end_pos[1] then
+      table.insert(positions, { start = start_pos, end_ = end_pos })
+    end
+
+    vim.fn.cursor(end_pos[1], end_pos[2] + 1)
+  end
+
+  if #positions == 0 then
+    return
+  end
+
+  for _, r in ipairs(positions) do
+    local lines = vim.api.nvim_buf_get_lines(buf, r.start[1] - 1, r.end_[1], false)
+    for _, line in ipairs(lines) do
+      table.insert(kept_lines, line)
+    end
+  end
+
+  vim.api.nvim_buf_set_lines(buf, 0, -1, true, kept_lines)
+
+  vim.fn.cursor(1, 1)
+  vim.cmd.write()
+end
+
 -- MSVC EXPLORER
 --
 -- /Fa             产生 .asm 文件（默认文件名是源文件名+后缀 .asm）
@@ -71,19 +134,23 @@ end, { desc = "Push codes to 'origin' in main branch.", nargs = 1 })
 function AssemblyExplorerMSVC()
   local filetype = vim.bo[vim.api.nvim_get_current_buf()].filetype
   local filepath = vim.api.nvim_buf_get_name(0)
-  local asm_path = vim.fn.stdpath("cache") .. "\\_temp_assembly_explorer.asm"
-  local old_win = vim.api.nvim_get_current_win()
+
   if (filetype == "c" or filetype == "cpp") and filepath ~= nil then
+    local asm_path = vim.fn.stdpath("cache") .. "\\_temp_assembly_explorer.asm"
+    local old_win = vim.api.nvim_get_current_win()
+    local asm_win
+    local asm_bufnr
+
     vim.cmd(
       'FloatermSend --name=msvc cl /Fa"'
         .. asm_path:gsub([[\]], [[\\]])
         .. '" /c /O1 /GS- /guard:cf- /EHs- /EHc- /GR- /MT /Oy- /Ob0 /nologo /Zc:inline- '
         .. filepath
     )
-    local asm_bufnr = IsFileVisible("_temp_assembly_explorer.asm")
+    asm_bufnr = IsFileVisible("_temp_assembly_explorer.asm")
 
     if asm_bufnr == -1 then
-      local asm_win = vim.api.nvim_open_win(0, true, {
+      asm_win = vim.api.nvim_open_win(0, true, {
         split = "right",
         vertical = true,
         width = 55,
@@ -91,7 +158,22 @@ function AssemblyExplorerMSVC()
       vim.api.nvim_set_current_win(asm_win) -- toggle to asm win
       vim.cmd.edit(vim.fn.fnameescape(asm_path)) -- read file to asm buffer
       vim.api.nvim_set_current_win(old_win) -- toggle back
+      asm_bufnr = vim.api.nvim_win_get_buf(asm_win)
+    else
+      asm_win = NvimBufGetWin(asm_bufnr)
     end
+
+    vim.api.nvim_create_autocmd("FileChangedShellPost", {
+      callback = function(args)
+        if args.buf == asm_bufnr then
+          vim.api.nvim_set_current_win(asm_win) -- toggle to asm win
+          filterMSVC()
+          vim.api.nvim_set_current_win(old_win) -- toggle back
+        end
+      end,
+      desc = "Asm file have changed",
+      -- once = true,
+    })
 
     local timer = vim.loop.new_timer()
     timer:start(

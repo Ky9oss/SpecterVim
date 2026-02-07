@@ -9,6 +9,14 @@ function GetActiveBuffers()
   return buffers
 end
 
+function NvimBufGetWin(bufnr)
+  bufnr = bufnr or 0
+  return vim
+    .iter(vim.api.nvim_list_wins())
+    :filter(function(w) return vim.api.nvim_win_get_buf(w) == bufnr end)
+    :totable()
+end
+
 function IsBufferVisible(bufnr)
   if not vim.api.nvim_buf_is_valid(bufnr) then
     return false

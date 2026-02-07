@@ -19,8 +19,8 @@
 
 ## Others
 
-- [ ] Optimize assmebly explorer: 
-  - formatter for simplify asm
+- [x] Optimize assmebly explorer: 
+  - filter for simplifying msvc asm
 
 - [ ] A tmux-like custom terminal for radare2 by tmux
   - info-rich term
