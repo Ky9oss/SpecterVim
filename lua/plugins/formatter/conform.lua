@@ -45,6 +45,7 @@ return {
       vue = { "biome" },
       css = { "biome" },
       lua = { "stylua" },
+      ps1 = { lsp_format = "fallback" },
     },
     -- Set default options
     -- default_format_opts = {

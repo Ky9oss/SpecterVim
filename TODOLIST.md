@@ -7,8 +7,8 @@
 ## Normal Bugs
 
 - [ ] `gd` in telescope has duplication for every items.
-- [ ] Powershell hover_doc error
-- [ ] Powershell do not auto dap
+- [x] Powershell hover_doc error
+- [x] Powershell do not auto dap
 - [ ] Gets stuck when :w in ps1
 
 # New Features
@@ -28,9 +28,9 @@
 - [x] C to assembly just in time
 - [x] C to assembly in remote server
 - [ ] Optimize assmebly explorer: 
-  - secondary process to simplify asm
+  - formatter for simplify asm
 
-- [ ] A tmux-like custom terminal for radare2 by toggleterm.nvim or alacritty && zellij
+- [ ] A tmux-like custom terminal for radare2 by tmux
   - info-rich term
   - full history
   - always a new default powershell on background to save time from openning powershell

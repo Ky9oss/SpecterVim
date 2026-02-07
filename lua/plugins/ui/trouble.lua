@@ -1,6 +1,8 @@
 return {
   "folke/trouble.nvim",
-  opts = {}, -- for default options, refer to the configuration section for custom setup.
+  opts = {
+    filter = { severity=vim.diagnostic.severity.ERROR, severity=vim.diagnostic.severity.WARN }
+  }, -- for default options, refer to the configuration section for custom setup.
   lazy = true,
   keys = {
     {
