@@ -3,7 +3,6 @@ require("../utils.buffer")
 local project = require("project_nvim.project")
 local project_root_path = project.get_project_root()
 
-
 --- Execute shell command in project's root path on Linux
 --- Cmd is split by space: "git add ."
 ---
@@ -12,7 +11,9 @@ local project_root_path = project.get_project_root()
 local function shellExecute(cmd, on_result)
   return vim.system(vim.split(cmd, "%s+"), { cwd = vim.split(project_root_path, "%s+")[1] }, function(obj)
     if obj.code == 0 then
-      vim.notify("STDOUT:" .. obj.stdout)
+      if obj.stdout ~= nil and obj.stdout:gsub("^%s*(.-)%s*$", "%1") ~= "" then
+        vim.notify("STDOUT:" .. obj.stdout)
+      end
       if on_result then
         on_result(true)
       end
