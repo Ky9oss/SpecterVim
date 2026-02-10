@@ -1,13 +1,35 @@
 require("../utils.buffer")
 
+local project = require("project_nvim.project")
+local project_root_path = project.get_project_root()
+
+
+--- Execute shell command in project's root path on Linux
+--- Cmd is split by space: "git add ."
+---
+--- @param cmd string
+--- @param on_result function(success: bool)
+local function shellExecute(cmd, on_result)
+  return vim.system(vim.split(cmd, "%s+"), { cwd = vim.split(project_root_path, "%s+")[1] }, function(obj)
+    if obj.code == 0 then
+      vim.notify("STDOUT:" .. obj.stdout)
+      if on_result then
+        on_result(true)
+      end
+    else
+      vim.notify("[" .. obj.code .. "] " .. "Failed! STDERR: " .. obj.stderr, vim.log.levels.ERROR)
+      if on_result then
+        on_result(false)
+      end
+    end
+  end)
+end
+
 -- Git Push
 vim.api.nvim_create_user_command("GitPush", function(opts)
   if opts.args == nil then
     vim.notify("GitPush need 1 argument at least.", vim.log.levels.ERROR)
   else
-    local project = require("project_nvim.project")
-    local project_root_path = project.get_project_root()
-
     if project_root_path == nil then
       vim.notify("Can't find the project's root path", vim.log.levels.ERROR)
     else
@@ -44,17 +66,15 @@ vim.api.nvim_create_user_command("GitPush", function(opts)
         end)
       else
         -- Linux with proxychains
-        vim.system(
-          { "bash", "-c", "git add . && git commit -m " .. vim.fn.shellescape(opts.args) .. " && git push" },
-          { cwd = vim.split(project_root_path, "%s+")[1] },
-          function(obj)
-            if obj.code == 0 then
-              vim.notify("STDOUT:" .. obj.stdout)
-            else
-              vim.notify("[" .. obj.code .. "] " .. "GitPush Failed! STDERR: " .. obj.stderr, vim.log.levels.ERROR)
-            end
+        shellExecute("git add .", function(success)
+          if success then
+            shellExecute("git commit -m " .. opts.args, function(success)
+              if success then
+                shellExecute("git push -u origin main")
+              end
+            end)
           end
-        )
+        end)
       end
     end
   end
