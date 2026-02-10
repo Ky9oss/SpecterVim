@@ -11,35 +11,51 @@ vim.api.nvim_create_user_command("GitPush", function(opts)
     if project_root_path == nil then
       vim.notify("Can't find the project's root path", vim.log.levels.ERROR)
     else
-      vim.system({
-        "cmd",
-        "/c",
-        "cd",
-        project_root_path,
-        "&&",
-        "git",
-        "add",
-        ".",
-        "&&",
-        "git",
-        "commit",
-        "-m",
-        opts.args,
-        "&&",
-        "proxychains",
-        "-q",
-        "git",
-        "push",
-        "-u",
-        "origin",
-        "main",
-      }, { text = true }, function(obj)
-        if obj.code == 0 then
-          vim.notify("STDOUT:" .. obj.stdout)
-        else
-          vim.notify("[" .. obj.code .. "] " .. "GitPush Failed! STDERR: " .. obj.stderr, vim.log.levels.ERROR)
-        end
-      end)
+      if vim.fn.has("win32") == 1 then
+        -- Windows with proxychains
+        vim.system({
+          "cmd",
+          "/c",
+          "cd",
+          project_root_path,
+          "&&",
+          "git",
+          "add",
+          ".",
+          "&&",
+          "git",
+          "commit",
+          "-m",
+          opts.args,
+          "&&",
+          "proxychains",
+          "-q",
+          "git",
+          "push",
+          "-u",
+          "origin",
+          "main",
+        }, { text = true }, function(obj)
+          if obj.code == 0 then
+            vim.notify("STDOUT:" .. obj.stdout)
+          else
+            vim.notify("[" .. obj.code .. "] " .. "GitPush Failed! STDERR: " .. obj.stderr, vim.log.levels.ERROR)
+          end
+        end)
+      else
+        -- Linux with proxychains
+        vim.system(
+          { "bash", "-c", "git add . && git commit -m " .. vim.fn.shellescape(opts.args) .. " && git push" },
+          { cwd = vim.split(project_root_path, "%s+")[1] },
+          function(obj)
+            if obj.code == 0 then
+              vim.notify("STDOUT:" .. obj.stdout)
+            else
+              vim.notify("[" .. obj.code .. "] " .. "GitPush Failed! STDERR: " .. obj.stderr, vim.log.levels.ERROR)
+            end
+          end
+        )
+      end
     end
   end
 end, { desc = "Push codes to 'origin' in main branch.", nargs = 1 })

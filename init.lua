@@ -42,7 +42,7 @@ vim.opt.softtabstop = 4
 vim.opt.expandtab = true
 vim.o.autoread = true
 
--- CRLF
+-- CRLF to LF
 vim.opt.fileformats = { "unix", "dos" }
 vim.opt.fileformat = "unix"
 vim.opt.fixendofline = false
