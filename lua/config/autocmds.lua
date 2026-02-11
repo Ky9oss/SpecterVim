@@ -356,7 +356,7 @@ root = true
 indent_style = space
 indent_size = 4
 tab_width = 4
-end_of_line = crlf
+end_of_line = lf
 insert_final_newline = true
         ]]
       create_file(".editorconfig", default_editorconfig)
