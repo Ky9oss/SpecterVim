@@ -20,7 +20,9 @@
 ## Others
 
 - assmebly explorer:
-  - [ ] linux compatibility
+  -  linux compatibility
+    - [x] gcc
+    - [ ] msvc
 
 - [ ] pass encrypt with random algorithm in every single nvim session
 

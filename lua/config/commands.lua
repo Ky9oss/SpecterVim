@@ -4,8 +4,7 @@ require("../utils.remote")
 local project = require("project_nvim.project")
 local project_root_path = project.get_project_root()
 
---- Execute shell command in project's root path on Linux
---- Cmd is split by space: "git add ."
+--- Execute shell command in project's root path on `Linux`
 ---
 --- @param cmd string
 --- @param on_result function(success: bool)
@@ -70,7 +69,7 @@ vim.api.nvim_create_user_command("GitPush", function(opts)
         -- Linux with proxychains
         shellExecute("git add .", function(success)
           if success then
-            shellExecute("git commit -m " .. opts.args, function(success)
+            shellExecute("git commit -m " .. opts.args:gsub("%s+", "-"), function(success)
               if success then
                 shellExecute("proxychains -q git push -u origin main")
               end
@@ -169,62 +168,78 @@ end
 --
 -- /nologo         不要输出版本信息（美观用）
 --
-function AssemblyExplorerMSVC()
-  local filetype = vim.bo[vim.api.nvim_get_current_buf()].filetype
-  local filepath = vim.api.nvim_buf_get_name(0)
+--- @param is_remote bool
+function AssemblyExplorerMSVC(is_remote)
+  local asm_path = vim.fn.has("win32") == 1 and vim.fn.stdpath("cache") .. "\\_temp_assembly_explorer_msvc.asm"
+    or vim.fn.stdpath("cache") .. "/_temp_assembly_explorer_msvc.asm"
 
-  if (filetype == "c" or filetype == "cpp") and filepath ~= nil then
-    local asm_path = vim.fn.stdpath("cache") .. "\\_temp_assembly_explorer.asm"
-    local old_win = vim.api.nvim_get_current_win()
-    local asm_win
-    local asm_bufnr
-
+  if is_remote then
+    scp_push(vim.api.nvim_buf_get_name(0), "C:\\Windows\\Temp\\_temp_assembly_explorer_msvc.c", function(flag)
+      if flag then
+        -- vim.cmd(
+        --   'FloatermSend --name=msvc cl /Fa"'
+        --     .. "C:\\Windows\\Temp\\_temp_assembly_explorer_msvc.asm"
+        --     .. '" /c /O1 /GS- /guard:cf- /EHs- /EHc- /GR- /MT /Oy- /Ob0 /nologo /Zc:inline- '
+        --     .. "C:\\Windows\\Temp\\_temp_assembly_explorer_msvc.c"
+        -- )
+        --
+        -- ssh(compile_command, function(flag)
+        --   if flag then
+        --     scp_pull("C:\\Windows\\Temp\\_temp_assembly_explorer_msvc.asm", asm_path)
+        --   end
+        -- end)
+      end
+    end)
+  else
     vim.cmd(
       'FloatermSend --name=msvc cl /Fa"'
         .. asm_path:gsub([[\]], [[\\]])
         .. '" /c /O1 /GS- /guard:cf- /EHs- /EHc- /GR- /MT /Oy- /Ob0 /nologo /Zc:inline- '
-        .. filepath
+        .. vim.api.nvim_buf_get_name(0)
     )
-    asm_bufnr = IsFileVisible("_temp_assembly_explorer.asm")
-
-    if asm_bufnr == -1 then
-      asm_win = vim.api.nvim_open_win(0, true, {
-        split = "right",
-        vertical = true,
-        width = 55,
-      })
-      vim.api.nvim_set_current_win(asm_win) -- toggle to asm win
-      vim.cmd.edit(vim.fn.fnameescape(asm_path)) -- read file to asm buffer
-      vim.api.nvim_set_current_win(old_win) -- toggle back
-      asm_bufnr = vim.api.nvim_win_get_buf(asm_win)
-    else
-      asm_win = NvimBufGetWin(asm_bufnr)
-    end
-
-    vim.api.nvim_create_autocmd("FileChangedShellPost", {
-      callback = function(args)
-        if args.buf == asm_bufnr then
-          vim.api.nvim_set_current_win(asm_win) -- toggle to asm win
-          filterMSVC()
-          vim.api.nvim_set_current_win(old_win) -- toggle back
-        end
-      end,
-      desc = "Asm file have changed",
-      -- once = true,
-    })
-
-    local timer = vim.loop.new_timer()
-    timer:start(
-      0,
-      300, -- 0.3s
-      vim.schedule_wrap(function()
-        vim.cmd("silent! checktime") -- 20 checks
-      end)
-    )
-    vim.defer_fn(function()
-      timer:stop()
-    end, 6000) -- 6s
   end
+
+  local old_win = vim.api.nvim_get_current_win()
+  local asm_bufnr = IsFileVisible("_temp_assembly_explorer_msvc.asm")
+  local asm_win
+
+  if asm_bufnr == -1 then
+    asm_win = vim.api.nvim_open_win(0, true, {
+      split = "right",
+      vertical = true,
+      width = 55,
+    })
+    vim.api.nvim_set_current_win(asm_win) -- toggle to asm win
+    vim.cmd.edit(vim.fn.fnameescape(asm_path)) -- read file to asm buffer
+    vim.api.nvim_set_current_win(old_win) -- toggle back
+    asm_bufnr = vim.api.nvim_win_get_buf(asm_win)
+  else
+    asm_win = NvimBufGetWin(asm_bufnr)
+  end
+
+  vim.api.nvim_create_autocmd("FileChangedShellPost", {
+    callback = function(args)
+      if args.buf == asm_bufnr then
+        vim.api.nvim_set_current_win(asm_win) -- toggle to asm win
+        filterMSVC()
+        vim.api.nvim_set_current_win(old_win) -- toggle back
+      end
+    end,
+    desc = "Asm file have changed",
+    -- once = true,
+  })
+
+  local timer = vim.loop.new_timer()
+  timer:start(
+    0,
+    300, -- 0.3s
+    vim.schedule_wrap(function()
+      vim.cmd("silent! checktime") -- 20 checks
+    end)
+  )
+  vim.defer_fn(function()
+    timer:stop()
+  end, 6000) -- 6s
 end
 
 -- GCC Remote EXPLORER
@@ -235,9 +250,9 @@ end
 -- -fno-asynchronous-unwind-tables  阻止生成 异步栈展开表（.eh_frame 段中的 DWARF CFI 信息）
 -- -fstack-protector  金丝雀
 --
---- @param remote bool
-function AssemblyExplorerGCC(remote)
-  if remote then
+--- @param is_remote bool
+function AssemblyExplorerGCC(is_remote)
+  if is_remote then
     scp_push(vim.api.nvim_buf_get_name(0), "/tmp/_temp_assembly_explorer_gcc.c", function(flag)
       if flag then
         local compile_command = "gcc -S -masm=intel -fno-asynchronous-unwind-tables -fno-exceptions "
@@ -263,52 +278,6 @@ function AssemblyExplorerGCC(remote)
       end
     end)
   end
-
-  -- asynchronous
-  -- vim.system({
-  --   sshpass,
-  --   "-p",
-  --   vim.g.myenv["SSHPASS"],
-  --   "scp",
-  --   "-P" .. vim.g.myenv["SSHPORT"],
-  --   vim.api.nvim_buf_get_name(0),
-  --   vim.g.myenv["SSHSERVER"] .. ":" .. vim.fn.stdpath("cache") .. "/_temp_assembly_explorer_gcc.c",
-  -- }, { text = true }, function(obj)
-  --   if obj.code == 0 then
-  --     vim.system({
-  --       sshpass,
-  --       "-p",
-  --       vim.g.myenv["SSHPASS"],
-  --       "ssh",
-  --       vim.g.myenv["SSHSERVER"],
-  --       "-p" .. vim.g.myenv["SSHPORT"],
-  --       compile_command,
-  --     }, { text = true }, function(obj)
-  --       if obj.code == 0 then
-  --         vim.system({
-  --           sshpass,
-  --           "-p",
-  --           vim.g.myenv["SSHPASS"],
-  --           "scp",
-  --           "-P" .. vim.g.myenv["SSHPORT"],
-  --           vim.g.myenv["SSHSERVER"] .. ":" .. vim.fn.stdpath("cache") .. "/_temp_assembly_explorer_gcc.s",
-  --           vim.fn.stdpath("cache") .. "/_temp_assembly_explorer_gcc.s",
-  --         }, { text = true }, function(obj)
-  --           if obj.code ~= 0 then
-  --             vim.notify("[AssemblyExplorer Failed 3]" .. (obj.stderr or "?"), vim.log.levels.ERROR)
-  --             return
-  --           end
-  --         end)
-  --       else
-  --         vim.notify("[AssemblyExplorer Failed 2]" .. (obj.stderr or "?"), vim.log.levels.ERROR)
-  --         return
-  --       end
-  --     end)
-  --   else
-  --     vim.notify("[AssemblyExplorer Failed 1]" .. (obj.stderr or "?"), vim.log.levels.ERROR)
-  --     return
-  --   end
-  -- end)
 
   local asm_bufnr = IsFileVisible("_temp_assembly_explorer_gcc.s")
   local asm_path = vim.fn.stdpath("cache") .. "/_temp_assembly_explorer_gcc.s"
@@ -342,13 +311,21 @@ vim.api.nvim_create_user_command("AssemblyExplorer", function(opts)
   if opts.args == nil then
     vim.notify("AssemblyExplorer need 1 argument at least.", vim.log.levels.ERROR)
   else
-    if string.lower(opts.args) == "msvc" then
-      AssemblyExplorerMSVC()
-    elseif string.lower(opts.args) == "gcc" then
-      if vim.fn.has("win32") == 1 then
-        AssemblyExplorerGCC(true)
-      else
-        AssemblyExplorerGCC(false)
+    local filetype = vim.bo[vim.api.nvim_get_current_buf()].filetype
+    if filetype == "c" or filetype == "cpp" then
+      if string.lower(opts.args) == "msvc" then
+        if vim.fn.has("win32") == 1 then
+          AssemblyExplorerMSVC(false)
+        else
+          vim.notify("AssemblyExplorer-msvc on remote is not currently supportted.", vim.log.levels.ERROR)
+          -- AssemblyExplorerMSVC(true)
+        end
+      elseif string.lower(opts.args) == "gcc" then
+        if vim.fn.has("win32") == 1 then
+          AssemblyExplorerGCC(true)
+        else
+          AssemblyExplorerGCC(false)
+        end
       end
     end
   end

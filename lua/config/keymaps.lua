@@ -1,9 +1,9 @@
 -- Copy
 if vim.g.copy_to_system == true then
-  vim.keymap.set("n", "y", '"+y')
-  vim.keymap.set("n", "Y", '"+Y')
-  vim.keymap.set("v", "y", '"+y')
-  vim.keymap.set("v", "Y", '"+Y')
+  vim.keymap.set("n", "gy", '"+y')
+  vim.keymap.set("n", "gY", '"+Y')
+  vim.keymap.set("v", "gy", '"+y')
+  vim.keymap.set("v", "gY", '"+Y')
 end
 
 -- LspSaga
