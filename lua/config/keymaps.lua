@@ -4,6 +4,8 @@ if vim.g.copy_to_system == true then
   vim.keymap.set("n", "gY", '"+Y')
   vim.keymap.set("v", "gy", '"+y')
   vim.keymap.set("v", "gY", '"+Y')
+  vim.keymap.set("n", "gp", '"+p')
+  vim.keymap.set("n", "gP", '"+P')
 end
 
 -- LspSaga

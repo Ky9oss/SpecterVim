@@ -22,7 +22,8 @@
 - assmebly explorer:
   -  linux compatibility
     - [x] gcc
-    - [ ] msvc
+    - [x] msvc
+  - [ ] optimize msvc by env cache
 
 - [ ] pass encrypt with random algorithm in every single nvim session
 

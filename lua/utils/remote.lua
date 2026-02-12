@@ -64,7 +64,8 @@ function ssh(command, on_exit)
     "ssh",
     vim.g.myenv["SSHSERVER"],
     "-p" .. vim.g.myenv["SSHPORT"],
-    command,
+    command
+    -- vim.split(command, "%s+"),
   }, { text = true }, function(obj)
     if on_exit then
       if obj.code ~= 0 then

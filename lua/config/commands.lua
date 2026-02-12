@@ -172,33 +172,6 @@ end
 function AssemblyExplorerMSVC(is_remote)
   local asm_path = vim.fn.has("win32") == 1 and vim.fn.stdpath("cache") .. "\\_temp_assembly_explorer_msvc.asm"
     or vim.fn.stdpath("cache") .. "/_temp_assembly_explorer_msvc.asm"
-
-  if is_remote then
-    scp_push(vim.api.nvim_buf_get_name(0), "C:\\Windows\\Temp\\_temp_assembly_explorer_msvc.c", function(flag)
-      if flag then
-        -- vim.cmd(
-        --   'FloatermSend --name=msvc cl /Fa"'
-        --     .. "C:\\Windows\\Temp\\_temp_assembly_explorer_msvc.asm"
-        --     .. '" /c /O1 /GS- /guard:cf- /EHs- /EHc- /GR- /MT /Oy- /Ob0 /nologo /Zc:inline- '
-        --     .. "C:\\Windows\\Temp\\_temp_assembly_explorer_msvc.c"
-        -- )
-        --
-        -- ssh(compile_command, function(flag)
-        --   if flag then
-        --     scp_pull("C:\\Windows\\Temp\\_temp_assembly_explorer_msvc.asm", asm_path)
-        --   end
-        -- end)
-      end
-    end)
-  else
-    vim.cmd(
-      'FloatermSend --name=msvc cl /Fa"'
-        .. asm_path:gsub([[\]], [[\\]])
-        .. '" /c /O1 /GS- /guard:cf- /EHs- /EHc- /GR- /MT /Oy- /Ob0 /nologo /Zc:inline- '
-        .. vim.api.nvim_buf_get_name(0)
-    )
-  end
-
   local old_win = vim.api.nvim_get_current_win()
   local asm_bufnr = IsFileVisible("_temp_assembly_explorer_msvc.asm")
   local asm_win
@@ -229,17 +202,59 @@ function AssemblyExplorerMSVC(is_remote)
     -- once = true,
   })
 
-  local timer = vim.loop.new_timer()
-  timer:start(
-    0,
-    300, -- 0.3s
-    vim.schedule_wrap(function()
-      vim.cmd("silent! checktime") -- 20 checks
+  if is_remote then
+    scp_push(vim.api.nvim_buf_get_name(0), "~/_temp_assembly_explorer_msvc.c", function(flag)
+      if flag then
+        scp_push(vim.fn.stdpath("config") .. "/lib/AssemblyExplorer.bat", "~/AssemblyExplorer.bat", function(flag)
+          if flag then
+            -- both from lua to ssh(powershell) and from powershell to cmd have an escape
+            local compile_command = "cmd /c %USERPROFILE%\\\\AssemblyExplorer.bat"
+            ssh(compile_command, function(flag)
+              if flag then
+                scp_pull("~/_temp_assembly_explorer_msvc.asm", asm_path, function(flag)
+                  if flag then
+                    vim.notify("[AssemblyExplorer Done]", vim.log.levels.INFO)
+                  end
+                end)
+              end
+            end)
+          end
+        end)
+      end
     end)
-  )
-  vim.defer_fn(function()
-    timer:stop()
-  end, 6000) -- 6s
+
+    -- add a timer to refresh cause we cannot refresh in vim.system callback function
+    local timer = vim.loop.new_timer()
+    timer:start(
+      0,
+      500,
+      vim.schedule_wrap(function()
+        vim.cmd("silent! checktime")
+      end)
+    )
+    vim.defer_fn(function()
+      timer:stop()
+    end, 20000) -- 20s
+  else
+    vim.cmd(
+      'FloatermSend --name=msvc cl /Fa"'
+        .. asm_path:gsub([[\]], [[\\]])
+        .. '" /c /O1 /GS- /guard:cf- /EHs- /EHc- /GR- /MT /Oy- /Ob0 /nologo /Zc:inline- '
+        .. vim.api.nvim_buf_get_name(0)
+    )
+    -- add a timer to refresh cause we cannot refresh in vim.system callback function
+    local timer = vim.loop.new_timer()
+    timer:start(
+      0,
+      300, -- 0.3s
+      vim.schedule_wrap(function()
+        vim.cmd("silent! checktime") -- 20 checks
+      end)
+    )
+    vim.defer_fn(function()
+      timer:stop()
+    end, 6000) -- 6s
+  end
 end
 
 -- GCC Remote EXPLORER
@@ -252,6 +267,10 @@ end
 --
 --- @param is_remote bool
 function AssemblyExplorerGCC(is_remote)
+  local asm_bufnr = IsFileVisible("_temp_assembly_explorer_gcc.s")
+  local asm_path = vim.fn.stdpath("cache") .. "/_temp_assembly_explorer_gcc.s"
+  local old_win = vim.api.nvim_get_current_win()
+
   if is_remote then
     scp_push(vim.api.nvim_buf_get_name(0), "/tmp/_temp_assembly_explorer_gcc.c", function(flag)
       if flag then
@@ -274,14 +293,9 @@ function AssemblyExplorerGCC(is_remote)
     vim.system(vim.split(compile_command, "%s+"), { text = true }, function(obj)
       if obj.code ~= 0 then
         vim.notify("[AssemblyExplorer Failed]" .. (obj.stderr or "?"), vim.log.levels.ERROR)
-        return
       end
     end)
   end
-
-  local asm_bufnr = IsFileVisible("_temp_assembly_explorer_gcc.s")
-  local asm_path = vim.fn.stdpath("cache") .. "/_temp_assembly_explorer_gcc.s"
-  local old_win = vim.api.nvim_get_current_win()
 
   if asm_bufnr == -1 then
     local asm_win = vim.api.nvim_open_win(0, true, {
@@ -317,8 +331,8 @@ vim.api.nvim_create_user_command("AssemblyExplorer", function(opts)
         if vim.fn.has("win32") == 1 then
           AssemblyExplorerMSVC(false)
         else
-          vim.notify("AssemblyExplorer-msvc on remote is not currently supportted.", vim.log.levels.ERROR)
-          -- AssemblyExplorerMSVC(true)
+          -- vim.notify("AssemblyExplorer-msvc on remote is not currently supportted.", vim.log.levels.ERROR)
+          AssemblyExplorerMSVC(true)
         end
       elseif string.lower(opts.args) == "gcc" then
         if vim.fn.has("win32") == 1 then
