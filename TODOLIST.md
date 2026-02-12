@@ -2,8 +2,8 @@
 
 ## Normal Bugs
 
-- [ ] `gd` in telescope has duplication for every items.
-- [ ] Gets stuck when :w in ps1
+- [ ] The `gd` in telescope has duplication for every items sometimes.
+- [x] Got stuck when :w in ps1
 
 # New Features
 
@@ -19,8 +19,10 @@
 
 ## Others
 
-- [x] Optimize assmebly explorer: 
-  - filter for simplifying msvc asm
+- assmebly explorer:
+  - [ ] linux compatibility
+
+- [ ] pass encrypt with random algorithm in every single nvim session
 
 - [ ] A tmux-like custom terminal for radare2 by tmux
   - info-rich term

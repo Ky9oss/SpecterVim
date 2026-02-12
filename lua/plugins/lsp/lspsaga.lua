@@ -6,6 +6,15 @@ return {
     lightbulb = {
       enable = false,
     },
+    outline = {
+      enable = false,
+    },
+    rename = {
+      enable = false,
+    },
+    diagnostic = {
+      enable = false,
+    },
   },
   dependencies = {
     "nvim-treesitter/nvim-treesitter", -- optional

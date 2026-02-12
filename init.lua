@@ -81,6 +81,12 @@ end
 
 vim.g.myenv = _G.load_env(vim.fn.stdpath("config") .. "/.env")
 
+vim.diagnostic.config({
+  signs = {
+    severity = { min = vim.diagnostic.severity.WARN },
+  },
+})
+
 require("config.lazy")
 require("config.autocmds")
 require("config.keymaps")

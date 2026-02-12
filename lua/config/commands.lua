@@ -1,4 +1,5 @@
 require("../utils.buffer")
+require("../utils.remote")
 
 local project = require("project_nvim.project")
 local project_root_path = project.get_project_root()
@@ -71,7 +72,7 @@ vim.api.nvim_create_user_command("GitPush", function(opts)
           if success then
             shellExecute("git commit -m " .. opts.args, function(success)
               if success then
-                shellExecute("git push -u origin main")
+                shellExecute("proxychains -q git push -u origin main")
               end
             end)
           end
@@ -228,60 +229,90 @@ end
 
 -- GCC Remote EXPLORER
 --
+-- output file path: vim.fn.stdpath("cache") .. "/_temp_assembly_explorer_gcc.s"
+--
 -- -fno-exceptions  关闭 C++ 异常支持（throw / catch / try 等）
 -- -fno-asynchronous-unwind-tables  阻止生成 异步栈展开表（.eh_frame 段中的 DWARF CFI 信息）
 -- -fstack-protector  金丝雀
 --
-function AssemblyExplorerGCC()
-  local asm_bufnr = IsFileVisible("_temp_assembly_explorer_remote_gcc.s")
-  local asm_path = vim.fn.stdpath("cache") .. "\\_temp_assembly_explorer_remote_gcc.s"
-  local old_win = vim.api.nvim_get_current_win()
+--- @param remote bool
+function AssemblyExplorerGCC(remote)
+  if remote then
+    scp_push(vim.api.nvim_buf_get_name(0), "/tmp/_temp_assembly_explorer_gcc.c", function(flag)
+      if flag then
+        local compile_command = "gcc -S -masm=intel -fno-asynchronous-unwind-tables -fno-exceptions "
+          .. "/tmp/_temp_assembly_explorer_gcc.c -o "
+          .. "/tmp/_temp_assembly_explorer_gcc.s"
+        ssh(compile_command, function(flag)
+          if flag then
+            scp_pull("/tmp/_temp_assembly_explorer_gcc.s", vim.fn.stdpath("cache") .. "/_temp_assembly_explorer_gcc.s")
+          end
+        end)
+      end
+    end)
+  else
+    local compile_command = "gcc -S -masm=intel -fno-asynchronous-unwind-tables -fno-exceptions "
+      .. vim.api.nvim_buf_get_name(0)
+      .. " -o "
+      .. vim.fn.stdpath("cache")
+      .. "/_temp_assembly_explorer_gcc.s"
+    vim.system(vim.split(compile_command, "%s+"), { text = true }, function(obj)
+      if obj.code ~= 0 then
+        vim.notify("[AssemblyExplorer Failed]" .. (obj.stderr or "?"), vim.log.levels.ERROR)
+        return
+      end
+    end)
+  end
 
   -- asynchronous
-  vim.system({
-    vim.fn.stdpath("config") .. "\\lib\\sshpass.exe",
-    "-p",
-    vim.g.myenv["SSHPASS"],
-    "scp",
-    "-P" .. vim.g.myenv["SSHPORT"],
-    vim.api.nvim_buf_get_name(0),
-    vim.g.myenv["SSHSERVER"] .. ":/tmp/nvim_generate_asm.c",
-  }, { text = true }, function(obj)
-    if obj.code == 0 then
-      vim.system({
-        vim.fn.stdpath("config") .. "\\lib\\sshpass.exe",
-        "-p",
-        vim.g.myenv["SSHPASS"],
-        "ssh",
-        vim.g.myenv["SSHSERVER"],
-        "-p" .. vim.g.myenv["SSHPORT"],
-        "gcc -S -masm=intel -fno-asynchronous-unwind-tables -fno-exceptions /tmp/nvim_generate_asm.c -o /tmp/nvim_generate_asm.s",
-      }, { text = true }, function(obj)
-        if obj.code == 0 then
-          vim.system({
-            vim.fn.stdpath("config") .. "\\lib\\sshpass.exe",
-            "-p",
-            vim.g.myenv["SSHPASS"],
-            "scp",
-            "-P" .. vim.g.myenv["SSHPORT"],
-            vim.g.myenv["SSHSERVER"] .. ":/tmp/nvim_generate_asm.s",
-            vim.fn.stdpath("cache") .. "\\_temp_assembly_explorer_remote_gcc.s",
-          }, { text = true }, function(obj)
-            if obj.code ~= 0 then
-              vim.notify("[AssemblyExplorer Failed 3]" .. (obj.stderr or "?"), vim.log.levels.ERROR)
-              return
-            end
-          end)
-        else
-          vim.notify("[AssemblyExplorer Failed 2]" .. (obj.stderr or "?"), vim.log.levels.ERROR)
-          return
-        end
-      end)
-    else
-      vim.notify("[AssemblyExplorer Failed 1]" .. (obj.stderr or "?"), vim.log.levels.ERROR)
-      return
-    end
-  end)
+  -- vim.system({
+  --   sshpass,
+  --   "-p",
+  --   vim.g.myenv["SSHPASS"],
+  --   "scp",
+  --   "-P" .. vim.g.myenv["SSHPORT"],
+  --   vim.api.nvim_buf_get_name(0),
+  --   vim.g.myenv["SSHSERVER"] .. ":" .. vim.fn.stdpath("cache") .. "/_temp_assembly_explorer_gcc.c",
+  -- }, { text = true }, function(obj)
+  --   if obj.code == 0 then
+  --     vim.system({
+  --       sshpass,
+  --       "-p",
+  --       vim.g.myenv["SSHPASS"],
+  --       "ssh",
+  --       vim.g.myenv["SSHSERVER"],
+  --       "-p" .. vim.g.myenv["SSHPORT"],
+  --       compile_command,
+  --     }, { text = true }, function(obj)
+  --       if obj.code == 0 then
+  --         vim.system({
+  --           sshpass,
+  --           "-p",
+  --           vim.g.myenv["SSHPASS"],
+  --           "scp",
+  --           "-P" .. vim.g.myenv["SSHPORT"],
+  --           vim.g.myenv["SSHSERVER"] .. ":" .. vim.fn.stdpath("cache") .. "/_temp_assembly_explorer_gcc.s",
+  --           vim.fn.stdpath("cache") .. "/_temp_assembly_explorer_gcc.s",
+  --         }, { text = true }, function(obj)
+  --           if obj.code ~= 0 then
+  --             vim.notify("[AssemblyExplorer Failed 3]" .. (obj.stderr or "?"), vim.log.levels.ERROR)
+  --             return
+  --           end
+  --         end)
+  --       else
+  --         vim.notify("[AssemblyExplorer Failed 2]" .. (obj.stderr or "?"), vim.log.levels.ERROR)
+  --         return
+  --       end
+  --     end)
+  --   else
+  --     vim.notify("[AssemblyExplorer Failed 1]" .. (obj.stderr or "?"), vim.log.levels.ERROR)
+  --     return
+  --   end
+  -- end)
+
+  local asm_bufnr = IsFileVisible("_temp_assembly_explorer_gcc.s")
+  local asm_path = vim.fn.stdpath("cache") .. "/_temp_assembly_explorer_gcc.s"
+  local old_win = vim.api.nvim_get_current_win()
 
   if asm_bufnr == -1 then
     local asm_win = vim.api.nvim_open_win(0, true, {
@@ -307,16 +338,18 @@ function AssemblyExplorerGCC()
   end, 6000) -- 6s
 end
 
-if vim.fn.has("win32") == 1 then
-  vim.api.nvim_create_user_command("AssemblyExplorer", function(opts)
-    if opts.args == nil then
-      vim.notify("AssemblyExplorer need 1 argument at least.", vim.log.levels.ERROR)
-    else
-      if string.lower(opts.args) == "msvc" then
-        AssemblyExplorerMSVC()
-      elseif string.lower(opts.args) == "gcc" then
-        AssemblyExplorerGCC()
+vim.api.nvim_create_user_command("AssemblyExplorer", function(opts)
+  if opts.args == nil then
+    vim.notify("AssemblyExplorer need 1 argument at least.", vim.log.levels.ERROR)
+  else
+    if string.lower(opts.args) == "msvc" then
+      AssemblyExplorerMSVC()
+    elseif string.lower(opts.args) == "gcc" then
+      if vim.fn.has("win32") == 1 then
+        AssemblyExplorerGCC(true)
+      else
+        AssemblyExplorerGCC(false)
       end
     end
-  end, { desc = "Get assembly for current buffer.", nargs = 1 })
-end
+  end
+end, { desc = "Get assembly for current buffer.", nargs = 1 })
