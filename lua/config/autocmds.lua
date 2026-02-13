@@ -1,8 +1,9 @@
 -- auto open nvim-tree
 local function open_nvim_tree(data)
   local opened_with_file = vim.fn.argc() > 0
+  local opened_with_man = vim.bo.filetype == 'man' and vim.fn.argc() == 0
 
-  if not opened_with_file then
+  if not opened_with_file and not opened_with_man then
     require("nvim-tree.api").tree.open()
   end
 end
