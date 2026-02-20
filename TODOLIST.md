@@ -25,7 +25,7 @@
     - [x] msvc
   - [ ] optimize msvc by env cache
 
-- [ ] pass encrypt with random algorithm in every single nvim session
+- [ ] encrypt password with random algorithm in every single nvim session
 
 - [ ] A tmux-like custom terminal for radare2 by tmux
   - info-rich term
