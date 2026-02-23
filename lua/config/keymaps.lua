@@ -8,8 +8,33 @@ if vim.g.copy_to_system == true then
   vim.keymap.set("n", "gP", '"+P')
 end
 
--- LspSaga
-vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", { noremap = true, silent = true })
+-- Hover action: Use signature_help in csharp with roslyn; Otherwise use LspSaga's hover
+vim.keymap.set("n", "K", function()
+  local filetype = vim.bo[vim.api.nvim_get_current_buf()].filetype
+  if filetype == "cs" then
+    local mark = vim.api.nvim_win_get_cursor(0)
+
+    vim.cmd.normal({ bang = true, args = { 'vf)"cy' } })
+    local copied = vim.fn.getreg("c")
+    local _, count = copied:gsub("%(", "")
+
+    if count > 0 then
+      local cmd = "f)"
+      if count > 1 then
+        for _ = 1, count - 1 do
+          cmd = cmd .. ";"
+        end
+      end
+      vim.cmd.normal({ bang = true, args = { cmd } })
+      vim.lsp.buf.signature_help()
+    end
+
+    vim.fn.setreg('c', {}) -- clean "c
+    vim.api.nvim_win_set_cursor(0, mark)
+  else
+    vim.cmd("Lspsaga hover_doc")
+  end
+end, { noremap = true, silent = true })
 
 -- NvimTree
 vim.keymap.set("n", "<leader>tr", "<cmd>NvimTreeOpen<CR>", { noremap = true, silent = true })
