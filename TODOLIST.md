@@ -24,6 +24,7 @@
     - [x] gcc
     - [x] msvc
   - [ ] optimize msvc by env cache
+  - [ ] accept more compile options
 
 - [ ] encrypt password with random algorithm in every single nvim session
 
