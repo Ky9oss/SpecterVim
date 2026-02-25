@@ -349,6 +349,13 @@ C:/Program Files (x86)/Windows Kits/10/Include/10.0.26100.0/um
       ]]
         create_file("compile_flags.txt", compile_flags)
       end
+
+    elseif ft == "lua" then
+      local stylua_toml = [[
+syntax = "LuaJIT"
+        ]]
+      create_file("stylua.toml", stylua_toml)
+
     else
       local default_editorconfig = [[
 root = true

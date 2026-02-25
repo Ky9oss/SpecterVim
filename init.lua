@@ -49,46 +49,13 @@ vim.opt.fileformats = { "unix", "dos" }
 vim.opt.fileformat = "unix"
 vim.opt.fixendofline = false
 
--- load .env
-function _G.load_env(path)
-  local env = {}
-  local file = io.open(path, "r")
-  if not file then
-    return env
-  end
-
-  local content = file:read("*a")
-  file:close()
-
-  for line in (content .. "\n"):gmatch("(.-)\n") do
-    line = line:match("^%s*(.-)%s*$") -- trim
-    if line == "" or line:match("^#") then
-      goto skip
-    end
-
-    local key, value = line:match("^([A-Za-z_][%w_]*)%s*=%s*(.*)$")
-    if not key then
-      goto skip
-    end
-
-    value = value:match("^[\"']?(.-)[\"']?$") or value
-    value = value:gsub('\\"', '"'):gsub("\\'", "'"):gsub("\\n", "\n"):gsub("\\t", "\t"):gsub("\\\\", "\\")
-
-    env[key] = value
-    ::skip::
-  end
-
-  return env
-end
-
-vim.g.myenv = _G.load_env(vim.fn.stdpath("config") .. "/.env")
-
 vim.diagnostic.config({
   signs = {
     severity = { min = vim.diagnostic.severity.WARN },
   },
 })
 
+require("config.env")
 require("config.lazy")
 require("config.autocmds")
 require("config.keymaps")
