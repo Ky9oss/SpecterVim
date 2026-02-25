@@ -19,8 +19,8 @@
   -  linux compatibility
     - [x] gcc
     - [x] msvc
+  - [x] accept more compile options
   - [ ] optimize msvc by env cache
-  - [ ] accept more compile options
 
 - [x] encrypt password
 
