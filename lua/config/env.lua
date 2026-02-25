@@ -40,6 +40,7 @@ function _G.load_env(path)
 			end
 		end
 		table.insert(lines, "ENCRYPTED1=" .. env["ENCRYPTED1"])
+
 		local file = io.open(path, "w")
 		for _, line in ipairs(lines) do
 			file:write(line .. "\n")

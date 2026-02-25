@@ -24,11 +24,6 @@
 
 - [x] encrypt password
 
-- [ ] A tmux-like custom terminal for radare2 by tmux
-  - info-rich term
-  - full history
-  - always a new default powershell on background to save time from openning powershell
-
 - [ ] Encore.sh
 
 - [ ] a more grace way to replace hover() with signature_help() in roslyn
