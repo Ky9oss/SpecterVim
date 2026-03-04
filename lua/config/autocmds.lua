@@ -84,7 +84,7 @@ default_diagnostics = true
         ]]
 
       create_file(".asm-lsp.toml", default_toml)
-    elseif ft == "c" or ft == "cpp" then
+    elseif (ft == "c" or ft == "cpp") and vim.g.clangd == 1 then
       local clang_format = [[
 ---
 Language:        Cpp

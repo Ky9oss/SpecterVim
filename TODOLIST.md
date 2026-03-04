@@ -13,6 +13,12 @@
 - [ ] Add PDB support for source link to audit source code instead of decompiled code in .NET runtime / aspnetcore
 - [ ] (?) Performance Analyzer like Visual Studio 2026
 
+## About C/Cpp
+
+- [ ] Debugger
+
+- [ ] Edit-compile-edit for all c-compilation-env(Makefile/CmakeList/gcc&msvc/...) by Quickfix
+
 ## Others
 
 - assmebly explorer:

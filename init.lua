@@ -2,6 +2,7 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 vim.g.profiler = true -- a neovim lua profiler in snacks.nvim
 vim.g.copy_to_system = true -- duplicate 'y' in keymaps.lua
+vim.g.clangd = 1 -- enable clangd lsp OR use ctags without lsp (1 or 0)
 
 if vim.fn.has("win32") ~= 1 then
   if vim.env.TMUX == nil or vim.env.TMUX == "" then
