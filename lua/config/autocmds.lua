@@ -30,7 +30,6 @@ vim.api.nvim_create_autocmd("WinLeave", {
 
 local create_file = function(filename, dcontent)
   local project = require("project_nvim.project")
-  -- local content = dcontent:gsub("^%s+", ""):gsub("\n%s+", "\n")
   local content = dcontent:gsub("%s+\n", "\n"):gsub("%s+$", "")
   local project_root = project.get_project_root()
   if not project_root then
