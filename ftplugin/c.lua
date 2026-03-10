@@ -34,7 +34,7 @@ vim.keymap.set("n", "<leader>mm", function()
 	end
 
 	if vim.fn.has("win32") ~= 1 then -- Linux
-		vim.bo.makeprg = "gcc -Wall -O2 -o %< %"
+		vim.bo.makeprg = "gcc-15 -Wall -O2 -o %< %"
 	end
 
 	vim.cmd("Make")

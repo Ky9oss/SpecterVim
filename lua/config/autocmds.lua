@@ -321,13 +321,17 @@ CompileFlags:
     Add:
       - --target=x86_64-pc-windows-msvc
       - -I./include
+      - -Wall
 
 
         ]]
       else
         clangd = [[
 CompileFlags:
-    Add: [-I./include]
+    Add: 
+      - -I./include
+      - -std=c23
+      - -Wall
 
         ]]
       end

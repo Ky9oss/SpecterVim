@@ -289,7 +289,7 @@ function AssemblyExplorerGCC(is_remote, compile_options)
 	local asm_path = vim.fn.stdpath("cache") .. "/_temp_assembly_explorer_gcc.s"
 	local old_win = vim.api.nvim_get_current_win()
 
-	local custom_command = "gcc -S -masm=intel -fno-asynchronous-unwind-tables -fno-exceptions "
+	local custom_command = "gcc-15 -S -masm=intel -fno-asynchronous-unwind-tables -fno-exceptions "
 	for _, o in ipairs(compile_options) do
 		custom_command = custom_command .. o .. " "
 	end
