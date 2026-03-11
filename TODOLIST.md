@@ -19,6 +19,10 @@
 
 - [ ] Edit-compile-edit for all c-compilation-env(Makefile/CmakeList/gcc&msvc/...) by Quickfix
 
+## About Tmux
+
+- [ ] restore neovim pages when restore tmux windows
+
 ## Others
 
 - assmebly explorer:
@@ -31,6 +35,7 @@
 - [x] encrypt password
 
 - [ ] Encore.sh
+
 
 - [ ] a more grace way to replace hover() with signature_help() in roslyn
 
