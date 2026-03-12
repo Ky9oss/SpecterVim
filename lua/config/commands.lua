@@ -360,10 +360,10 @@ vim.api.nvim_create_user_command("AssemblyExplorer", function(opts)
 		local filetype = vim.bo[vim.api.nvim_get_current_buf()].filetype
 		if filetype == "c" or filetype == "cpp" then
 			if string.lower(compiler) == "msvc" then
-				local is_remote = vim.fn.has("win32") == 1 and false or true
+				local is_remote = vim.fn.has("win32") ~= 1
 				AssemblyExplorerMSVC(is_remote, compile_options)
 			elseif string.lower(compiler) == "gcc" then
-				local is_remote = vim.fn.has("win32") == 1 and true or false
+				local is_remote = vim.fn.has("win32") == 1
 				AssemblyExplorerGCC(is_remote, compile_options)
 			end
 		end
