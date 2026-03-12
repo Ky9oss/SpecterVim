@@ -208,7 +208,7 @@ function AssemblyExplorerMSVC(is_remote, compile_options)
 
   -- TODO: Add custom_command
   -- TODO: Optimize batch file by env cache
-	if is_remote == true then
+	if is_remote then
 		scp_push(vim.api.nvim_buf_get_name(0), "~/_temp_assembly_explorer_msvc.c", function(flag)
 			if flag then
 				scp_push(
@@ -360,7 +360,7 @@ vim.api.nvim_create_user_command("AssemblyExplorer", function(opts)
 		local filetype = vim.bo[vim.api.nvim_get_current_buf()].filetype
 		if filetype == "c" or filetype == "cpp" then
 			if string.lower(compiler) == "msvc" then
-				local is_remote = vim.fn.has("win32") == 1 and false or true
+				local is_remote = vim.fn.has("win32") == 1 and true or false
 				AssemblyExplorerMSVC(is_remote, compile_options)
 			elseif string.lower(compiler) == "gcc" then
 				local is_remote = vim.fn.has("win32") == 1 and true or false
