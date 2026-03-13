@@ -209,43 +209,42 @@ function AssemblyExplorerMSVC(is_remote, compile_options)
   -- TODO: Add custom_command
   -- TODO: Optimize batch file by env cache
 	if is_remote then
-    vim.notify("AssemblyExplorer: is remote")
-		-- scp_push(vim.api.nvim_buf_get_name(0), "~/_temp_assembly_explorer_msvc.c", function(flag)
-		-- 	if flag then
-		-- 		scp_push(
-		-- 			vim.fn.stdpath("config") .. "/lib/AssemblyExplorer.bat",
-		-- 			"~/AssemblyExplorer.bat",
-		-- 			function(flag)
-		-- 				if flag then
-		-- 					-- both from lua to ssh(powershell) and from powershell to cmd have an escape
-		-- 					local compile_command = "cmd /c %USERPROFILE%\\\\AssemblyExplorer.bat"
-		-- 					ssh(compile_command, function(flag)
-		-- 						if flag then
-		-- 							scp_pull("~/_temp_assembly_explorer_msvc.asm", asm_path, function(flag)
-		-- 								if flag then
-		-- 									vim.notify("[AssemblyExplorer Done]", vim.log.levels.INFO)
-		-- 								end
-		-- 							end)
-		-- 						end
-		-- 					end)
-		-- 				end
-		-- 			end
-		-- 		)
-		-- 	end
-		-- end)
-		--
-		-- -- add a timer to refresh cause we cannot refresh in vim.system callback function
-		-- local timer = vim.loop.new_timer()
-		-- timer:start(
-		-- 	0,
-		-- 	500,
-		-- 	vim.schedule_wrap(function()
-		-- 		vim.cmd("silent! checktime")
-		-- 	end)
-		-- )
-		-- vim.defer_fn(function()
-		-- 	timer:stop()
-		-- end, 20000) -- 20s
+		scp_push(vim.api.nvim_buf_get_name(0), "~/_temp_assembly_explorer_msvc.c", function(flag)
+			if flag then
+				scp_push(
+					vim.fn.stdpath("config") .. "/lib/AssemblyExplorer.bat",
+					"~/AssemblyExplorer.bat",
+					function(flag)
+						if flag then
+							-- both from lua to ssh(powershell) and from powershell to cmd have an escape
+							local compile_command = "cmd /c %USERPROFILE%\\\\AssemblyExplorer.bat"
+							ssh(compile_command, function(flag)
+								if flag then
+									scp_pull("~/_temp_assembly_explorer_msvc.asm", asm_path, function(flag)
+										if flag then
+											vim.notify("[AssemblyExplorer Done]", vim.log.levels.INFO)
+										end
+									end)
+								end
+							end)
+						end
+					end
+				)
+			end
+		end)
+
+		-- add a timer to refresh cause we cannot refresh in vim.system callback function
+		local timer = vim.loop.new_timer()
+		timer:start(
+			0,
+			500,
+			vim.schedule_wrap(function()
+				vim.cmd("silent! checktime")
+			end)
+		)
+		vim.defer_fn(function()
+			timer:stop()
+		end, 20000) -- 20s
 	else
 
 		local custom_command = ""
