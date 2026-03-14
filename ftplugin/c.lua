@@ -11,17 +11,14 @@ vim.keymap.set("n", "<leader>mm", function()
 					local stat = vim.uv.fs_stat(scriptpath)
 					if stat then -- file exists
 						if stat.mode % 128 >= 64 then -- mode is 12 bits int. owner: bits 8-6(rwx). x = 2^6 = 64
-							vim.bo.makeprg = "cd "
-								.. project_root
-								.. " && "
-                .. scriptpath
+							vim.bo.makeprg = "cd " .. project_root .. " && " .. scriptpath
 						else
 							vim.bo.makeprg = "cd "
 								.. project_root
 								.. " && chmod +x "
-                .. scriptpath
+								.. scriptpath
 								.. " && "
-                .. scriptpath
+								.. scriptpath
 						end
 					end
 				end
@@ -39,3 +36,40 @@ vim.keymap.set("n", "<leader>mm", function()
 
 	vim.cmd("Make")
 end, { buffer = true, desc = "Make (C)" })
+
+vim.keymap.set("n", "<leader>mt", function()
+	local project_root = project.get_project_root()
+	local filename = vim.api.nvim_buf_get_name(0):match("^(%S+)%.c$") -- This is a absolute path
+	local scriptpath = vim.fn.stdpath("config") .. "/lib/runscript-tmux.sh"
+	local run_command = scriptpath .. " " .. filename
+
+	if project_root then
+		for name, type in vim.fs.dir(project_root) do
+			if name == "CMakeLists.txt" and type == "file" then -- Cmake
+				if vim.fn.has("win32") ~= 1 then -- Linux
+					-- TODO Cmake runner
+					return
+				end
+			end
+		end
+
+		-- vim.notify(
+		-- 	[=[<leader>mt: This file must in a project.
+		--   Use `git init` in your project's root path to initialize a project]=],
+		-- 	vim.log.levels.ERROR
+		-- )
+	end
+
+	local stat = vim.uv.fs_stat(scriptpath)
+	if stat then -- file exists
+		if stat.mode % 128 < 64 then -- mode is 12 bits int. owner: bits 8-6(rwx). x = 2^6 = 64
+			vim.system(vim.split("chmod +x " .. scriptpath, "%s+"), { text = true }, function(obj)
+				if obj.code == 0 then
+					vim.system(vim.split(run_command, "%s+"), { text = true })
+				end
+			end)
+		else
+			vim.system(vim.split(run_command, "%s+"), { text = true })
+		end
+	end
+end, { buffer = true, desc = "Run C Program with Tmux" })
