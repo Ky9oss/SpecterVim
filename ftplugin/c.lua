@@ -40,7 +40,7 @@ end, { buffer = true, desc = "Make (C)" })
 vim.keymap.set("n", "<leader>mt", function()
 	local project_root = project.get_project_root()
 	local filename = vim.api.nvim_buf_get_name(0):match("^(%S+)%.c$") -- This is a absolute path
-	local scriptpath = vim.fn.stdpath("config") .. "/lib/runscript-tmux.sh"
+	local scriptpath = vim.fn.stdpath("config") .. "/lib/runc-tmux.sh"
 	local run_command = scriptpath .. " " .. filename
 
 	if project_root then
