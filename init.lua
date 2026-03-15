@@ -5,32 +5,51 @@ vim.g.copy_to_system = true -- duplicate 'y' in keymaps.lua
 vim.g.clangd = 1 -- enable clangd lsp OR use ctags without lsp (1 or 0)
 
 if vim.fn.has("win32") ~= 1 then
-  if vim.env.TMUX == nil or vim.env.TMUX == "" then
-    vim.g.clipboard = {
-      name = "OSC 52",
-      copy = {
-        ["+"] = require("vim.ui.clipboard.osc52").copy("+"),
-        ["*"] = require("vim.ui.clipboard.osc52").copy("*"),
-      },
-      paste = {
-        ["+"] = require("vim.ui.clipboard.osc52").paste("+"),
-        ["*"] = require("vim.ui.clipboard.osc52").paste("*"),
-      },
-    }
-  else
-    vim.g.clipboard = {
-      name = "tmux-osc52-fallback",
-      copy = {
-        ["+"] = { "tmux", "load-buffer", "-w", "-" },
-        ["*"] = { "tmux", "load-buffer", "-w", "-" },
-      },
-      paste = {
-        ["+"] = { "tmux", "save-buffer", "-" },
-        ["*"] = { "tmux", "save-buffer", "-" },
-      },
-      cache_enabled = true,
-    }
-  end
+	if vim.env.TMUX == nil or vim.env.TMUX == "" then
+		vim.g.clipboard = {
+			name = "OSC 52",
+			copy = {
+				["+"] = require("vim.ui.clipboard.osc52").copy("+"),
+				["*"] = require("vim.ui.clipboard.osc52").copy("*"),
+			},
+			paste = {
+				["+"] = require("vim.ui.clipboard.osc52").paste("+"),
+				["*"] = require("vim.ui.clipboard.osc52").paste("*"),
+			},
+		}
+	else
+		-- This was valid until I upgraded Debian from 12 to 13. :-(
+		--
+		-- vim.g.clipboard = {
+		--   name = "tmux-osc52-fallback",
+		--   copy = {
+		--     ["+"] = { "tmux", "load-buffer", "-w", "-" },
+		--     ["*"] = { "tmux", "load-buffer", "-w", "-" },
+		--   },
+		--   paste = {
+		--     ["+"] = { "tmux", "save-buffer", "-" },
+		--     ["*"] = { "tmux", "save-buffer", "-" },
+		--   },
+		--   cache_enabled = true,
+		-- }
+		--
+		local command = vim.fn.stdpath("config") .. "/lib/osc52-fixed.sh"
+
+		vim.g.clipboard = {
+			name = "tmux-osc52-fixed",
+
+			-- neovim -> stdin-pipe -> command
+			copy = {
+				["+"] = { command },
+				["*"] = { command },
+			},
+		  paste = {
+		    ["+"] = { "tmux", "save-buffer", "-" },
+		    ["*"] = { "tmux", "save-buffer", "-" },
+		  },
+			cache_enabled = true,
+		}
+	end
 end
 
 vim.opt.termguicolors = true
@@ -51,9 +70,9 @@ vim.opt.fileformat = "unix"
 vim.opt.fixendofline = false
 
 vim.diagnostic.config({
-  signs = {
-    severity = { min = vim.diagnostic.severity.WARN },
-  },
+	signs = {
+		severity = { min = vim.diagnostic.severity.WARN },
+	},
 })
 
 require("config.env")

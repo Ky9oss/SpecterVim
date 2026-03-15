@@ -36,6 +36,7 @@
 
 - [ ] Encore.sh
 
+- [ ] Ensure the libs(bash-scripts/executable) is executable and grant it if it's not.
 
 - [ ] a more grace way to replace hover() with signature_help() in roslyn
 
