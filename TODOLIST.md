@@ -2,8 +2,7 @@
 
 ## Normal Bugs
 
-- [ ] The `gd` in telescope has duplication for every items sometimes.
-- [x] Got stuck when :w in ps1
+- [ ] Lsp failed sometimes and :LspRestart cause error
 
 # New Features
 

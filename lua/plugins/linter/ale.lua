@@ -1,13 +1,12 @@
 return {
   "dense-analysis/ale",
   config = function()
-    local g = vim.g
-
     -- g.ale_disable_lsp = 1
     vim.g.ale_disable_lsp = "auto"
     vim.g.ale_linters_explicit = 1 -- only enable the linter I set in g.ale_linters
+    vim.g.ale_echo_cursor = 0 -- no echo when cursor move
 
-    g.ale_linters = {
+    vim.g.ale_linters = {
       sh = { "shellcheck" },
     }
   end,
