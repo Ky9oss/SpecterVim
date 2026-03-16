@@ -5,27 +5,6 @@ require("utils.shell")
 local project = require("project_nvim.project")
 local project_root_path = project.get_project_root()
 
---- Execute shell command in project's root path on `Linux`
----
---- @param cmd string
---- @param on_result function(success: bool)
-local function shellExecute(cmd, on_result)
-	vim.system(vim.split(cmd, "%s+"), { cwd = vim.split(project_root_path, "%s+")[1] }, function(obj)
-		if obj.code == 0 then
-			if obj.stdout ~= nil and obj.stdout:gsub("^%s*(.-)%s*$", "%1") ~= "" then
-				vim.notify("STDOUT:" .. obj.stdout)
-			end
-			if on_result then
-				on_result(true)
-			end
-		else
-			vim.notify("[" .. obj.code .. "] " .. "Failed! STDERR: " .. obj.stderr, vim.log.levels.ERROR)
-			if on_result then
-				on_result(false)
-			end
-		end
-	end)
-end
 
 -- Git Push
 vim.api.nvim_create_user_command("GitPush", function(opts)
@@ -70,12 +49,13 @@ vim.api.nvim_create_user_command("GitPush", function(opts)
 					end
 				end)
 			else
+        local cwd = vim.split(project_root_path, "%s+")[1]
 				-- Linux with proxychains
-				shellExecute("git add .", function(success)
+				exec_bash_command("git add .", cwd, function(success)
 					if success then
-						shellExecute("git commit -m " .. opts.args:gsub("%s+", "-"), function(success)
+						exec_bash_command("git commit -m " .. opts.args:gsub("%s+", "-"), cwd, function(success)
 							if success then
-								shellExecute("proxychains -q git push -u origin main")
+								exec_bash_command("proxychains -q git push -u origin main", cwd)
 							end
 						end)
 					end
@@ -389,3 +369,10 @@ vim.api.nvim_create_user_command("GenCtags", function(opts)
 	end
 
 end, { desc = "Generate Ctags" })
+
+-- Dump GCC predefined macros
+vim.api.nvim_create_user_command("DumpPredefinedMacro", function(opts)
+  local cmd = "gcc -dM -E -x c /dev/null | grep " .. vim.fn.expand("<cword>")
+  -- local cmd = "gcc -dM -E -x c /dev/null"
+  exec_bash_command(cmd)
+end, { desc = "Dump GCC predefined macros → Quickfix" })

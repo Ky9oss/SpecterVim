@@ -4,13 +4,12 @@
 #
 # By Ky9oss
 
-find . -name '*.c' | while read -r src; do
+find . -name '*.c' | while read src; do
     gcc -M -I/usr/include -I/usr/local/include "$src" 2>/dev/null
 done | \
 sed -e 's/[\\ ]/\n/g' \
     -e '/^$/d' \
-    -e '/\.o:.*$/d' \
-    -e '/\.c$/d' | sort -u > all-includes.txt
+    -e 's/^.*\.o://g'| sort -u > all-includes.txt
 
 ctags --kinds-C=+px \
       --fields=+iaS \
