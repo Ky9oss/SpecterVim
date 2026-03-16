@@ -13,7 +13,7 @@ if vim.g.clangd == 1 then
 	vim.lsp.config("clangd", {
 		filetypes = { "c", "cpp" },
 	})
-	vim.lsp.enable("clangd")
+	-- vim.lsp.enable("clangd")
 end
 
 vim.lsp.config("pylsp", {

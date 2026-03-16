@@ -369,3 +369,19 @@ vim.api.nvim_create_user_command("AssemblyExplorer", function(opts)
 		end
 	end
 end, { desc = "Get assembly for current buffer.", nargs = "+" })
+
+-- Generate Ctags
+vim.api.nvim_create_user_command("GenCtags", function(opts)
+
+	if project_root_path then
+		local run_command = "ctags -R --c-kinds=+px --fields=+iaS --extras=+q --exclude=.git ."
+		vim.system(vim.split(run_command, "%s+"), { text = true, cwd = project_root })
+	else
+		vim.notify(
+			[=[GenCtags: This file must in a project.
+		  Use `git init` in your project's root path to initialize a project]=],
+			vim.log.levels.ERROR
+		)
+	end
+
+end, { desc = "Generate Ctags" })
