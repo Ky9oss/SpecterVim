@@ -1,3 +1,5 @@
+require("utils.shell")
+
 local project = require("project_nvim.project")
 
 vim.keymap.set("n", "<leader>mm", function()
@@ -41,7 +43,7 @@ vim.keymap.set("n", "<leader>mt", function()
 	local project_root = project.get_project_root()
 	local filename = vim.api.nvim_buf_get_name(0):match("^(%S+)%.c$") -- This is a absolute path
 	local scriptpath = vim.fn.stdpath("config") .. "/lib/runc-tmux.sh"
-	local run_command = scriptpath .. " " .. filename
+  local params = { filename }
 
 	if project_root then
 		for name, type in vim.fs.dir(project_root) do
@@ -60,16 +62,5 @@ vim.keymap.set("n", "<leader>mt", function()
 		-- )
 	end
 
-	local stat = vim.uv.fs_stat(scriptpath)
-	if stat then -- file exists
-		if stat.mode % 128 < 64 then -- mode is 12 bits int. owner: bits 8-6(rwx). x = 2^6 = 64
-			vim.system(vim.split("chmod +x " .. scriptpath, "%s+"), { text = true }, function(obj)
-				if obj.code == 0 then
-					vim.system(vim.split(run_command, "%s+"), { text = true })
-				end
-			end)
-		else
-			vim.system(vim.split(run_command, "%s+"), { text = true })
-		end
-	end
+  exec_bash_scripts(scriptpath, params)
 end, { buffer = true, desc = "Run C Program with Tmux" })

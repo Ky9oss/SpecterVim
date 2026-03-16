@@ -1,5 +1,6 @@
-require("../utils.buffer")
-require("../utils.remote")
+require("utils.buffer")
+require("utils.remote")
+require("utils.shell")
 
 local project = require("project_nvim.project")
 local project_root_path = project.get_project_root()
@@ -9,7 +10,7 @@ local project_root_path = project.get_project_root()
 --- @param cmd string
 --- @param on_result function(success: bool)
 local function shellExecute(cmd, on_result)
-	return vim.system(vim.split(cmd, "%s+"), { cwd = vim.split(project_root_path, "%s+")[1] }, function(obj)
+	vim.system(vim.split(cmd, "%s+"), { cwd = vim.split(project_root_path, "%s+")[1] }, function(obj)
 		if obj.code == 0 then
 			if obj.stdout ~= nil and obj.stdout:gsub("^%s*(.-)%s*$", "%1") ~= "" then
 				vim.notify("STDOUT:" .. obj.stdout)
@@ -374,8 +375,11 @@ end, { desc = "Get assembly for current buffer.", nargs = "+" })
 vim.api.nvim_create_user_command("GenCtags", function(opts)
 
 	if project_root_path then
-		local run_command = "ctags -R --c-kinds=+px --fields=+iaS --extras=+q --exclude=.git ."
-		vim.system(vim.split(run_command, "%s+"), { text = true, cwd = project_root })
+		local scriptpath = vim.fn.stdpath("config") .. "/lib/gen-tags.sh"
+    exec_bash_scripts(scriptpath, nil, project_root_path)
+    
+		-- local run_command = "ctags -R --c-kinds=+px --fields=+iaS --extras=+q --exclude=.git ."
+		-- vim.system(vim.split(run_command, "%s+"), { text = true, cwd = project_root })
 	else
 		vim.notify(
 			[=[GenCtags: This file must in a project.

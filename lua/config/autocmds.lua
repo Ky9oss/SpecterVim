@@ -1,4 +1,4 @@
-require("../utils.lsp")
+require("utils.lsp")
 
 -- auto open nvim-tree
 local function open_nvim_tree(data)
@@ -65,6 +65,7 @@ vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
 .env
 tags
 .clangd
+all-includes.txt
 
         ]]
 		create_file(".gitignore", default_gitignore)

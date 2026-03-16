@@ -1,4 +1,4 @@
-require("../utils/encrypter")
+require("utils.encrypter")
 
 -- load .env
 function _G.load_env(path)
