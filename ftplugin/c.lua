@@ -26,7 +26,7 @@ vim.keymap.set("n", "<leader>mm", function()
 				end
 
 				vim.cmd("Make")
-				vim.cmd("copen 10")
+				vim.cmd("copen 10 | wincmd p")
 
 				return
 			end
@@ -34,13 +34,20 @@ vim.keymap.set("n", "<leader>mm", function()
 	end
 
 	if vim.fn.has("win32") ~= 1 then -- Linux
-		vim.bo.makeprg = "gcc-15 -Wall -O2 -o %< %"
+		-- vim.bo.makeprg = "gcc-15 -Wall -O2 -o %< %"
+		local scriptpath = vim.fn.stdpath("config") .. "/lib/gcc-compile.sh"
+		local stat = vim.uv.fs_stat(scriptpath)
+		if stat then -- file exists
+			if stat.mode % 128 >= 64 then -- mode is 12 bits int. owner: bits 8-6(rwx). x = 2^6 = 64
+				vim.bo.makeprg = "cd " .. project_root .. " && " .. scriptpath .. " %"
+			else
+				vim.bo.makeprg = "cd " .. project_root .. " && chmod +x " .. scriptpath .. " && " .. scriptpath .. " %"
+			end
+		end
 	end
 
-	-- vim.cmd("make")
-  vim.cmd("Make")
-	vim.cmd("copen 10")
-
+	vim.cmd("Make")
+	vim.cmd("copen 10 | wincmd p")
 end, { buffer = true, desc = "Make (C)" })
 
 vim.keymap.set("n", "<leader>mt", function()

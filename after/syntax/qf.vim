@@ -17,7 +17,7 @@ syn match	qfSeparator2	"|"	 contained nextgroup=qfText
 syn match	qfText		".*"	 contained contains=@qfType
 syn cluster	qfType	contains=qfError,qfWarning
 
-syn match	qfError		"error"	 contained
+syn match	qfError		"error\|Error\|ERROR\|FAILED"	 contained
 syn match	qfWarning		"warning"	 contained
 " syn match qfError   /error\|Error\|ERROR/   contained
 " syn match qfWarning /warning\|Warning\|WARNING/ contained
