@@ -25,7 +25,8 @@
 
 ## From Lsp to Ctags
 
-> [!TIP]Why?
+> [!TIP]
+> Why?
 > Because all I need is a lighter, more customizable, and controllable index jump and code completion.
 > No more dependencies, complex configurations, inconsistent behavior, or overly heavy applications.
 
