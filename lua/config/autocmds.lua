@@ -345,7 +345,6 @@ CompileFlags:
 				create_file(".clangd", clangd)
 			end
 
-
 			if vim.fn.has("win32") == 1 then
 				local compile_flags = [[
 -isystem
@@ -380,3 +379,16 @@ insert_final_newline = true
 		end
 	end,
 })
+
+-- modify quickfix
+-- vim.api.nvim_create_autocmd("QuickfixCmdPost", {
+-- 	callback = function()
+-- 		local qf = vim.fn.getqflist()
+--
+-- 		for i, item in ipairs(qf) do
+-- 			item.text = "[MODIFIED] " .. item.text
+-- 		end
+--
+-- 		vim.fn.setqflist(qf, "r")
+-- 	end,
+-- })

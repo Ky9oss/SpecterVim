@@ -26,6 +26,7 @@ vim.keymap.set("n", "<leader>mm", function()
 				end
 
 				vim.cmd("Make")
+				vim.cmd("copen 10")
 
 				return
 			end
@@ -36,14 +37,17 @@ vim.keymap.set("n", "<leader>mm", function()
 		vim.bo.makeprg = "gcc-15 -Wall -O2 -o %< %"
 	end
 
-	vim.cmd("Make")
+	-- vim.cmd("make")
+  vim.cmd("Make")
+	vim.cmd("copen 10")
+
 end, { buffer = true, desc = "Make (C)" })
 
 vim.keymap.set("n", "<leader>mt", function()
 	local project_root = project.get_project_root()
 	local filename = vim.api.nvim_buf_get_name(0):match("^(%S+)%.c$") -- This is a absolute path
-	local scriptpath = vim.fn.stdpath("config") .. "/lib/runc-tmux.sh"
-  local params = { filename }
+	local scriptpath = vim.fn.stdpath("config") .. "/lib/runscript-tmux.sh"
+	local params = { filename }
 
 	if project_root then
 		for name, type in vim.fs.dir(project_root) do
@@ -62,5 +66,5 @@ vim.keymap.set("n", "<leader>mt", function()
 		-- )
 	end
 
-  exec_bash_scripts(scriptpath, params)
+	exec_bash_scripts(scriptpath, params)
 end, { buffer = true, desc = "Run C Program with Tmux" })
