@@ -24,6 +24,7 @@ return {
         "luap",
         "markdown",
         "markdown_inline",
+        "make",
         "ninja",
         "printf",
         "python",

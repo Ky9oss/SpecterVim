@@ -2,6 +2,7 @@
 
 ## Normal Bugs
 
+- [ ] `<leader>ql` reopen other files
 - [ ] Lsp failed sometimes and :LspRestart cause error
 
 # New Features
