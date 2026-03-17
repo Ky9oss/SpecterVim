@@ -13,3 +13,6 @@ else
     # But the difference in OSC-52 between Tmux and non-Tmux is useful.
     printf '\e]52;c;%s\a' "$text"
 fi
+
+# `exit` will flush buffer ( printf -> buffer -> stdout)
+exit

@@ -31,13 +31,14 @@ if [[ -z $new_pane ]]; then
   tmux select-pane -t "$old_pane"
 fi
 
+# Warning: `. script.sh` will run scripts in the current progress; `./script.sh` run scripts in **child** process
 if [[ -x $OSC52_SCRIPT ]]; then
-  tmux send-keys -t "$new_pane" "$OSC52_SCRIPT" Enter
+  tmux send-keys -t "$new_pane" ". $OSC52_SCRIPT" Enter 
 elif [[ -f $OSC52_SCRIPT ]]; then
-  tmux send-keys -t "$new_pane" "chmod +x $OSC52_SCRIPT && $OSC52_SCRIPT" Enter
+  tmux send-keys -t "$new_pane" "chmod +x $OSC52_SCRIPT && . $OSC52_SCRIPT" Enter
 else
   printf "File does not exist!";
 fi
 
-sleep 0.02
-tmux kill-pane -t "$new_pane"
+# sleep 0.02
+# tmux kill-pane -t "$new_pane"
