@@ -31,6 +31,7 @@
 > No more dependencies, complex configurations, inconsistent behavior, or overly heavy applications.
 
 - [ ] support `makefile` in ctags
+- [ ] support function-like macro such as `pow` in `/usr/include/bits/mathcalls.h`
 
 ## Others
 
