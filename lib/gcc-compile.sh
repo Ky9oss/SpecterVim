@@ -11,5 +11,6 @@ if [[ $? -eq 1 ]]; then
   printf "%s\n" "--------[COMPILATION FAILED]--------"
   printf "%s" "$result"
 else 
+  printf "%s\n" "--------[COMPILATION SUCCESS]--------"
   printf "%s" "$result";
 fi
