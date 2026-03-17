@@ -17,7 +17,7 @@ for item in "${arr[@]}"; do
 done
 
 if [[ -z $new_pane ]]; then
-  new_pane=$(tmux split-window -h -l 0 -P -F "#{pane_id}")
+  new_pane=$(tmux split-window -h -l 0 -P -F "#{pane_id}" 'bash --noprofile --norc')
   tmux select-pane -t "$old_pane"
 fi
 
