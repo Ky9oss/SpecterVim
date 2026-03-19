@@ -1,4 +1,3 @@
-
 -- Copy
 if vim.g.copy_to_system == true then
 	vim.keymap.set("n", "gy", '"+y')
@@ -8,7 +7,6 @@ if vim.g.copy_to_system == true then
 	vim.keymap.set("n", "gp", '"+p')
 	vim.keymap.set("n", "gP", '"+P')
 end
-
 
 -- Hover action: Use signature_help in csharp with roslyn; Otherwise use LspSaga's hover
 vim.keymap.set("n", "K", function()
@@ -48,7 +46,12 @@ end, { noremap = true, silent = true })
 
 -- Lua Temp Script
 vim.keymap.set("n", "<leader>sr", function()
-	vim.cmd.pedit(vim.fn.stdpath("cache") .. "/_temp_script.lua")
+	local filetype = vim.bo[vim.api.nvim_get_current_buf()].filetype
+	if filetype == "lua" then
+		vim.cmd.pedit(vim.fn.stdpath("cache") .. "/_temp_script.lua")
+	elseif filetype == "sh" then
+		vim.cmd.pedit(vim.fn.stdpath("cache") .. "/_temp_script.sh")
+	end
 end, { noremap = true, silent = true })
 
 -- Lua Runner

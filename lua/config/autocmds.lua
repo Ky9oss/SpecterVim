@@ -22,9 +22,9 @@ vim.api.nvim_create_autocmd("BufWrite", {
 	end,
 })
 
--- auto save draftpaper
+-- auto save draftpaper and temp scripts
 vim.api.nvim_create_autocmd("WinLeave", {
-	pattern = { "draftpaper.txt", "_temp_script.lua" },
+	pattern = { "draftpaper.txt", "_temp_script.lua", "_temp_script.sh" },
 	callback = function()
 		vim.cmd.write()
 	end,
