@@ -2,7 +2,7 @@
 
 ## Normal Bugs
 
-- [ ] `<leader>ql` reopen other files
+- [x] `<leader>ql` reopen other files
 - [ ] Lsp failed sometimes and :LspRestart cause error
 
 # New Features
@@ -21,7 +21,7 @@
 
 ## About Tmux
 
-- [ ] restore neovim pages(`<leader>ql`) when restore tmux
+- [x] restore neovim pages(`<leader>ql`) when restore tmux
 
 ## From Lsp to Ctags
 
@@ -32,7 +32,7 @@
 
 - [ ] support locate in AssemblyExplorer
 - [ ] support function-like macro such as `pow` in `/usr/include/bits/mathcalls.h`
-- [ ] support `makefile` in ctags
+- [x] support `makefile` in ctags
 
 ## Others
 

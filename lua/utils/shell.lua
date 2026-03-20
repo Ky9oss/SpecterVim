@@ -16,11 +16,34 @@ function exec_bash_scripts(scriptpath, params, cwd)
 		if stat.mode % 128 < 64 then -- mode is 12 bits int. owner: bits 8-6(rwx). x = 2^6 = 64
 			vim.system(vim.split("chmod +x " .. scriptpath, "%s+"), { text = true, cwd = cwd }, function(obj)
 				if obj.code == 0 then
-					vim.system(vim.split(run_command, "%s+"), { text = true, cwd = cwd })
+					vim.system(vim.split(run_command, "%s+"), { text = true, cwd = cwd }, function(obj)
+						if obj.code == 0 then
+							if obj.stdout ~= nil and obj.stdout:gsub("^%s*(.-)%s*$", "%1") ~= "" then
+								vim.notify("[Command]\n" .. run_command .. "\n[STDOUT]\n" .. obj.stdout)
+							end
+						else
+							vim.notify(
+								"[Command]\n" .. run_command .. "\n[STDERR(code:" .. obj.code .. ")]" .. obj.stderr,
+								vim.log.levels.ERROR
+							)
+						end
+					end)
 				end
 			end)
 		else
-			vim.system(vim.split(run_command, "%s+"), { text = true, cwd = cwd })
+			-- vim.system(vim.split(run_command, "%s+"), { text = true, cwd = cwd })
+			vim.system(vim.split(run_command, "%s+"), { text = true, cwd = cwd }, function(obj)
+				if obj.code == 0 then
+					if obj.stdout ~= nil and obj.stdout:gsub("^%s*(.-)%s*$", "%1") ~= "" then
+						vim.notify("[Command]\n" .. run_command .. "\n[STDOUT]\n" .. obj.stdout)
+					end
+				else
+					vim.notify(
+						"[Command]\n" .. run_command .. "\n[STDERR(code:" .. obj.code .. ")]" .. obj.stderr,
+						vim.log.levels.ERROR
+					)
+				end
+			end)
 		end
 	end
 end
@@ -41,13 +64,15 @@ function exec_bash_command(cmd, cwd, on_result)
 					on_result(true)
 				end
 			else
-				vim.notify("[Command]\n" .. cmd .. "\n[STDERR(code:" .. obj.code .. ")]" .. obj.stderr, vim.log.levels.ERROR)
+				vim.notify(
+					"[Command]\n" .. cmd .. "\n[STDERR(code:" .. obj.code .. ")]" .. obj.stderr,
+					vim.log.levels.ERROR
+				)
 				if on_result then
 					on_result(false)
 				end
 			end
 		end)
-
 	else
 		vim.system({ "bash", "-c", cmd }, { text = true, cwd = cwd }, function(obj)
 			if obj.code == 0 then
@@ -58,7 +83,10 @@ function exec_bash_command(cmd, cwd, on_result)
 					on_result(true)
 				end
 			else
-				vim.notify("[Command]\n" .. cmd .. "\n[STDERR(code:" .. obj.code .. ")]" .. obj.stderr, vim.log.levels.ERROR)
+				vim.notify(
+					"[Command]\n" .. cmd .. "\n[STDERR(code:" .. obj.code .. ")]" .. obj.stderr,
+					vim.log.levels.ERROR
+				)
 				if on_result then
 					on_result(false)
 				end

@@ -21,7 +21,7 @@ list_panes=$(tmux list-panes -F "#{pane_width}:#{pane_id}")
 readarray arr <<<"$list_panes"
 
 for item in "${arr[@]}"; do
-  if [[ "$item" =~ 1:([^[:space:]]+) ]]; then
+  if [[ "$item" =~ ^1:([^[:space:]]+) ]]; then
     new_pane=${BASH_REMATCH[1]}
   fi
 done

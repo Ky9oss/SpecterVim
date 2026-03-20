@@ -5,7 +5,6 @@ require("utils.shell")
 local project = require("project_nvim.project")
 local project_root_path = project.get_project_root()
 
-
 -- Git Push
 vim.api.nvim_create_user_command("GitPush", function(opts)
 	if opts.args == nil then
@@ -49,7 +48,7 @@ vim.api.nvim_create_user_command("GitPush", function(opts)
 					end
 				end)
 			else
-        local cwd = vim.split(project_root_path, "%s+")[1]
+				local cwd = vim.split(project_root_path, "%s+")[1]
 				-- Linux with proxychains
 				exec_bash_command("git add .", cwd, function(success)
 					if success then
@@ -187,8 +186,8 @@ function AssemblyExplorerMSVC(is_remote, compile_options)
 		-- once = true,
 	})
 
-  -- TODO: Add custom_command
-  -- TODO: Optimize batch file by env cache
+	-- TODO: Add custom_command
+	-- TODO: Optimize batch file by env cache
 	if is_remote then
 		scp_push(vim.api.nvim_buf_get_name(0), "~/_temp_assembly_explorer_msvc.c", function(flag)
 			if flag then
@@ -227,7 +226,6 @@ function AssemblyExplorerMSVC(is_remote, compile_options)
 			timer:stop()
 		end, 20000) -- 20s
 	else
-
 		local custom_command = ""
 		for _, o in ipairs(compile_options) do
 			custom_command = custom_command .. o .. " "
@@ -352,14 +350,12 @@ vim.api.nvim_create_user_command("AssemblyExplorer", function(opts)
 end, { desc = "Get assembly for current buffer.", nargs = "+" })
 
 -- Generate Ctags
+-- Usage: GenCtags c make
 vim.api.nvim_create_user_command("GenCtags", function(opts)
-
 	if project_root_path then
+		local params = opts.fargs or { "c" }
 		local scriptpath = vim.fn.stdpath("config") .. "/lib/gen-tags.sh"
-    exec_bash_scripts(scriptpath, nil, project_root_path)
-    
-		-- local run_command = "ctags -R --c-kinds=+px --fields=+iaS --extras=+q --exclude=.git ."
-		-- vim.system(vim.split(run_command, "%s+"), { text = true, cwd = project_root })
+		exec_bash_scripts(scriptpath, params, project_root_path)
 	else
 		vim.notify(
 			[=[GenCtags: This file must in a project.
@@ -367,12 +363,11 @@ vim.api.nvim_create_user_command("GenCtags", function(opts)
 			vim.log.levels.ERROR
 		)
 	end
-
-end, { desc = "Generate Ctags" })
+end, { desc = "Generate Ctags", nargs = "+" })
 
 -- Dump GCC predefined macros
 vim.api.nvim_create_user_command("DumpPredefinedMacro", function(opts)
-  local cmd = "gcc -dM -E -x c /dev/null | grep " .. vim.fn.expand("<cword>")
-  -- local cmd = "gcc -dM -E -x c /dev/null"
-  exec_bash_command(cmd)
+	local cmd = "gcc -dM -E -x c /dev/null | grep " .. vim.fn.expand("<cword>")
+	-- local cmd = "gcc -dM -E -x c /dev/null"
+	exec_bash_command(cmd)
 end, { desc = "Dump GCC predefined macros → Quickfix" })
