@@ -1,4 +1,6 @@
 require("utils.lsp")
+local project = require("project_nvim.project")
+local project_root = project.get_project_root()
 
 -- auto open nvim-tree
 local function open_nvim_tree(data)
@@ -30,48 +32,46 @@ vim.api.nvim_create_autocmd("WinLeave", {
 	end,
 })
 
-local create_file = function(filename, dcontent)
-	local project = require("project_nvim.project")
-	local content = dcontent:gsub("%s+\n", "\n"):gsub("%s+$", "")
-	local project_root = project.get_project_root()
-	if not project_root then
-		return
-	end
+-- This will run if the current file is in a "Project"
+if project_root then
+	local create_file = function(filename, dcontent)
+		local content = dcontent:gsub("%s+\n", "\n"):gsub("%s+$", "")
 
-	local filepath = project_root .. "/" .. filename
-	local is_exists = vim.fn.findfile(filepath, ".;") ~= ""
+		local filepath = project_root .. "/" .. filename
+		local is_exists = vim.fn.findfile(filepath, ".;") ~= ""
 
-	if not is_exists then
-		if vim.fn.filereadable(filepath) == 0 then
-			local f = io.open(filepath, "w")
-			if f then
-				f:write(content)
-				f:close()
-				vim.notify(filename .. " created automatically", "info")
-			else
-				vim.notify("Failed to create " .. filename, "error")
+		if not is_exists then
+			if vim.fn.filereadable(filepath) == 0 then
+				local f = io.open(filepath, "w")
+				if f then
+					f:write(content)
+					f:close()
+					vim.notify(filename .. " created automatically", "info")
+				else
+					vim.notify("Failed to create " .. filename, "error")
+				end
 			end
 		end
 	end
-end
 
--- auto create config files for formatter and git
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-	callback = function(ev)
-		local ft = vim.bo[ev.buf].filetype
+	-- auto create config files for formatter and git
+	vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+		callback = function(ev)
+			local ft = vim.bo[ev.buf].filetype
 
-		local default_gitignore = [[
+			local default_gitignore = [[
 *.log
 .env
 tags
 .clangd
 all-includes.txt
+Session.vim
 
         ]]
-		create_file(".gitignore", default_gitignore)
+			create_file(".gitignore", default_gitignore)
 
-		if ft == "asm" then
-			local default_toml = [[
+			if ft == "asm" then
+				local default_toml = [[
 
 [default_config]
 # Configure documentation available for features like hover and completions
@@ -88,9 +88,9 @@ default_diagnostics = true
 
         ]]
 
-			create_file(".asm-lsp.toml", default_toml)
-		elseif (ft == "c" or ft == "cpp") and vim.g.clangd == 1 then
-			local clang_format = [[
+				create_file(".asm-lsp.toml", default_toml)
+			elseif (ft == "c" or ft == "cpp") and vim.g.clangd == 1 then
+				local clang_format = [[
 ---
 Language:        Cpp
 # BasedOnStyle:  Google
@@ -318,12 +318,12 @@ WhitespaceSensitiveMacros:
 ...
 
         ]]
-			create_file(".clang_format", clang_format)
+				create_file(".clang_format", clang_format)
 
-			if CheckLspHealth("clangd") then
-				local clangd
-				if vim.fn.has("win32") == 1 then
-					clangd = [[
+				if CheckLspHealth("clangd") then
+					local clangd
+					if vim.fn.has("win32") == 1 then
+						clangd = [[
 CompileFlags:
     Add:
       - --target=x86_64-pc-windows-msvc
@@ -332,8 +332,8 @@ CompileFlags:
 
 
         ]]
-				else
-					clangd = [[
+					else
+						clangd = [[
 CompileFlags:
     Add: 
       - -I./include
@@ -341,12 +341,12 @@ CompileFlags:
       - -Wall
 
         ]]
+					end
+					create_file(".clangd", clangd)
 				end
-				create_file(".clangd", clangd)
-			end
 
-			if vim.fn.has("win32") == 1 then
-				local compile_flags = [[
+				if vim.fn.has("win32") == 1 then
+					local compile_flags = [[
 -isystem
 C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.29.30133/include
 -isystem
@@ -357,15 +357,15 @@ C:/Program Files (x86)/Windows Kits/10/Include/10.0.26100.0/shared
 C:/Program Files (x86)/Windows Kits/10/Include/10.0.26100.0/um
 
       ]]
-				create_file("compile_flags.txt", compile_flags)
-			end
-		elseif ft == "lua" then
-			local stylua_toml = [[
+					create_file("compile_flags.txt", compile_flags)
+				end
+			elseif ft == "lua" then
+				local stylua_toml = [[
 syntax = "LuaJIT"
         ]]
-			create_file("stylua.toml", stylua_toml)
-		else
-			local default_editorconfig = [[
+				create_file("stylua.toml", stylua_toml)
+			else
+				local default_editorconfig = [[
 root = true
 
 [*]
@@ -375,20 +375,19 @@ tab_width = 4
 end_of_line = lf
 insert_final_newline = true
         ]]
-			create_file(".editorconfig", default_editorconfig)
-		end
-	end,
-})
+				create_file(".editorconfig", default_editorconfig)
+			end
+		end,
+	})
 
--- modify quickfix
--- vim.api.nvim_create_autocmd("QuickfixCmdPost", {
--- 	callback = function()
--- 		local qf = vim.fn.getqflist()
---
--- 		for i, item in ipairs(qf) do
--- 			item.text = "[MODIFIED] " .. item.text
--- 		end
---
--- 		vim.fn.setqflist(qf, "r")
--- 	end,
--- })
+	-- auto :Obsession
+	vim.api.nvim_create_autocmd("VimEnter", {
+		callback = function()
+			local filepath = project_root .. "/Session.vim"
+			local is_exists = vim.fn.findfile(filepath, ".;") ~= ""
+			if not is_exists then
+        vim.cmd("Obsession")
+			end
+		end,
+	})
+end

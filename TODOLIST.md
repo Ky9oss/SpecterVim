@@ -21,7 +21,7 @@
 
 ## About Tmux
 
-- [ ] restore neovim pages when restore tmux windows
+- [ ] restore neovim pages(`<leader>ql`) when restore tmux
 
 ## From Lsp to Ctags
 
@@ -30,8 +30,9 @@
 > Because all I need is a lighter, more customizable, and controllable index jump and code completion.
 > No more dependencies, complex configurations, inconsistent behavior, or overly heavy applications.
 
-- [ ] support `makefile` in ctags
+- [ ] support locate in AssemblyExplorer
 - [ ] support function-like macro such as `pow` in `/usr/include/bits/mathcalls.h`
+- [ ] support `makefile` in ctags
 
 ## Others
 
@@ -43,9 +44,6 @@
   - [ ] optimize msvc by env cache
 
 - [x] encrypt password
-
-
-- [ ] Encore.sh
 
 - [ ] Ensure the libs(bash-scripts/executable) is executable and grant it if it's not.
 

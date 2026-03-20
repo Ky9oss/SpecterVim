@@ -39,6 +39,9 @@ end, { noremap = true, silent = true })
 -- NvimTree
 vim.keymap.set("n", "<leader>tr", "<cmd>NvimTreeOpen<CR>", { noremap = true, silent = true })
 
+-- Obsession
+vim.keymap.set("n", "<leader>ql", "<cmd>source Session.vim<CR>", { noremap = true, silent = true })
+
 -- Draft Paper
 vim.keymap.set("n", "<leader>dp", function()
 	vim.cmd.pedit(vim.fn.stdpath("cache") .. "/draftpaper.txt")
