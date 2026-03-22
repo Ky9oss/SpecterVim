@@ -370,3 +370,12 @@ vim.api.nvim_create_user_command("DumpPredefinedMacro", function(opts)
 	local cmd = "gcc -dM -E -x c /dev/null | grep " .. vim.fn.expand("<cword>")
 	exec_bash_command(cmd)
 end, { desc = "Dump GCC predefined macros → Quickfix" })
+
+-- Temp Script
+vim.api.nvim_create_user_command("TempScript", function(opts)
+	if opts.args == nil then
+		vim.notify("TempScript need 1 argument.", vim.log.levels.ERROR)
+	else
+		vim.cmd.pedit(vim.fn.stdpath("cache") .. "/_temp_script." .. opts.args)
+  end
+end, { desc = "Create a temp script file for a specific language", nargs = 1 })

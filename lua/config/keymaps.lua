@@ -54,9 +54,11 @@ end, { noremap = true, silent = true })
 vim.keymap.set("n", "<leader>sr", function()
 	local filetype = vim.bo[vim.api.nvim_get_current_buf()].filetype
 	if filetype == "lua" then
-		vim.cmd.pedit(vim.fn.stdpath("cache") .. "/_temp_script.lua")
+		-- vim.cmd.pedit(vim.fn.stdpath("cache") .. "/_temp_script.lua")
+    vim.cmd("TempScript lua")
 	elseif filetype == "sh" then
-		vim.cmd.pedit(vim.fn.stdpath("cache") .. "/_temp_script.sh")
+		-- vim.cmd.pedit(vim.fn.stdpath("cache") .. "/_temp_script.sh")
+    vim.cmd("TempScript sh")
 	end
 end, { noremap = true, silent = true })
 

@@ -21,6 +21,7 @@
   - [x] normal gcc
   - [ ] Makefile
   - [ ] Cmake
+  - [ ] A controllable compile command instaed of Make
 
 ## About Tmux
 

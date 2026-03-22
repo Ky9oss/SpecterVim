@@ -69,10 +69,13 @@ vim.keymap.set("n", "<leader>mm", function()
 		end
 	end
 
-	vim.cmd([[
-Make
-copen 10 | wincmd p
-  ]]) -- I need to know whether the :Make has done.
+  -- vim.notify("Current errorformat: " .. vim.bo.errorformat)
+  vim.cmd("compiler gcc")
+  -- vim.notify("Current errorformat: " .. vim.bo.errorformat)
+	vim.cmd("copen 10")
+  -- TODO: A controllable compile command instaed of Make
+	vim.cmd("Make")
+
 	-- vim.cmd("make | copen 10 | wincmd p")
 end, { buffer = true, desc = "Make (C)" })
 
