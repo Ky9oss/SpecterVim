@@ -17,7 +17,10 @@
 
 - [ ] Debugger
 
-- [ ] Edit-compile-edit for all c-compilation-env(Makefile/CmakeList/gcc&msvc/...) by Quickfix
+- Edit-compile-edit for all c-compilation-env by Quickfix
+  - [x] normal gcc
+  - [ ] Makefile
+  - [ ] Cmake
 
 ## About Tmux
 

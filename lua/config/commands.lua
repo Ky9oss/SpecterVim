@@ -368,6 +368,5 @@ end, { desc = "Generate Ctags", nargs = "+" })
 -- Dump GCC predefined macros
 vim.api.nvim_create_user_command("DumpPredefinedMacro", function(opts)
 	local cmd = "gcc -dM -E -x c /dev/null | grep " .. vim.fn.expand("<cword>")
-	-- local cmd = "gcc -dM -E -x c /dev/null"
 	exec_bash_command(cmd)
 end, { desc = "Dump GCC predefined macros → Quickfix" })

@@ -71,6 +71,7 @@ tags
 all-includes.txt
 Session.vim
 tagfiles
+bin
 
         ]]
 			create_file(".gitignore", default_gitignore)
