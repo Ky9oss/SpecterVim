@@ -378,4 +378,4 @@ vim.api.nvim_create_user_command("TempScript", function(opts)
 	else
 		vim.cmd.pedit(vim.fn.stdpath("cache") .. "/_temp_script." .. opts.args)
   end
-end, { desc = "Create a temp script file for a specific language", nargs = 1 })
+end, { desc = "A command to create multiple types temporary files", nargs = 1 })
