@@ -4,7 +4,7 @@
 # By Ky9oss
 
 copied=$(tmux save-buffer -)
-text=$(echo -n "$copied" | base64 -w0)
+text=$(printf "%s" "$copied" | base64 -w0)
 
 if [ -n "$TMUX" ]; then
     printf '\ePtmux;\e\e]52;c;%s\e\e\\\e\\' "$text"
