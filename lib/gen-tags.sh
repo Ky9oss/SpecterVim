@@ -8,9 +8,11 @@
 
 C_CTAGS="./tagfiles/c/tags"
 MAKE_CTAGS="./tagfiles/make/tags"
+SH_CTAGS="./tagfiles/sh/tags"
 
 mkdir -p ./tagfiles/c/
 mkdir -p ./tagfiles/make/
+mkdir -p ./tagfiles/sh/
 
 for lang in "$@"; do
   lang=$(echo "$lang" | tr '[:upper:]' '[:lower:]')
@@ -41,11 +43,17 @@ for lang in "$@"; do
     if [[ -e $MAKE_CTAGS ]]; then
       rm $MAKE_CTAGS
     fi
-    touch $MAKE_CTAGS
 
     ctags --languages=Make \
       --tag-relative=no \
-       $PWD/Makefile $PWD/*.make && mv $PWD/tags $MAKE_CTAGS && printf "Done: %s\n" "$MAKE_CTAGS has generated."
+       "$PWD/Makefile" "$PWD/*.make" && mv "$PWD/tags" $MAKE_CTAGS && printf "Done: %s\n" "$MAKE_CTAGS has generated."
+    ;;
+  sh|bash|zsh)
+    if [[ -e $SH_CTAGS ]]; then
+      rm $SH_CTAGS
+    fi
+
+    ctags --languages=Sh -R "$PWD" && mv "$PWD/tags" $SH_CTAGS && printf "Done: %s\n" "$SH_CTAGS has generated."
     ;;
   *)
     printf "Error: %s\n" "Parameters error" >&2

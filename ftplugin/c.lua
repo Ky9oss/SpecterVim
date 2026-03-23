@@ -72,7 +72,7 @@ vim.keymap.set("n", "<leader>mm", function()
   -- vim.notify("Current errorformat: " .. vim.bo.errorformat)
   vim.cmd("compiler gcc")
   -- vim.notify("Current errorformat: " .. vim.bo.errorformat)
-	vim.cmd("copen 10")
+	vim.cmd("copen 10 | wincmd p")
   -- TODO: A controllable compile command instaed of Make
 	vim.cmd("Make")
 
