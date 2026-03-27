@@ -21,7 +21,9 @@
   - [x] normal gcc
   - [ ] Makefile
   - [ ] Cmake
-  - [ ] A controllable compile command instaed of Make
+  - [ ] Meson
+  - [ ] Ninja
+  - [ ] A controllable compile command instead of :Make
 
 ## About Tmux
 

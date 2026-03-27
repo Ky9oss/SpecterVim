@@ -110,3 +110,16 @@ vim.keymap.set("n", "<leader>mt", function()
 
 	exec_bash_scripts(scriptpath, params)
 end, { buffer = true, desc = "Run C Program with Tmux" })
+
+-- Run executable binary and output to vim.notify()
+-- If we are in a Project. Then run executable binary in project_root/bin. Else run exectubale binary in current dir.
+vim.keymap.set("n", "<leader>mv", function()
+	local executable_path
+	if project_root then
+		executable_path = project_root .. "/bin/" .. vim.api.nvim_buf_get_name(0):match(".*/(%S+)%.c$")
+	else
+		executable_path = vim.api.nvim_buf_get_name(0):match("^(%S+)%.c$") -- This is a absolute path
+	end
+	exec_bash_scripts(executable_path)
+
+end, { buffer = true, desc = "Run C Program with Tmux" })
