@@ -397,3 +397,19 @@ insert_final_newline = true
 		end,
 	})
 end
+
+-- Auto set: Tab or 4 space
+vim.api.nvim_create_autocmd({ "BufEnter" }, {
+	pattern = { "Makefile", "Makefile.*" },
+	callback = function()
+		vim.cmd("set noexpandtab")
+		vim.cmd("set list")
+	end,
+})
+vim.api.nvim_create_autocmd("WinLeave", {
+	pattern = { "Makefile", "Makefile.*" },
+	callback = function()
+		vim.cmd("set expandtab")
+		vim.cmd("set nolist")
+	end,
+})
