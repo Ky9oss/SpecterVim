@@ -35,9 +35,11 @@ return {
 				mappings = {
 					i = {
 						["<c-y>"] = actions.select_vertical,
+						["<c-x>"] = actions.select_horizontal,
 					},
 					n = {
 						["<c-y>"] = actions.select_vertical,
+						["<c-x>"] = actions.select_horizontal,
 					},
 				},
 			},

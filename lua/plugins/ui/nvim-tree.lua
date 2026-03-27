@@ -1,109 +1,117 @@
 return {
-  "nvim-tree/nvim-tree.lua",
-  lazy = true,
-  cmd = { "NvimTreeOpen" },
-  config = function()
-    -- Custom Decorator
-    ---@class MyCustomDecorator : UserDecorator
-    ---@field enabled boolean
-    ---@field highlight_range string
-    ---@field icon_placement string
-    local MyCustomDecorator = require("nvim-tree.api").decorator.UserDecorator:extend()
+	"nvim-tree/nvim-tree.lua",
+	lazy = true,
+	cmd = { "NvimTreeOpen" },
+	config = function()
+		-- Custom Keymap
+		-- local api = require("nvim-tree.api")
+		-- local function opts(desc)
+		-- 	return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+		-- end
+		-- vim.keymap.set("n", "<c-x>", api.node.open.horizontal, opts("Open: Horizontal Split"))
+		-- vim.keymap.set("n", "<c-y>", api.node.open.vertical, opts("Open: Vertical Split"))
 
-    function MyCustomDecorator:new()
-      self.enabled = true
-      self.highlight_range = "all" -- or "all", "icon", "none"
-      self.icon_placement = "after"
-      self.my_icon_node = { str = ">", hl = { "DevIconNushell" } }
-    end
+		-- Custom Decorator
+		---@class MyCustomDecorator : UserDecorator
+		---@field enabled boolean
+		---@field highlight_range string
+		---@field icon_placement string
+		local MyCustomDecorator = require("nvim-tree.api").decorator.UserDecorator:extend()
 
-    -- Custom Highlight
-    ---@param node any
-    ---@return string|nil
-    function MyCustomDecorator:highlight_group(node)
-      local target_files = {
-        vim.api.nvim_buf_get_name(0),
-      }
-      for _, target_path in ipairs(target_files) do
-        if node.absolute_path == target_path then
-          return "Substitute" -- highlight format
-        end
-      end
-      return nil
-    end
+		function MyCustomDecorator:new()
+			self.enabled = true
+			self.highlight_range = "all" -- or "all", "icon", "none"
+			self.icon_placement = "after"
+			self.my_icon_node = { str = ">", hl = { "DevIconNushell" } }
+		end
 
-    function MyCustomDecorator:icon_node(node)
-      local target_files = {
-        vim.api.nvim_buf_get_name(0),
-      }
-      for _, target_path in ipairs(target_files) do
-        if node.absolute_path == target_path then
-          return self.my_icon_node
-        end
-      end
-      return nil
-    end
+		-- Custom Highlight
+		---@param node any
+		---@return string|nil
+		function MyCustomDecorator:highlight_group(node)
+			local target_files = {
+				vim.api.nvim_buf_get_name(0),
+			}
+			for _, target_path in ipairs(target_files) do
+				if node.absolute_path == target_path then
+					return "Substitute" -- highlight format
+				end
+			end
+			return nil
+		end
 
-    require("nvim-tree").setup({
-      disable_netrw = true,
-      hijack_netrw = true,
+		function MyCustomDecorator:icon_node(node)
+			local target_files = {
+				vim.api.nvim_buf_get_name(0),
+			}
+			for _, target_path in ipairs(target_files) do
+				if node.absolute_path == target_path then
+					return self.my_icon_node
+				end
+			end
+			return nil
+		end
 
-      respect_buf_cwd = false,
-      sync_root_with_cwd = false,
+		require("nvim-tree").setup({
+			disable_netrw = true,
+			hijack_netrw = true,
 
-      sort = {
-        sorter = "case_sensitive",
-      },
-      view = {
-        width = 30,
-      },
-      update_focused_file = {
-        enable = true, -- auto highlight when open files
-        update_cwd = false, -- change root dir when open files
-      },
-      renderer = {
-        group_empty = true,
-        highlight_git = true,
-        highlight_hidden = "name",
-        special_files = { "Cargo.toml", "Makefile", "README.md", "readme.md" },
-        root_folder_label = function(path)
-          require("../../utils.str")
-          return LimitStr(vim.fn.fnamemodify(path, ":p"), 20)
-        end,
-        icons = {
-          show = {
-            git = false,
-            folder = true,
-            file = true,
-            folder_arrow = true,
-          },
-        },
-        decorators = {
-          "Git",
-          "Open",
-          "Hidden",
-          "Modified",
-          "Bookmark",
-          "Diagnostics",
-          "Copied",
-          "Cut",
-          MyCustomDecorator,
-        },
-      },
-      filters = {
-        dotfiles = false, -- show hidden files
-        git_ignored = false,
-      },
-      actions = {
-        open_file = {
-          quit_on_open = false,
-        },
-      },
-      git = {
-        enable = true,
-        timeout = 200, -- (in ms)
-      },
-    })
+			respect_buf_cwd = false,
+			sync_root_with_cwd = false,
 
-  end,
+			sort = {
+				sorter = "case_sensitive",
+			},
+			view = {
+				width = 30,
+			},
+			update_focused_file = {
+				enable = true, -- auto highlight when open files
+				update_cwd = false, -- change root dir when open files
+			},
+			renderer = {
+				group_empty = true,
+				highlight_git = true,
+				highlight_hidden = "name",
+				special_files = { "Cargo.toml", "Makefile", "README.md", "readme.md" },
+				root_folder_label = function(path)
+					require("../../utils.str")
+					return LimitStr(vim.fn.fnamemodify(path, ":p"), 20)
+				end,
+				icons = {
+					show = {
+						git = false,
+						folder = true,
+						file = true,
+						folder_arrow = true,
+					},
+				},
+				decorators = {
+					"Git",
+					"Open",
+					"Hidden",
+					"Modified",
+					"Bookmark",
+					"Diagnostics",
+					"Copied",
+					"Cut",
+					MyCustomDecorator,
+				},
+			},
+			filters = {
+				dotfiles = false, -- show hidden files
+				git_ignored = false,
+			},
+			actions = {
+				open_file = {
+					quit_on_open = false,
+				},
+			},
+			git = {
+				enable = true,
+				timeout = 200, -- (in ms)
+			},
+		})
+
+	end,
 }

@@ -55,10 +55,10 @@ vim.keymap.set("n", "<leader>sr", function()
 	local filetype = vim.bo[vim.api.nvim_get_current_buf()].filetype
 	if filetype == "lua" then
 		-- vim.cmd.pedit(vim.fn.stdpath("cache") .. "/_temp_script.lua")
-    vim.cmd("TempScript lua")
+		vim.cmd("TempScript lua")
 	elseif filetype == "sh" then
 		-- vim.cmd.pedit(vim.fn.stdpath("cache") .. "/_temp_script.sh")
-    vim.cmd("TempScript sh")
+		vim.cmd("TempScript sh")
 	end
 end, { noremap = true, silent = true })
 
@@ -81,3 +81,11 @@ vim.keymap.set("t", "<Esc>", "<C-\\><C-n>:q<CR>")
 
 -- Assembly Explorer
 vim.keymap.set("n", "<leader>as", "<cmd>AssemblyExplorer<CR>")
+
+-- Nvim-tree Custom Keymap
+local api = require("nvim-tree.api")
+local function opts(desc)
+	return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+end
+vim.keymap.set("n", "<C-y>", api.node.open.vertical, opts("Open: Vertical Split"))
+vim.keymap.set("n", "<C-x>", api.node.open.horizontal, opts("Open: Horizontal Split"))
