@@ -9,10 +9,14 @@
 C_CTAGS="./tagfiles/c/tags"
 MAKE_CTAGS="./tagfiles/make/tags"
 SH_CTAGS="./tagfiles/sh/tags"
+AUTOMAKE_CTAGS="./tagfiles/automake/tags"
+AUTOCONF_CTAGS="./tagfiles/autoconf/tags"
 
 mkdir -p ./tagfiles/c/
 mkdir -p ./tagfiles/make/
 mkdir -p ./tagfiles/sh/
+mkdir -p ./tagfiles/automake/
+mkdir -p ./tagfiles/autoconf/
 
 for lang in "$@"; do
   lang=$(echo "$lang" | tr '[:upper:]' '[:lower:]')
@@ -54,6 +58,19 @@ for lang in "$@"; do
     fi
 
     ctags --languages=Sh -R "$PWD" && mv "$PWD/tags" $SH_CTAGS && printf "Done: %s\n" "$SH_CTAGS has generated."
+    ;;
+  automake|autoconf)
+    if [[ -e $AUTOMAKE_CTAGS ]]; then
+      rm $AUTOMAKE_CTAGS
+    fi
+
+    if [[ -e $AUTOCONF_CTAGS ]]; then
+      rm $AUTOCONF_CTAGS
+    fi
+
+    ctags --languages=Automake -R "$PWD" && mv "$PWD/tags" $AUTOMAKE_CTAGS && printf "Done: %s\n" "$AUTOMAKE_CTAGS has generated."
+    ctags --languages=Autoconf -R "$PWD" && mv "$PWD/tags" $AUTOCONF_CTAGS && printf "Done: %s\n" "$AUTOCONF_CTAGS has generated."
+
     ;;
   *)
     printf "Error: %s\n" "Parameters error" >&2
