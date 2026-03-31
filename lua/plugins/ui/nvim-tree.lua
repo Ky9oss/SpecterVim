@@ -73,7 +73,19 @@ return {
 				group_empty = true,
 				highlight_git = true,
 				highlight_hidden = "name",
-				special_files = { "Cargo.toml", "Makefile", "README.md", "readme.md" },
+				special_files = {
+					"Cargo.toml",
+					-- "Makefile",
+					-- "Makefile.in",
+					-- "Makefile.am",
+					-- "configure",
+					-- "configure.in",
+					-- "configure.ac",
+					-- "config.h",
+					-- "config.h.in",
+					"README.md",
+					"readme.md",
+				},
 				root_folder_label = function(path)
 					require("../../utils.str")
 					return LimitStr(vim.fn.fnamemodify(path, ":p"), 20)
@@ -112,6 +124,5 @@ return {
 				timeout = 200, -- (in ms)
 			},
 		})
-
 	end,
 }
