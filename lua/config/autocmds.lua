@@ -65,6 +65,9 @@ if project_root then
 
 			local default_gitignore = [[
 *.log
+*.cache
+config.scan
+config.status
 .env
 tags
 .clangd

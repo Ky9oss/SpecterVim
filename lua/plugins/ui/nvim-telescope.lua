@@ -14,7 +14,7 @@ return {
 			vim.keymap.set("n", "gd", builtin.lsp_definitions, { noremap = true, silent = true })
 			vim.keymap.set("n", "gr", builtin.lsp_references, { noremap = true, silent = true })
 			vim.keymap.set("n", "gi", builtin.lsp_implementations, { noremap = true, silent = true })
-			vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>")
+			vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files no_ignore=true hidden=true<cr>")
 			vim.keymap.set("n", "<leader>fg", "<cmd>Telescope live_grep<cr>")
 			vim.keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>")
 			vim.keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>")
