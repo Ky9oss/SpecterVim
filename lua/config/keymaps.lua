@@ -42,8 +42,11 @@ vim.keymap.set("n", "<leader>tr", "<cmd>NvimTreeOpen<CR>", { noremap = true, sil
 -- Obsession
 vim.keymap.set("n", "<leader>ql", "<cmd>source Session.vim<CR>", { noremap = true, silent = true })
 
--- Obsession
+-- Close all vim.notify
 vim.keymap.set("n", "<leader>ca", "<cmd>NoiceDismiss<CR>", { noremap = true, silent = true })
+
+-- Search current word
+vim.keymap.set("n", "<leader>cw", "<cmd>SearchCurrentWord<CR>", { noremap = true, silent = true })
 
 -- Draft Paper
 vim.keymap.set("n", "<leader>dp", function()
