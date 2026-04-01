@@ -9,5 +9,12 @@ return {
     vim.g.ale_linters = {
       sh = { "shellcheck" },
     }
+
+    vim.g.ale_pattern_options = {
+      ["configure$"] = { ale_enabled = 0 },
+      ["config.status$"] = { ale_enabled = 0 },
+      ["config.guess$"] = { ale_enabled = 0 },
+      ["config.sub$"] = { ale_enabled = 0 },
+    }
   end,
 }

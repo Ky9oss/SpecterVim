@@ -76,6 +76,7 @@ Session.vim
 tagfiles
 bin
 .r00t_here
+Makefile
 
         ]]
 			create_file(".gitignore", default_gitignore)
