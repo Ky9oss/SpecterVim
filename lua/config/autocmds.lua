@@ -418,3 +418,11 @@ vim.api.nvim_create_autocmd("WinLeave", {
 		vim.cmd("set nolist")
 	end,
 })
+
+-- set nvim-treesitter parsers for specific files
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+  pattern = { "configure.ac", "configure.in" },
+  callback = function(args)
+    vim.treesitter.start(args.buf, "editorconfig")
+  end,
+})

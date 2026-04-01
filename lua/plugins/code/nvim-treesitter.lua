@@ -8,10 +8,13 @@ return {
   config = function()
     require("nvim-treesitter.configs").setup({
       ensure_installed = {
+        "awk",
         "bash",
         "c",
+        "cpp",
         "css",
         "c_sharp",
+        "cmake",
         "rust",
         "diff",
         "html",
@@ -25,7 +28,9 @@ return {
         "markdown",
         "markdown_inline",
         "make",
+        "meson",
         "ninja",
+        "nasm",
         "printf",
         "python",
         "query",
