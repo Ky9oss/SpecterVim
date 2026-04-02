@@ -17,6 +17,7 @@ return {
         "cmake",
         "rust",
         "diff",
+        "dockerfile",
         "html",
         "javascript",
         "jsdoc",

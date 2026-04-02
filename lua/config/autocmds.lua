@@ -77,6 +77,15 @@ tagfiles
 bin
 .r00t_here
 Makefile
+*~
+.dirstamp
+.deps
+*.o
+*.lo
+*.la
+*.a
+*.so
+temp
 
         ]]
 			create_file(".gitignore", default_gitignore)
@@ -419,10 +428,12 @@ vim.api.nvim_create_autocmd("WinLeave", {
 	end,
 })
 
+-- Suggestion: Use `:set syntax?` instead of nvim-treesitter for specific files
+--
 -- set nvim-treesitter parsers for specific files
-vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
-  pattern = { "configure.ac", "configure.in" },
-  callback = function(args)
-    vim.treesitter.start(args.buf, "editorconfig")
-  end,
-})
+-- vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+--   pattern = { "configure.ac", "configure.in" },
+--   callback = function(args)
+--     vim.treesitter.start(args.buf, "editorconfig")
+--   end,
+-- })
