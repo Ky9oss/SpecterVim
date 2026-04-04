@@ -4,10 +4,10 @@
 " Last Change:		2025 Feb 07
 " Former Maintainer:	Bram Moolenaar <Bram@vim.org>
 
-" Quit when a syntax file was already loaded
-" if exists("b:current_syntax")
-"   finish
-" endif
+" Overload syntax
+if exists("b:current_syntax")
+  syntax clear
+endif
 
 syn match	qfFileName	"^[^|]*"	   nextgroup=qfSeparator1
 syn match	qfSeparator1	"|"	 contained nextgroup=qfLineNr

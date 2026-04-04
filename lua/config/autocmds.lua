@@ -17,7 +17,6 @@ local function open_nvim_tree(data)
 end
 
 vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
-vim.api.nvim_create_autocmd({ "VimEnter" }, { command = "Obsession" })
 
 -- auto change CRLF to LF
 vim.api.nvim_create_autocmd("BufWrite", {
@@ -435,15 +434,17 @@ insert_final_newline = true
 	})
 
 	-- auto :Obsession
-	vim.api.nvim_create_autocmd("VimEnter", {
-		callback = function()
-			local filepath = project_root .. "/Session.vim"
-			local is_exists = vim.fn.findfile(filepath, ".;") ~= ""
-			if not is_exists then
-				vim.cmd("Obsession")
-			end
-		end,
-	})
+	vim.api.nvim_create_autocmd({ "VimLeave" }, { command = "Obsession" })
+	-- vim.api.nvim_create_autocmd("VimEnter", {
+	-- 	callback = function()
+	-- 		local filepath = project_root .. "/Session.vim"
+	-- 		local is_exists = vim.fn.findfile(filepath, ".;") ~= ""
+	-- 		if not is_exists then
+	-- 			vim.cmd("Obsession")
+	-- 		end
+	-- 	end,
+	-- })
+
 end
 
 -- Auto set: Tab or 4 space
@@ -475,25 +476,21 @@ vim.api.nvim_create_autocmd("WinLeave", {
 -- shared registers
 vim.api.nvim_create_augroup("SHADA", { clear = true })
 -- vim.api.nvim_create_autocmd({ "CursorHold", "TextYankPost", "FocusGained", "FocusLost" }, {
- 
+
 vim.api.nvim_create_autocmd({ "TextYankPost" }, {
 	group = "SHADA",
 	callback = function()
-
-    -- vim.notify("TextYankPost")
+		-- vim.notify("TextYankPost")
 		vim.cmd("wshada")
-
 	end,
 })
 
 vim.api.nvim_create_autocmd({ "CursorHold" }, {
 	group = "SHADA",
 	callback = function()
-
-    -- vim.notify("CursorHold")
+		-- vim.notify("CursorHold")
 		if vim.fn.exists(":rshada") == 2 then
 			vim.cmd("rshada")
 		end
-
 	end,
 })
