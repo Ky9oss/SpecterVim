@@ -374,7 +374,8 @@ end, { desc = "Dump GCC predefined macros → Quickfix" })
 -- Search current word
 vim.api.nvim_create_user_command("SearchCurrentWord", function(opts)
 	local cursor = vim.api.nvim_win_get_cursor(0)
-	vim.cmd("/" .. vim.fn.expand("<cword>"))
+  vim.api.nvim_win_set_cursor(0, { 1, 1 })
+	vim.cmd("/\\V" .. vim.fn.expand("<cword>"))
   vim.api.nvim_win_set_cursor(0, { cursor[1], cursor[2] })
 end, { desc = "Search current word" })
 

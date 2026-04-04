@@ -64,28 +64,61 @@ if project_root then
 			local ft = vim.bo[ev.buf].filetype
 
 			local default_gitignore = [[
-*.log
-*.cache
-config.scan
-config.status
-.env
-tags
-.clangd
-all-includes.txt
+# Vim files
+*~
 Session.vim
 tagfiles
-bin
+tags
+.clangd
 .r00t_here
-Makefile
-*~
+
+# Compiled intermediate files and dirs
 .dirstamp
 .deps
-*.o
+Makefile
+config.scan
+config.status
+all-includes.txt
+
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
 *.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
 *.la
 *.a
-*.so
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Other files and dirs
 temp
+bin
+*.log
+*.cache
+.env
 
         ]]
 			create_file(".gitignore", default_gitignore)
