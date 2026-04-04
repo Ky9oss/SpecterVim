@@ -470,3 +470,29 @@ vim.api.nvim_create_autocmd("WinLeave", {
 --     vim.treesitter.start(args.buf, "editorconfig")
 --   end,
 -- })
+
+-- shared registers
+vim.api.nvim_create_augroup("SHADA", { clear = true })
+-- vim.api.nvim_create_autocmd({ "CursorHold", "TextYankPost", "FocusGained", "FocusLost" }, {
+ 
+vim.api.nvim_create_autocmd({ "TextYankPost" }, {
+	group = "SHADA",
+	callback = function()
+
+    -- vim.notify("TextYankPost")
+		vim.cmd("wshada")
+
+	end,
+})
+
+vim.api.nvim_create_autocmd({ "CursorHold" }, {
+	group = "SHADA",
+	callback = function()
+
+    -- vim.notify("CursorHold")
+		if vim.fn.exists(":rshada") == 2 then
+			vim.cmd("rshada")
+		end
+
+	end,
+})
