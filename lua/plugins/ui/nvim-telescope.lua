@@ -17,7 +17,7 @@ return {
 			vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>")
 			vim.keymap.set("n", "<leader>faf", "<cmd>Telescope find_files no_ignore=true hidden=true<cr>")
 			vim.keymap.set("n", "<leader>fg", "<cmd>Telescope live_grep<cr>")
-			vim.keymap.set("n", "<leader>fag", "<cmd>Telescope live_grep<cr> no_ignore=true hidden=true<cr>")
+			vim.keymap.set("n", "<leader>fag", "<cmd>Telescope live_grep no_ignore=true hidden=true<cr>")
 			vim.keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>")
 			vim.keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>")
 
