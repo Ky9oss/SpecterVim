@@ -52,7 +52,8 @@ vim.api.nvim_create_user_command("GitPush", function(opts)
 				-- Linux with proxychains
 				exec_bash_command("git add .", cwd, function(success)
 					if success then
-						exec_bash_command("git commit -m " .. opts.args:gsub("%s+", "-"), cwd, function(success)
+						-- exec_bash_command("git commit -m " .. opts.args:gsub("%s+", "-"), cwd, function(success)
+						exec_bash_command('git commit -m "' .. opts.args:gsub("%s+", "-") .. '"', cwd, function(success)
 							if success then
 								exec_bash_command("proxychains -q git push -u origin main", cwd)
 							end
