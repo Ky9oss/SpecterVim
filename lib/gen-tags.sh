@@ -12,10 +12,18 @@ MAKE_CTAGS="./tagfiles/make/tags"
 SH_CTAGS="./tagfiles/sh/tags"
 AUTOMAKE_CTAGS="./tagfiles/automake/tags"
 AUTOCONF_CTAGS="./tagfiles/autoconf/tags"
+M4_CTAGS="./tagfiles/m4/tags"
+
+mkdir -p ./tagfiles/c/
+mkdir -p ./tagfiles/lua/
+mkdir -p ./tagfiles/make/
+mkdir -p ./tagfiles/sh/
+mkdir -p ./tagfiles/automake/
+mkdir -p ./tagfiles/autoconf/
+mkdir -p ./tagfiles/m4/
 
 for lang in "$@"; do
   lang=$(echo "$lang" | tr '[:upper:]' '[:lower:]')
-  mkdir -p ./tagfiles/"$lang"/
 
   case $lang in
   c)
@@ -56,7 +64,7 @@ for lang in "$@"; do
 
     ctags --languages=Sh -R "$PWD" && mv "$PWD/tags" $SH_CTAGS && printf "Done: %s\n" "$SH_CTAGS has generated."
     ;;
-  automake | autoconf)
+  automake | autoconf | autotools)
     if [[ -e $AUTOMAKE_CTAGS ]]; then
       rm $AUTOMAKE_CTAGS
     fi
@@ -65,8 +73,13 @@ for lang in "$@"; do
       rm $AUTOCONF_CTAGS
     fi
 
+    if [[ -e $M4_CTAGS ]]; then
+      rm $M4_CTAGS
+    fi
+
     ctags --languages=Automake -R "$PWD" && mv "$PWD/tags" $AUTOMAKE_CTAGS && printf "Done: %s\n" "$AUTOMAKE_CTAGS has generated."
     ctags --languages=Autoconf -R "$PWD" && mv "$PWD/tags" $AUTOCONF_CTAGS && printf "Done: %s\n" "$AUTOCONF_CTAGS has generated."
+    ctags --languages=M4 -R "$PWD" && mv "$PWD/tags" $M4_CTAGS && printf "Done: %s\n" "$M4_CTAGS has generated."
 
     ;;
   lua)
