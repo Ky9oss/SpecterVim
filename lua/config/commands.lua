@@ -6,6 +6,7 @@ local project = require("project_nvim.project")
 local project_root_path = project.get_project_root()
 
 -- Git Push
+-- Example: :GitPush this is a commit infomation
 vim.api.nvim_create_user_command("GitPush", function(opts)
 	if opts.args == nil then
 		vim.notify("GitPush need 1 argument at least.", vim.log.levels.ERROR)
