@@ -46,3 +46,8 @@ vim.keymap.set("n", "<leader>mm", function()
 	-- 	timer:stop()
 	-- end, 300) -- 0.3s
 end, { buffer = true, desc = "Make (Bash)" })
+
+vim.keymap.set("n", "<leader>mv", function()
+	local executable_path = vim.api.nvim_buf_get_name(0)
+	exec_bash_scripts(executable_path)
+end, { buffer = true, desc = "Run C Program with Tmux" })
