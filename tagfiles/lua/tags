@@ -1,0 +1,84 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_OUTPUT_EXCMD	mixed	/number, pattern, mixed, or combineV2/
+!_TAG_OUTPUT_FILESEP	slash	/slash or backslash/
+!_TAG_OUTPUT_MODE	u-ctags	/u-ctags or e-ctags/
+!_TAG_PATTERN_LENGTH_LIMIT	96	/0 for no limit/
+!_TAG_PROC_CWD	/home/ky9oss/.config/nvim/	//
+!_TAG_PROGRAM_AUTHOR	Universal Ctags Team	//
+!_TAG_PROGRAM_NAME	Universal Ctags	/Derived from Exuberant Ctags/
+!_TAG_PROGRAM_URL	https://ctags.io/	/official site/
+!_TAG_PROGRAM_VERSION	5.9.0	//
+AssemblyExplorerGCC	/home/ky9oss/.config/nvim/lua/config/commands.lua	/^function AssemblyExplorerGCC(is_remote, compile_options)$/;"	f
+AssemblyExplorerMSVC	/home/ky9oss/.config/nvim/lua/config/commands.lua	/^function AssemblyExplorerMSVC(is_remote, compile_options)$/;"	f
+CheckLspHealth	/home/ky9oss/.config/nvim/lua/utils/lsp.lua	/^function CheckLspHealth(lsp_name)$/;"	f
+GetActiveBuffers	/home/ky9oss/.config/nvim/lua/utils/buffer.lua	/^function GetActiveBuffers()$/;"	f
+GetLspInfo	/home/ky9oss/.config/nvim/lua/utils/lsp.lua	/^function GetLspInfo()$/;"	f
+IsBufferVisible	/home/ky9oss/.config/nvim/lua/utils/buffer.lua	/^function IsBufferVisible(bufnr)$/;"	f
+IsFileVisible	/home/ky9oss/.config/nvim/lua/utils/buffer.lua	/^function IsFileVisible(partial_filename)$/;"	f
+LimitStr	/home/ky9oss/.config/nvim/lua/utils/str.lua	/^function LimitStr(str, size)$/;"	f
+MyCustomDecorator:highlight_group	/home/ky9oss/.config/nvim/lua/plugins/ui/nvim-tree.lua	/^		function MyCustomDecorator:highlight_group(node)$/;"	f
+MyCustomDecorator:icon_node	/home/ky9oss/.config/nvim/lua/plugins/ui/nvim-tree.lua	/^		function MyCustomDecorator:icon_node(node)$/;"	f
+MyCustomDecorator:new	/home/ky9oss/.config/nvim/lua/plugins/ui/nvim-tree.lua	/^		function MyCustomDecorator:new()$/;"	f
+NvimBufGetWin	/home/ky9oss/.config/nvim/lua/utils/buffer.lua	/^function NvimBufGetWin(bufnr)$/;"	f
+_G.load_env	/home/ky9oss/.config/nvim/lua/config/env.lua	/^function _G.load_env(path)$/;"	f
+abs_path	/home/ky9oss/.config/nvim/lua/plugins/ui/lualine.lua	/^    local function abs_path()$/;"	f
+callback	/home/ky9oss/.config/nvim/lua/config/autocmds.lua	/^		callback = function(ev)$/;"	f
+callback	/home/ky9oss/.config/nvim/lua/config/autocmds.lua	/^	callback = function()$/;"	f
+callback	/home/ky9oss/.config/nvim/lua/config/commands.lua	/^		callback = function(args)$/;"	f
+callback	/home/ky9oss/.config/nvim/lua/plugins/lsp/powershell.lua	/^        callback = function()$/;"	f
+choose_target	/home/ky9oss/.config/nvim/lua/plugins/lsp/roslyn.lua	/^    choose_target = function(target)$/;"	f
+config	/home/ky9oss/.config/nvim/lua/plugins/code/nvim-cmp.lua	/^  config = function()$/;"	f
+config	/home/ky9oss/.config/nvim/lua/plugins/code/nvim-treesitter.lua	/^  config = function()$/;"	f
+config	/home/ky9oss/.config/nvim/lua/plugins/dap/nvim-dap.lua	/^  config = function()$/;"	f
+config	/home/ky9oss/.config/nvim/lua/plugins/linter/ale.lua	/^  config = function()$/;"	f
+config	/home/ky9oss/.config/nvim/lua/plugins/lsp/powershell.lua	/^    config = function()$/;"	f
+config	/home/ky9oss/.config/nvim/lua/plugins/luasnip.lua	/^  config = function()$/;"	f
+config	/home/ky9oss/.config/nvim/lua/plugins/project_nvim.lua	/^	config = function()$/;"	f
+config	/home/ky9oss/.config/nvim/lua/plugins/ui/lualine.lua	/^  config = function()$/;"	f
+config	/home/ky9oss/.config/nvim/lua/plugins/ui/nvim-telescope.lua	/^	config = function()$/;"	f
+config	/home/ky9oss/.config/nvim/lua/plugins/ui/nvim-tree.lua	/^	config = function()$/;"	f
+config	/home/ky9oss/.config/nvim/lua/plugins/ui/tokyonight.lua	/^  config = function()$/;"	f
+config	/home/ky9oss/.config/nvim/lua/plugins/ui/vim-floaterm.lua	/^  config = function()$/;"	f
+config	/home/ky9oss/.config/nvim/lua/plugins/util/iron.lua	/^  config = function()$/;"	f
+config	/home/ky9oss/.config/nvim/lua/plugins/util/smart-splits.lua	/^  config = function()$/;"	f
+config	/home/ky9oss/.config/nvim/lua/plugins/util/vim-table-mode.lua	/^  config = function()$/;"	f
+create_file	/home/ky9oss/.config/nvim/lua/config/autocmds.lua	/^	local create_file = function(filename, dcontent)$/;"	f
+decrypt_s1	/home/ky9oss/.config/nvim/lua/utils/encrypter.lua	/^function decrypt_s1(s)$/;"	f
+disable	/home/ky9oss/.config/nvim/lua/plugins/code/nvim-treesitter.lua	/^        disable = function(lang, buf)$/;"	f
+encrypt_s1	/home/ky9oss/.config/nvim/lua/utils/encrypter.lua	/^function encrypt_s1(s)$/;"	f
+exec_bash_command	/home/ky9oss/.config/nvim/lua/utils/shell.lua	/^function exec_bash_command(cmd, cwd, on_result)$/;"	f
+exec_bash_scripts	/home/ky9oss/.config/nvim/lua/utils/shell.lua	/^function exec_bash_scripts(scriptpath, params, cwd)$/;"	f
+executable	/home/ky9oss/.config/nvim/lua/plugins/util/iron.lua	/^    local executable = function(exe)$/;"	f
+expand	/home/ky9oss/.config/nvim/lua/plugins/code/nvim-cmp.lua	/^        expand = function(args)$/;"	f
+filterMSVC	/home/ky9oss/.config/nvim/lua/config/commands.lua	/^local function filterMSVC()$/;"	f
+format	/home/ky9oss/.config/nvim/lua/plugins/code/nvim-cmp.lua	/^        format = function(entry, item)$/;"	f
+init	/home/ky9oss/.config/nvim/lua/plugins/formatter/conform.lua	/^  init = function()$/;"	f
+init	/home/ky9oss/.config/nvim/lua/plugins/ui/noice.lua	/^  init = function()$/;"	f
+lsp_info	/home/ky9oss/.config/nvim/lua/plugins/ui/lualine.lua	/^    local function lsp_info()$/;"	f
+name	/home/ky9oss/.config/nvim/lua/plugins/code/nvim-cmp.lua	/^        { name = "nvim_lsp_signature_help" }, -- display function signatures with current parame/;"	f
+on_init	/home/ky9oss/.config/nvim/lua/config/lsp.lua	/^	on_init = function(client)$/;"	f
+open_nvim_tree	/home/ky9oss/.config/nvim/lua/config/autocmds.lua	/^local function open_nvim_tree(data)$/;"	f
+opts	/home/ky9oss/.config/nvim/lua/config/keymaps.lua	/^local function opts(desc)$/;"	f
+opts	/home/ky9oss/.config/nvim/lua/plugins/ui/nvim-scrollbar.lua	/^  opts = function()$/;"	f
+opts	/home/ky9oss/.config/nvim/lua/plugins/util/snacks.lua	/^    opts = function()$/;"	f
+pattern	/home/ky9oss/.config/nvim/lua/plugins/bigfile.lua	/^    pattern = { "*" }, -- autocmd pattern or function see <### Overriding the detection of big f/;"	f
+program	/home/ky9oss/.config/nvim/lua/plugins/dap/nvim-dap.lua	/^        program = function()$/;"	f
+python	/home/ky9oss/.config/nvim/lua/plugins/formatter/conform.lua	/^      python = function(bufnr)$/;"	f
+repl_filetype	/home/ky9oss/.config/nvim/lua/plugins/util/iron.lua	/^        repl_filetype = function(bufnr, ft)$/;"	f
+result	/home/ky9oss/.config/nvim/lua/utils/buffer.lua	/^    local status, result = pcall(function()$/;"	f
+root_folder_label	/home/ky9oss/.config/nvim/lua/plugins/ui/nvim-tree.lua	/^				root_folder_label = function(path)$/;"	f
+scp_pull	/home/ky9oss/.config/nvim/lua/utils/remote.lua	/^function scp_pull(from, to, on_exit)$/;"	f
+scp_push	/home/ky9oss/.config/nvim/lua/utils/remote.lua	/^function scp_push(from, to, on_exit)$/;"	f
+split_respect_double_quotes	/home/ky9oss/.config/nvim/lua/utils/str.lua	/^function split_respect_double_quotes(str)$/;"	f
+ssh	/home/ky9oss/.config/nvim/lua/utils/remote.lua	/^function ssh(command, on_exit)$/;"	f
+text	/home/ky9oss/.config/nvim/lua/config/commands.lua	/^				}, { text = true }, function(obj)$/;"	f
+text	/home/ky9oss/.config/nvim/lua/config/commands.lua	/^		vim.system(vim.split(compile_command, "%s+"), { text = true }, function(obj)$/;"	f
+text	/home/ky9oss/.config/nvim/lua/config/keymaps.lua	/^	}, { text = true }, function(obj)$/;"	f
+text	/home/ky9oss/.config/nvim/lua/utils/remote.lua	/^  }, { text = true }, function(obj)$/;"	f
+text	/home/ky9oss/.config/nvim/lua/utils/shell.lua	/^					vim.system(vim.split(run_command, "%s+"), { text = true, cwd = cwd }, function(obj)$/;"	f
+text	/home/ky9oss/.config/nvim/lua/utils/shell.lua	/^			vim.system(vim.split("chmod +x " .. scriptpath, "%s+"), { text = true, cwd = cwd }, function(/;"	f
+text	/home/ky9oss/.config/nvim/lua/utils/shell.lua	/^			vim.system(vim.split(run_command, "%s+"), { text = true, cwd = cwd }, function(obj)$/;"	f
+text	/home/ky9oss/.config/nvim/lua/utils/shell.lua	/^		vim.system(split_respect_double_quotes(cmd), { text = true, cwd = cwd }, function(obj)$/;"	f
+trim	/home/ky9oss/.config/nvim/lua/utils/str.lua	/^function trim(s)$/;"	f
+visual_length	/home/ky9oss/.config/nvim/lua/plugins/ui/lualine.lua	/^    local function visual_length()$/;"	f
