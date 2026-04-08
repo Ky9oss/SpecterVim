@@ -6,6 +6,63 @@ return {
 	dependencies = { "nvim-lua/plenary.nvim" },
 	config = function()
 
+		-- Telescope Keymaps
+		require("telescope").load_extension("projects")
+		vim.keymap.set("n", "<leader>fp", function()
+			require("telescope").extensions.projects.projects()
+		end, { noremap = true, silent = true, desc = "Find Projects" })
+
+		local ok, builtin = pcall(require, "telescope.builtin")
+		if ok then
+			vim.keymap.set("n", "gd", builtin.lsp_definitions, { noremap = true, silent = true })
+			vim.keymap.set("n", "gr", builtin.lsp_references, { noremap = true, silent = true })
+			vim.keymap.set("n", "gi", builtin.lsp_implementations, { noremap = true, silent = true })
+			vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>")
+			vim.keymap.set("n", "<leader>faf", "<cmd>Telescope find_files no_ignore=true hidden=true<cr>")
+			-- vim.keymap.set("n", "<leader>fg", "<cmd>Telescope live_grep<cr>")
+			vim.keymap.set("n", "<leader>fg", function()
+				builtin.live_grep({
+					additional_args = {
+						"-g",
+						"!node_modules/**",
+						"-g",
+						"!autom4te.cache/**",
+						"-g",
+						"!tags",
+						"-g",
+						"!doc/**",
+					},
+				})
+			end)
+			vim.keymap.set("n", "<leader>fag", function()
+				builtin.live_grep({
+					additional_args = {
+						"--hidden",
+						"-u",
+						"-g",
+						"!node_modules/**",
+						"-g",
+						"!autom4te.cache/**",
+						"-g",
+						"!tags",
+						"-g",
+						"!.git/**",
+					},
+				})
+			end)
+			vim.keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>")
+			vim.keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>")
+		-- vim.keymap.set("n", "g]", function()
+		-- 	builtin.tags({
+		-- 		default_text = vim.fn.expand("<cword>"),
+		-- 		ctags_file = nil,
+		-- 		-- ctags_file = project_root .. "/tagfiles/**/tags",
+		-- 	})
+		-- end, { desc = "Telescope: search project tags for word under cursor" })
+		else
+			vim.notify("Telescope load failed.", vim.log.levels.ERROR)
+		end
+
 		-- 这里被坑了，注意：
 		-- 1. telescope.actions只能在telescope加载后加载。Lazy.nvim的opts配置会在插件加载时同时加载（因此不能使用actions），而config配置会在插件加载后加载
 		-- 2. actions.select_vertical 需要用在Picker上下文中，所以必须setup。而builtin会自动启动Picker，所以可以用vim.keymap.set
