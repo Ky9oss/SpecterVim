@@ -2,10 +2,6 @@ require("utils.lsp")
 local project = require("project_nvim.project")
 local project_root = project.get_project_root()
 
-if project_root then
-	vim.opt.tags = project_root .. "/tagfiles/**/tags"
-end
-
 -- auto open nvim-tree
 local function open_nvim_tree(data)
 	local opened_with_file = vim.fn.argc() > 0

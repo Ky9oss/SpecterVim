@@ -5,6 +5,10 @@ require("utils.shell")
 local project = require("project_nvim.project")
 local project_root_path = project.get_project_root()
 
+if project_root then
+	vim.opt.tags = project_root .. "/tagfiles/**/tags"
+end
+
 -- Git Push
 -- Example: :GitPush this is a commit infomation
 vim.api.nvim_create_user_command("GitPush", function(opts)

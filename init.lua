@@ -80,7 +80,7 @@ vim.diagnostic.config({
 
 require("config.env")
 require("config.lazy")
-require("config.autocmds")
 require("config.keymaps")
 require("config.commands")
+require("config.autocmds")
 require("config.lsp")

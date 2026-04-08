@@ -152,23 +152,7 @@ end
 
 -- Use quickfix for ctags
 vim.keymap.set("n", "g]", function()
-	-- In this implementation, "cmdline" is restore but "confirm" is not
-	-- require("noice").disable()
-	--
-	-- vim.defer_fn(function()
-	-- 	vim.cmd("ts " .. vim.fn.expand("<cword>"))
-	-- end, 1000)
-	--
-	-- vim.defer_fn(function()
-	-- 	require("noice").enable()
-	-- end, 4000)
-	--
-	-- vim.cmd("Noice disable")
-	-- vim.cmd("Noice enable")
-	-- require("noice").disable()
-	-- vim.cmd.tselect(vim.fn.expand("<cword>"))
-	-- require("noice").enable()
-
+	-- local tags = vim.fn.taglist("^" .. vim.fn.expand("<cword>") .. "$")
 	local tags = vim.fn.taglist(vim.fn.expand("<cword>"))
 
 	local max_name = 0
