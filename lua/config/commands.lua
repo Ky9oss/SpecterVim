@@ -376,9 +376,9 @@ end, { desc = "Dump GCC predefined macros → Quickfix" })
 -- Search current word
 vim.api.nvim_create_user_command("SearchCurrentWord", function(opts)
 	local cursor = vim.api.nvim_win_get_cursor(0)
-  vim.api.nvim_win_set_cursor(0, { 1, 1 })
+	vim.api.nvim_win_set_cursor(0, { 1, 1 })
 	vim.cmd("/\\V" .. vim.fn.expand("<cword>"))
-  vim.api.nvim_win_set_cursor(0, { cursor[1], cursor[2] })
+	vim.api.nvim_win_set_cursor(0, { cursor[1], cursor[2] })
 end, { desc = "Search current word" })
 
 -- Temp Script
@@ -389,3 +389,28 @@ vim.api.nvim_create_user_command("TempScript", function(opts)
 		vim.cmd.pedit(vim.fn.stdpath("cache") .. "/_temp_script." .. opts.args)
 	end
 end, { desc = "A command to create multiple types temporary files", nargs = 1 })
+
+-- Fuzzy search custom help files
+--
+-- Example:
+--  :Help
+--  :Help AC_DEFINE
+vim.api.nvim_create_user_command("Help", function(opts)
+	local ok, builtin = pcall(require, "telescope.builtin")
+	if ok then
+		if opts.args == nil then
+			builtin.live_grep({
+				prompt_title = "Help",
+				cwd = vim.fn.stdpath("config") .. "/doc",
+				type_filter = "txt",
+			})
+		else
+			builtin.live_grep({
+				prompt_title = "Help",
+				cwd = vim.fn.stdpath("config") .. "/doc",
+				type_filter = "txt",
+				default_text = opts.args,
+			})
+		end
+	end
+end, { desc = "Fuzzy search custom help files", nargs = "?" })

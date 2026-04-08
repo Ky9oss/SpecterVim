@@ -38,6 +38,7 @@
 
 - [ ] support locate in AssemblyExplorer
 - [ ] support function-like macro such as `pow` in `/usr/include/bits/mathcalls.h`
+- [ ] support GNU Manual in `:help`
 - [x] support `makefile` in ctags
 
 ## Others
