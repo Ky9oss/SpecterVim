@@ -2,36 +2,9 @@ return {
 	"nvim-telescope/telescope.nvim",
 	branch = "master",
 	lazy = true,
-  event = "VeryLazy",
+	event = "VeryLazy",
 	dependencies = { "nvim-lua/plenary.nvim" },
 	config = function()
-		require("telescope").load_extension("projects")
-		vim.keymap.set("n", "<leader>fp", function()
-			require("telescope").extensions.projects.projects()
-		end, { noremap = true, silent = true, desc = "Find Projects" })
-
-		local ok, builtin = pcall(require, "telescope.builtin")
-		if ok then
-			vim.keymap.set("n", "gd", builtin.lsp_definitions, { noremap = true, silent = true })
-			vim.keymap.set("n", "gr", builtin.lsp_references, { noremap = true, silent = true })
-			vim.keymap.set("n", "gi", builtin.lsp_implementations, { noremap = true, silent = true })
-			vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>")
-			vim.keymap.set("n", "<leader>faf", "<cmd>Telescope find_files no_ignore=true hidden=true<cr>")
-			vim.keymap.set("n", "<leader>fg", "<cmd>Telescope live_grep<cr>")
-			vim.keymap.set("n", "<leader>fag", function()
-				builtin.live_grep({
-					additional_args = { "--hidden", "-u", "-g", "!node_modules/**", "-g", "!autom4te.cache/**", "-g", "!tags" },
-				})
-			end)
-			vim.keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>")
-			vim.keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>")
-
-			vim.keymap.set("n", "g]", function()
-				builtin.tags({
-					default_text = vim.fn.expand("<cword>"),
-				})
-			end, { desc = "Telescope: search project tags for word under cursor" })
-		end
 
 		-- 这里被坑了，注意：
 		-- 1. telescope.actions只能在telescope加载后加载。Lazy.nvim的opts配置会在插件加载时同时加载（因此不能使用actions），而config配置会在插件加载后加载

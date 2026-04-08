@@ -390,7 +390,7 @@ vim.api.nvim_create_user_command("TempScript", function(opts)
 	end
 end, { desc = "A command to create multiple types temporary files", nargs = 1 })
 
--- Fuzzy search custom help files
+-- Fuzzy search for custom help files
 --
 -- Example:
 --  :Help
@@ -413,4 +413,4 @@ vim.api.nvim_create_user_command("Help", function(opts)
 			})
 		end
 	end
-end, { desc = "Fuzzy search custom help files", nargs = "?" })
+end, { desc = "Fuzzy search for custom help files", nargs = "?" })
