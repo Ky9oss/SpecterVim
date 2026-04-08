@@ -106,7 +106,21 @@ if ok then
 	vim.keymap.set("n", "gi", builtin.lsp_implementations, { noremap = true, silent = true })
 	vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>")
 	vim.keymap.set("n", "<leader>faf", "<cmd>Telescope find_files no_ignore=true hidden=true<cr>")
-	vim.keymap.set("n", "<leader>fg", "<cmd>Telescope live_grep<cr>")
+	-- vim.keymap.set("n", "<leader>fg", "<cmd>Telescope live_grep<cr>")
+	vim.keymap.set("n", "<leader>fg", function()
+		builtin.live_grep({
+			additional_args = {
+				"-g",
+				"!node_modules/**",
+				"-g",
+				"!autom4te.cache/**",
+				"-g",
+				"!tags",
+				"-g",
+				"!doc/**",
+			},
+		})
+	end)
 	vim.keymap.set("n", "<leader>fag", function()
 		builtin.live_grep({
 			additional_args = {
@@ -118,6 +132,8 @@ if ok then
 				"!autom4te.cache/**",
 				"-g",
 				"!tags",
+				"-g",
+				"!.git/**",
 			},
 		})
 	end)
@@ -133,3 +149,65 @@ if ok then
 else
 	vim.notify("Telescope load failed.", vim.log.levels.ERROR)
 end
+
+-- Use quickfix for ctags
+vim.keymap.set("n", "g]", function()
+	-- In this implementation, "cmdline" is restore but "confirm" is not
+	-- require("noice").disable()
+	--
+	-- vim.defer_fn(function()
+	-- 	vim.cmd("ts " .. vim.fn.expand("<cword>"))
+	-- end, 1000)
+	--
+	-- vim.defer_fn(function()
+	-- 	require("noice").enable()
+	-- end, 4000)
+	--
+	-- vim.cmd("Noice disable")
+	-- vim.cmd("Noice enable")
+	-- require("noice").disable()
+	-- vim.cmd.tselect(vim.fn.expand("<cword>"))
+	-- require("noice").enable()
+
+	local tags = vim.fn.taglist(vim.fn.expand("<cword>"))
+
+	local max_name = 0
+	local max_kind = 0
+
+	for _, tag in ipairs(tags) do
+		max_name = math.max(max_name, #tag.name)
+		max_kind = math.max(max_kind, #(tag.kind or ""))
+	end
+
+	local items = {}
+	table.insert(items, {
+		module = "ctags",
+		-- lnum = 1,
+		text = string.format("%-" .. max_name .. "s\t%-" .. max_kind .. "s\t%s", "Tag", "Kind", "File"),
+	})
+	for _, tag in ipairs(tags) do
+		table.insert(items, {
+			filename = tag.filename,
+			module = "ctags",
+			-- lnum = 1,
+			text = string.format(
+				"%-" .. max_name .. "s\t%-" .. max_kind .. "s\t%s",
+				-- "%-50s\t%-" .. max_kind .. "s\t%s",
+				tag.name,
+				tag.kind or "",
+				tag.filename
+			),
+			user_data = {
+				cmd = tag.cmd,
+				-- filename = tag.filename,
+			},
+		})
+	end
+
+	vim.fn.setqflist({}, " ", { title = "Tags", items = items })
+	vim.cmd("copen")
+end, { desc = "A dirty hack to disable noice when use g]" })
+
+-- vim.keymap.set("n", "gO", function()
+--   vim.cmd("set splitright | vert lopen | vertical resize 50")
+-- end, { noremap = true, silent = true, desc = "Vim-help files navigation" })

@@ -444,7 +444,6 @@ insert_final_newline = true
 	-- 		end
 	-- 	end,
 	-- })
-
 end
 
 -- Auto set: Tab or 4 space
@@ -492,5 +491,34 @@ vim.api.nvim_create_autocmd({ "CursorHold" }, {
 		if vim.fn.exists(":rshada") == 2 then
 			vim.cmd("rshada")
 		end
+	end,
+})
+
+-- Use quickfix for ctags
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "qf",
+	callback = function()
+		vim.keymap.set("n", "<CR>", function()
+			vim.cmd([[
+
+let qf = getqflist({'idx': 0, 'items': 1})
+let top_item = qf.items[0]
+if top_item.module == "ctags"
+  " execute "normal! \<C-w>\<CR>"
+  " execute "normal! \<C-w>p"
+  execute ".cc"
+  " sleep 100m
+  let qf = getqflist({'idx': 0, 'items': 1})
+  " echo "DEBUG" qf.idx
+  let item = qf.items[qf.idx - 1]
+  let cmd = item.user_data.cmd
+  let pattern = substitute(cmd[1:-2], '\\\\', '\\', 'g')
+  call search(pattern)
+else
+  execute ".cc"
+endif
+
+      ]])
+		end, { buffer = true })
 	end,
 })

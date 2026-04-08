@@ -1,12 +1,13 @@
 -- return {}
 return {
 	"folke/noice.nvim",
+  dev = false,
 	event = "VeryLazy",
 	dependencies = {
 		"MunifTanjim/nui.nvim",
 		"rcarriga/nvim-notify",
 	},
-	init = function()
+	config = function()
 		require("noice").setup({
 			lsp = {
 				-- override markdown rendering so that **cmp** and other plugins use **Treesitter**
@@ -22,7 +23,7 @@ return {
 					backend = "popup",
 					relative = "editor",
 					focusable = false,
-					align = "message-right",
+					align = "center",
 					enter = false,
 					zindex = 210,
 					format = { "{confirm}" },
@@ -48,10 +49,34 @@ return {
 					},
 				},
 			},
+			-- cmdline = {
+			-- 	backend = "popup",
+			-- 	relative = "editor",
+			-- 	align = "center",
+			-- 	position = {
+			-- 		row = "100%",
+			-- 		col = 0,
+			-- 	},
+			-- 	size = {
+			-- 		height = "auto",
+			-- 		width = "100%",
+			-- 	},
+			-- 	border = {
+			-- 		style = "none",
+			-- 	},
+			-- 	win_options = {
+			-- 		winhighlight = {
+			-- 			Normal = "NoiceCmdline",
+			-- 			IncSearch = "",
+			-- 			CurSearch = "",
+			-- 			Search = "",
+			-- 		},
+			-- 	},
+			-- },
 
 			routes = {
 				-- {
-				-- 	view = "confirm",
+				-- 	view = "cmdline",
 				-- 	filter = {
 				-- 		any = {
 				-- 			{ event = "msg_show", kind = "confirm" },
@@ -59,7 +84,9 @@ return {
 				-- 			{ event = "msg_show", kind = "number_prompt" },
 				-- 		},
 				-- 	},
+				-- 	-- opts = { skip = true, stop = false },
 				-- },
+
 				-- {
 				-- 	filter = { event = "msg_show", kind = "confirm" },
 				-- 	opts = { skip = true },

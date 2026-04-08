@@ -5,6 +5,10 @@
 - [x] `<leader>ql` reopen other files
 - [ ] Lsp failed sometimes and :LspRestart cause error
 
+## Noice.nvim
+
+- [ ] Bypass the hijack and explore native vim-interface. Replace for `:tselect`.
+
 # New Features
 
 ## About .NET

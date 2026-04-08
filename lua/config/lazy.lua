@@ -36,7 +36,8 @@ require("lazy").setup({
   },
 
   dev = {
-    path = vim.fn.stdpath("data") .. "/dev"
+    path = vim.fn.stdpath("data") .. "/dev",
+    fallback = false, -- Fallback to git when local plugin doesn't exist
   },
 
   -- performance = {
