@@ -15,11 +15,12 @@ syn match	qfLineNr	"[^|]*"	 contained nextgroup=qfSeparator2 contains=@qfType
 syn match	qfSeparator2	"|"	 contained nextgroup=qfText
 
 syn match	qfText		".*"	 contained contains=@qfType
-syn cluster	qfType	contains=qfError,qfWarning,qfSuccess
+syn cluster	qfType	contains=qfError,qfWarning,qfSuccess,qfCtags
 
 syn match	qfError		"error\|Error\|ERROR\|FAILED"	 contained
 syn match	qfWarning		"warning"	 contained
 syn match	qfSuccess		"SUCCESS"	 contained
+syn match	qfCtags		"Tag.*Kind.*File"	 contained
 " syn match qfError   /error\|Error\|ERROR/   contained
 " syn match qfWarning /warning\|Warning\|WARNING/ contained
 
@@ -42,6 +43,7 @@ highlight qfError   guifg=#ff0000 gui=bold ctermfg=Red
 highlight qfWarning guifg=#ffaa00 gui=bold ctermfg=Yellow
 highlight qfText guifg=#c0caf5 guibg=#1a1b26 ctermfg=White
 highlight qfSuccess guifg=#00ff00 gui=bold ctermfg=Green
+highlight qfCtags guifg=#ffaa00 gui=bold ctermfg=Yellow
 
 let b:current_syntax = "qf"
 
