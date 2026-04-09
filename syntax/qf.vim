@@ -4,9 +4,11 @@
 "
 " I just realized I need to become a damn syntax expert to master this shit 0_0
 
-" Overload syntax
+" Quit when a syntax file was already loaded
+" Do not overload by `syntax clear`. This might cause undefined behavior
 if exists("b:current_syntax")
-  syntax clear
+  echo "SpecterVim: The syntax setting failed because qf.vim has loaded. Check runtimepath and remove it."
+  finish
 endif
 
 syn match	qfFileName	"^[^|]*"	   nextgroup=qfSeparator1
@@ -14,20 +16,17 @@ syn match	qfSeparator1	"|"	 contained nextgroup=qfLineNr
 syn match	qfLineNr	"[^|]*"	 contained nextgroup=qfSeparator2 contains=@qfType
 syn match	qfSeparator2	"|"	 contained nextgroup=qfTitle
 
-" syn match	qfTitle		".*|[\s]*"	 contained nextgroup=qfText contains=qfCtags,qfSeparator3,qfCtagsText 
-syn match	qfTitle		".*"	 contained nextgroup=qfText contains=qfCtags,qfSeparator3,qfCtagsText 
 
-syn match	qfSeparator3	"|"	contained
-syn match	qfCtags		"\%1l[^|]*"	 contained
-syn match	qfCtagsText		"\%>1l.*"	 contained contains=@qfType
+syn match	qfError		"error\|Error\|ERROR\|FAILED"
+syn match	qfWarning		"warning"
+syn match	qfSuccess		"SUCCESS"
+" syn cluster	qfType	contains=qfError,qfSuccess,qfWarning
 
-" Normal text and Make compilation results
-syn match	qfText		".*"	 contained contains=@qfType
-syn cluster	qfType	contains=qfError,qfSuccess,qfWarning
+syn match	qfSeparator	"|"
 
-syn match	qfError		"error\|Error\|ERROR\|FAILED"	 contained
-syn match	qfWarning		"warning"	 contained
-syn match	qfSuccess		"SUCCESS"	 contained
+" 注意：多个syn match之间不能重复匹配，意味着这里匹配到的|不会在qfSeparator中匹配，导致高亮缺失
+" 使用contains可以解决问题
+syn match	qfCtags		/\%1l[^c][^|]*|/he=e-1  contains=qfSeparator
 
 
 " Hide file name and line number for help outline (TOC).
@@ -41,20 +40,14 @@ hi def link qfFileName		Directory
 hi def link qfLineNr		LineNr
 hi def link qfSeparator1	Delimiter
 hi def link qfSeparator2	Delimiter
-hi def link qfSeparator3	Delimiter
-" hi def link qfText		Normal
-" hi def link qfError		Error
 
 " My custom highlight
 highlight qfText guifg=#c0caf5 guibg=#1a1b26 ctermfg=White
-highlight qfTitle guifg=#c0caf5 guibg=#1a1b26 ctermfg=White
 highlight qfError   guifg=#ff0000 gui=bold ctermfg=Red
 highlight qfWarning guifg=#ffaa00 gui=bold ctermfg=Yellow
 highlight qfSuccess guifg=#00ff00 gui=bold ctermfg=Green
-
-highlight qfCtagsText guifg=#c0caf5 guibg=#1a1b26 ctermfg=White
+hi def link qfSeparator	Delimiter
 highlight qfCtags guifg=#ffaa00 gui=bold ctermfg=Yellow
-
 
 let b:current_syntax = "qf"
 

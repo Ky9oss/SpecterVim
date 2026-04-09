@@ -12,8 +12,10 @@
 " script, so I wrote this quick and dirty patch.
 
 " Overload syntax
+" Do not overload by `syntax clear`. This might cause undefined behavior
 if exists("b:current_syntax")
-  syntax clear
+  echo "SpecterVim: The syntax setting failed because config.vim has loaded. Check runtimepath and remove it."
+  finish
 endif
 
 " define the config syntax
