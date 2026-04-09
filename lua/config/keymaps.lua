@@ -94,37 +94,84 @@ vim.keymap.set("n", "<C-y>", api.node.open.vertical, opts("Open: Vertical Split"
 vim.keymap.set("n", "<C-x>", api.node.open.horizontal, opts("Open: Horizontal Split"))
 
 -- Open quickfix for ctags lists
---- @param tags string
+--- @param tags table
 function QuickfixCtags(tags)
-	local max_name = 0
-	local max_kind = 0
+	-- Tag:
+	--    cmd = "",
+	--    filename = "",
+	--    kind = "u",
+	--    name = "games",
+	--    static = 0
+	--    .....
+	local fields_display = {}
+	local exclude = {
+		["cmd"] = true,
+		["static"] = true,
+	}
 
+  -- Get all fields displayed in quickfix
+	for field, _ in pairs(tags[1]) do
+		if not exclude[field] then
+			local title = field:sub(1, 1):upper() .. field:sub(2, -1)
+			table.insert(fields_display, { field = field, max_length = #title, title = title })
+		end
+	end
+
+  -- sort fields
+	for i, v in ipairs(fields_display) do
+		if v.field == "name" then
+			table.remove(fields_display, i)
+			table.insert(fields_display, 1, v)
+		elseif v.field == "filename" then
+			table.remove(fields_display, i)
+			table.insert(fields_display, v)
+		end
+	end
+	for i, v in ipairs(fields_display) do
+		if v.field == "kind" then
+			table.remove(fields_display, i)
+			table.insert(fields_display, 2, v)
+      break
+		end
+	end
+
+  -- Calculate max length of every fields to be displayed
 	for _, tag in ipairs(tags) do
-		max_name = math.max(max_name, #tag.name)
-		max_kind = math.max(max_kind, #(tag.kind or ""))
+		tag.kind = tag.kind and tag.kind or ""
+		tag.cmd = tag.cmd and tag.cmd or ""
+		for _, f in ipairs(fields_display) do
+			f.max_length = math.max(f.max_length, #tag[f.field])
+		end
+	end
+
+  -- Concatenate titles for top row in quickfix
+	local top_row = ""
+	for _, f in ipairs(fields_display) do
+		f.title = f.title == "Name" and "Tag" or f.title
+		f.title = f.title == "Filename" and "File" or f.title
+		top_row = top_row .. string.format("%-" .. f.max_length .. "s | ", f.title)
 	end
 
 	local items = {}
 	table.insert(items, {
 		module = "ctags",
-		-- lnum = 1,
-		text = string.format("%-" .. max_name .. "s\t%-" .. max_kind .. "s\t%s", "Tag", "Kind", "File"),
+		text = top_row,
 	})
+
+  -- Concatenate every rows in quickfix
 	for _, tag in ipairs(tags) do
+		local tag_row = ""
+		for _, f in ipairs(fields_display) do
+			tag_row = tag_row .. string.format("%-" .. f.max_length .. "s | ", tag[f.field])
+		end
+
 		table.insert(items, {
 			filename = tag.filename,
 			module = "ctags",
 			-- lnum = 1,
-			text = string.format(
-				"%-" .. max_name .. "s\t%-" .. max_kind .. "s\t%s",
-				-- "%-50s\t%-" .. max_kind .. "s\t%s",
-				tag.name,
-				tag.kind or "",
-				tag.filename
-			),
+			text = tag_row,
 			user_data = {
 				cmd = tag.cmd,
-				-- filename = tag.filename,
 			},
 		})
 	end

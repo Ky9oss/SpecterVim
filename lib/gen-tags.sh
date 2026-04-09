@@ -14,19 +14,13 @@ AUTOMAKE_CTAGS="./tagfiles/automake/tags"
 AUTOCONF_CTAGS="./tagfiles/autoconf/tags"
 M4_CTAGS="./tagfiles/m4/tags"
 
-mkdir -p ./tagfiles/c/
-mkdir -p ./tagfiles/lua/
-mkdir -p ./tagfiles/make/
-mkdir -p ./tagfiles/sh/
-mkdir -p ./tagfiles/automake/
-mkdir -p ./tagfiles/autoconf/
-mkdir -p ./tagfiles/m4/
-
 for lang in "$@"; do
   lang=$(echo "$lang" | tr '[:upper:]' '[:lower:]')
 
   case $lang in
   c)
+    mkdir -p ./tagfiles/c/
+
     # Use $PWD instead of . in POSIX tools will return absolute-path results.
     find "$PWD" -name '*.c' | while read src; do
       gcc -M -I/usr/include -I/usr/local/include -I"$PWD/include" "$src" 2>/dev/null
@@ -49,6 +43,8 @@ for lang in "$@"; do
       -f $C_CTAGS && printf "Done: %s\n" "$C_CTAGS has generated."
     ;;
   make)
+    mkdir -p ./tagfiles/make/
+
     if [[ -e $MAKE_CTAGS ]]; then
       rm $MAKE_CTAGS
     fi
@@ -58,13 +54,19 @@ for lang in "$@"; do
       "$PWD/Makefile" "$PWD/*.make" && mv "$PWD/tags" $MAKE_CTAGS && printf "Done: %s\n" "$MAKE_CTAGS has generated."
     ;;
   sh | bash | zsh)
+    mkdir -p ./tagfiles/sh/
+
     if [[ -e $SH_CTAGS ]]; then
       rm $SH_CTAGS
     fi
 
     ctags --languages=Sh -R "$PWD" && mv "$PWD/tags" $SH_CTAGS && printf "Done: %s\n" "$SH_CTAGS has generated."
     ;;
-  automake | autoconf | autotools)
+  automake | autoconf | autotools | m4)
+    mkdir -p ./tagfiles/automake/
+    mkdir -p ./tagfiles/autoconf/
+    mkdir -p ./tagfiles/m4/
+
     if [[ -e $AUTOMAKE_CTAGS ]]; then
       rm $AUTOMAKE_CTAGS
     fi
@@ -84,6 +86,8 @@ for lang in "$@"; do
 
     ;;
   lua)
+    mkdir -p ./tagfiles/lua/
+
     if [[ -e $LUA_CTAGS ]]; then
       rm $LUA_CTAGS
     fi

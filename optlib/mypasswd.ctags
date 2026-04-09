@@ -1,0 +1,15 @@
+# Parser for /etc/passwd
+#
+# Author: Ky9oss
+# Usage: ctags --options=${PWD}/optlib/mypasswd.ctags --languages=MyPasswd /etc/passwd
+
+--langdef=MyPasswd
+--map-MyPasswd=+(passwd)
+--kinddef-MyPasswd=u,username,user names
+--_fielddef-MyPasswd=username,user name{datatype=str}
+--_fielddef-MyPasswd=home,home directory{datatype=str}
+--_fielddef-MyPasswd=shell,login shell{datatype=str}
+--fields-MyPasswd=+{username}
+--fields-MyPasswd=+{home}
+--fields-MyPasswd=+{shell}
+--regex-MyPasswd=/^([^:]+):([^:]+):([^:]+):([^:]+):([^:]*):([^:]+):([^:]+)/\1/u/{_field=username:\1}{_field=home:\6}{_field=shell:\7}
