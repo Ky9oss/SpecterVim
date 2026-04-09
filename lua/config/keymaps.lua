@@ -93,11 +93,9 @@ end
 vim.keymap.set("n", "<C-y>", api.node.open.vertical, opts("Open: Vertical Split"))
 vim.keymap.set("n", "<C-x>", api.node.open.horizontal, opts("Open: Horizontal Split"))
 
--- Use quickfix for ctags
-vim.keymap.set("n", "g]", function()
-	-- local tags = vim.fn.taglist("^" .. vim.fn.expand("<cword>") .. "$")
-	local tags = vim.fn.taglist(vim.fn.expand("<cword>"))
-
+-- Open quickfix for ctags lists
+--- @param tags string
+function QuickfixCtags(tags)
 	local max_name = 0
 	local max_kind = 0
 
@@ -133,7 +131,19 @@ vim.keymap.set("n", "g]", function()
 
 	vim.fn.setqflist({}, " ", { title = "Tags", items = items })
 	vim.cmd("copen")
-end, { desc = "A dirty hack to disable noice when use g]" })
+end
+
+vim.keymap.set("n", "g]", function()
+	-- local tags = vim.fn.taglist("^" .. vim.fn.expand("<cword>") .. "$")
+	local tags = vim.fn.taglist(vim.fn.expand("<cword>"))
+	QuickfixCtags(tags)
+end, { desc = "Open quickfix for ctags lists in normal mode" })
+
+vim.keymap.set("v", "g]", function()
+	vim.cmd('normal! "vy')
+	local tags = vim.fn.taglist(vim.fn.getreg("v"))
+	QuickfixCtags(tags)
+end, { desc = "Open quickfix for ctags lists in visual mode" })
 
 -- vim.keymap.set("n", "gO", function()
 --   vim.cmd("set splitright | vert lopen | vertical resize 50")
