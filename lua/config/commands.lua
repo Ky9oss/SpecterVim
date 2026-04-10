@@ -5,10 +5,6 @@ require("utils.shell")
 local project = require("project_nvim.project")
 local project_root_path = project.get_project_root()
 
-if project_root then
-	vim.opt.tags = project_root .. "/tagfiles/**/tags"
-end
-
 -- Git Push
 -- Example: :GitPush this is a commit infomation
 vim.api.nvim_create_user_command("GitPush", function(opts)
@@ -380,8 +376,9 @@ end, { desc = "Dump GCC predefined macros → Quickfix" })
 -- Search current word
 vim.api.nvim_create_user_command("SearchCurrentWord", function(opts)
 	local cursor = vim.api.nvim_win_get_cursor(0)
+  local current_word = vim.fn.expand("<cword>")
 	vim.api.nvim_win_set_cursor(0, { 1, 1 })
-	vim.cmd("/\\V" .. vim.fn.expand("<cword>"))
+	vim.cmd("/\\V" .. current_word)
 	vim.api.nvim_win_set_cursor(0, { cursor[1], cursor[2] })
 end, { desc = "Search current word" })
 

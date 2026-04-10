@@ -109,7 +109,7 @@ function QuickfixCtags(tags)
 		["static"] = true,
 	}
 
-  -- Get all fields displayed in quickfix
+	-- Get all fields displayed in quickfix
 	for field, _ in pairs(tags[1]) do
 		if not exclude[field] then
 			local title = field:sub(1, 1):upper() .. field:sub(2, -1)
@@ -117,7 +117,7 @@ function QuickfixCtags(tags)
 		end
 	end
 
-  -- sort fields
+	-- sort fields
 	for i, v in ipairs(fields_display) do
 		if v.field == "name" then
 			table.remove(fields_display, i)
@@ -131,11 +131,11 @@ function QuickfixCtags(tags)
 		if v.field == "kind" then
 			table.remove(fields_display, i)
 			table.insert(fields_display, 2, v)
-      break
+			break
 		end
 	end
 
-  -- Calculate max length of every fields to be displayed
+	-- Calculate max length of every fields to be displayed
 	for _, tag in ipairs(tags) do
 		tag.kind = tag.kind and tag.kind or ""
 		tag.cmd = tag.cmd and tag.cmd or ""
@@ -144,7 +144,7 @@ function QuickfixCtags(tags)
 		end
 	end
 
-  -- Concatenate titles for top row in quickfix
+	-- Concatenate titles for top row in quickfix
 	local top_row = ""
 	for _, f in ipairs(fields_display) do
 		f.title = f.title == "Name" and "Tag" or f.title
@@ -158,7 +158,7 @@ function QuickfixCtags(tags)
 		text = top_row,
 	})
 
-  -- Concatenate every rows in quickfix
+	-- Concatenate every rows in quickfix
 	for _, tag in ipairs(tags) do
 		local tag_row = ""
 		for _, f in ipairs(fields_display) do
@@ -183,13 +183,21 @@ end
 vim.keymap.set("n", "g]", function()
 	-- local tags = vim.fn.taglist("^" .. vim.fn.expand("<cword>") .. "$")
 	local tags = vim.fn.taglist(vim.fn.expand("<cword>"))
-	QuickfixCtags(tags)
+	if #tags == 0 then
+		vim.notify("Tag not found")
+	else
+		QuickfixCtags(tags)
+	end
 end, { desc = "Open quickfix for ctags lists in normal mode" })
 
 vim.keymap.set("v", "g]", function()
 	vim.cmd('normal! "vy')
 	local tags = vim.fn.taglist(vim.fn.getreg("v"))
-	QuickfixCtags(tags)
+	if #tags == 0 then
+		vim.notify("Tag not found")
+	else
+		QuickfixCtags(tags)
+	end
 end, { desc = "Open quickfix for ctags lists in visual mode" })
 
 -- vim.keymap.set("n", "gO", function()

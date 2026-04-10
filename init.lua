@@ -85,6 +85,7 @@ require("config.keymaps")
 require("config.commands")
 require("config.autocmds")
 require("config.lsp")
+require("config.after")
 
 -- Used for debug
 if vim.g.specter_debug == 1 then

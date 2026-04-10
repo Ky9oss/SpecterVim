@@ -1,7 +1,9 @@
 # Parser for Autoconf GNU Manual
 #
 # Author: Ky9oss
-# Usage: ctags --options=${PWD}/optlib/autoconf-gnu-manual.ctags --languages=AutoconfMan -o ${PWD}/tags ${PWD}/doc/autoconf.txt
+# Usage: 
+#   ctags --options=${PWD}/optlib/autoconf-gnu-manual.ctags --languages=AutoconfMan -o ${PWD}/tags ${PWD}/doc/autoconf.txt
+#   ctags --options=${PWD}/optlib/autoconf-gnu-manual.ctags --languages=AutoconfMan -o ${PWD}/doc/autoconf/tags ${PWD}/doc/autoconf.txt
 
 --langdef=AutoconfMan
 --map-AutoconfMan=+(autoconf.txt)
