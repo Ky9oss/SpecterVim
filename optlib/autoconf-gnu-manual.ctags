@@ -1,6 +1,7 @@
 # Parser for Autoconf GNU Manual
 #
 # Author: Ky9oss
+# Usage: ctags --options=${PWD}/optlib/autoconf-gnu-manual.ctags --languages=AutoconfMan -o ${PWD}/tags ${PWD}/doc/autoconf.txt
 
 --langdef=AutoconfMan
 --map-AutoconfMan=+(autoconf.txt)
@@ -8,21 +9,20 @@
 #
 # Kinds
 #
---kinddef-CMake=f,function,functions
---kinddef-CMake=m,macro,macros
---kinddef-CMake=t,target,targets
---kinddef-CMake=v,variable,variable definitions
---kinddef-CMake=D,option,options specified with -D
---kinddef-CMake=p,project,projects
+--kinddef-AutoconfMan=h,heading,level heading
+--kinddef-AutoconfMan=s,second,second level heading
+--kinddef-AutoconfMan=t,third,third level heading
+--kinddef-AutoconfMan=d,macro,macros
+
 
 #
-# Tables
+# Headings
 #
---_tabledef-CMake=main
---_tabledef-CMake=variable
---_tabledef-CMake=variableScoped
---_tabledef-CMake=function
---_tabledef-CMake=macro
---_tabledef-CMake=target
---_tabledef-CMake=option
---_tabledef-CMake=project
+--regex-AutoconfMan=/^[[:digit:]]+[[:space:]]+(.*)$/\1/h/{scope=set}
+--regex-AutoconfMan=/^[[:digit:]]+\.[[:digit:]]+[[:space:]]+(.*)$/\1/s/{scope=ref}
+--regex-AutoconfMan=/^[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+[[:space:]]+(.*)$/\1/s/{scope=ref}
+
+#
+# Macro
+#
+--regex-AutoconfMan=/-- Macro: ([^\(]*)/\1/d

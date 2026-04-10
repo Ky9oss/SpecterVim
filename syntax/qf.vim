@@ -13,8 +13,8 @@ endif
 
 syn match	qfFileName	"^[^|]*"	   nextgroup=qfSeparator1
 syn match	qfSeparator1	"|"	 contained nextgroup=qfLineNr
-syn match	qfLineNr	"[^|]*"	 contained nextgroup=qfSeparator2 contains=@qfType
-syn match	qfSeparator2	"|"	 contained nextgroup=qfTitle
+syn match	qfLineNr	"[^|]*"	 contained nextgroup=qfSeparator2
+syn match	qfSeparator2	"|"	 contained nextgroup=qfText
 
 
 syn match	qfError		"error\|Error\|ERROR\|FAILED"
@@ -24,9 +24,11 @@ syn match	qfSuccess		"SUCCESS"
 
 syn match	qfSeparator	"|"
 
-" 注意：多个syn match之间不能重复匹配，意味着这里匹配到的|不会在qfSeparator中匹配，导致高亮缺失
-" 使用contains可以解决问题
+" 注意：多个syn match之间会互相覆盖，导致高亮缺失
+" 使用contains可以解决问题。可以理解为contains中的规则优先级更高
 syn match	qfCtags		/\%1l[^c][^|]*|/he=e-1  contains=qfSeparator
+
+syn match	qfText		".*" contained contains=qfError,qfWarning,qfSuccess,qfCtags,qfSeparator
 
 
 " Hide file name and line number for help outline (TOC).
@@ -42,7 +44,7 @@ hi def link qfSeparator1	Delimiter
 hi def link qfSeparator2	Delimiter
 
 " My custom highlight
-" highlight qfText guifg=#c0caf5 guibg=#1a1b26 ctermfg=White
+highlight qfText guifg=#c0caf5 guibg=#1a1b26 ctermfg=White
 highlight qfError   guifg=#ff0000 gui=bold ctermfg=Red
 highlight qfWarning guifg=#ffaa00 gui=bold ctermfg=Yellow
 highlight qfSuccess guifg=#00ff00 gui=bold ctermfg=Green
