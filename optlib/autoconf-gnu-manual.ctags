@@ -1,0 +1,28 @@
+# Parser for Autoconf GNU Manual
+#
+# Author: Ky9oss
+
+--langdef=AutoconfMan
+--map-AutoconfMan=+(autoconf.txt)
+
+#
+# Kinds
+#
+--kinddef-CMake=f,function,functions
+--kinddef-CMake=m,macro,macros
+--kinddef-CMake=t,target,targets
+--kinddef-CMake=v,variable,variable definitions
+--kinddef-CMake=D,option,options specified with -D
+--kinddef-CMake=p,project,projects
+
+#
+# Tables
+#
+--_tabledef-CMake=main
+--_tabledef-CMake=variable
+--_tabledef-CMake=variableScoped
+--_tabledef-CMake=function
+--_tabledef-CMake=macro
+--_tabledef-CMake=target
+--_tabledef-CMake=option
+--_tabledef-CMake=project

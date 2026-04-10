@@ -6,10 +6,15 @@
 --langdef=MyPasswd
 --map-MyPasswd=+(passwd)
 --kinddef-MyPasswd=u,username,user names
+
 --_fielddef-MyPasswd=username,user name{datatype=str}
 --_fielddef-MyPasswd=home,home directory{datatype=str}
 --_fielddef-MyPasswd=shell,login shell{datatype=str}
 --fields-MyPasswd=+{username}
 --fields-MyPasswd=+{home}
 --fields-MyPasswd=+{shell}
---regex-MyPasswd=/^([^:]+):([^:]+):([^:]+):([^:]+):([^:]*):([^:]+):([^:]+)/\1/u/{_field=username:\1}{_field=home:\6}{_field=shell:\7}
+
+# --regex-MyPasswd=/^([^:]+):([^:]+):([^:]+):([^:]+):([^:]*):([^:]+):([^:]+)/\1/u/{_field=username:\1}{_field=home:\6}{_field=shell:\7}
+
+--_tabledef-MyPasswd=main
+--_mtable-regex-MyPasswd=main/^([^:]+):([^:]+):([^:]+):([^:]+):([^:]*):([^:]+):([^:]+)\n/\1/u/{_field=username:\1}{_field=home:\6}{_field=shell:\7}

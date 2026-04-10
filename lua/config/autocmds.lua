@@ -480,15 +480,28 @@ vim.api.nvim_create_autocmd({ "TextYankPost" }, {
 	end,
 })
 
-vim.api.nvim_create_autocmd({ "CursorHold" }, {
-	group = "SHADA",
-	callback = function()
-		-- vim.notify("CursorHold")
-		if vim.fn.exists(":rshada") == 2 then
-			vim.cmd("rshada")
-		end
-	end,
-})
+-- Hook paste for Shada
+-- vim.paste = (function(overridden)
+-- 	return function(lines, phase)
+-- 		print("SpecterVim: hook paste")
+-- 		vim.cmd("rshada")
+-- 		return overridden(lines, phase)
+-- 	end
+-- end)(vim.paste)
+
+-- Hook p for Shada
+if vim.g.specter_debug == 1 then
+	vim.keymap.set("n", "p", function()
+		print("SpecterVim: hook p")
+		vim.cmd("rshada")
+		return "p"
+	end, { expr = true })
+else
+	vim.keymap.set("n", "p", function()
+		vim.cmd("rshada")
+		return "p"
+	end, { expr = true })
+end
 
 -- Use quickfix for ctags
 vim.api.nvim_create_autocmd("FileType", {
