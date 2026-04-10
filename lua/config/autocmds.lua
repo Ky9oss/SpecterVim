@@ -518,11 +518,23 @@ if top_item.module == "ctags"
   execute ".cc"
   " sleep 100m
   let qf = getqflist({'idx': 0, 'items': 1})
-  " echo "DEBUG" qf.idx
   let item = qf.items[qf.idx - 1]
   let cmd = item.user_data.cmd
-  let pattern = substitute(cmd[1:-2], '\\\\', '\\', 'g')
-  call search(pattern)
+
+  " 从Ctags到Vim search，可能有转义问题
+  " 以下转义取自Neovim: src/nvim/ex_getln.c
+  " # define PATH_ESC_CHARS " \t\n*?[{`$\\%#'\"|!<"
+  " # define SHELL_ESC_CHARS " \t\n*?[{`$\\%#'\"|!<>();&"
+  " # define BUFFER_ESC_CHARS " \t\n*?[`$\\%#'\"|!<"
+
+  let cmd = escape(cmd, "\t\n*[{`%#'\"|!<")
+  " let cmd = substitute(cmd, '\\\\', '\\', 'g')
+  " let cmd = substitute(cmd, '\[', '\\\[', 'g')
+  " let cmd = substitute(cmd, '\]', '\\\]', 'g')
+
+  echo "Search:" .. cmd
+  execute cmd
+  " call search(pattern)
 else
   execute ".cc"
 endif
