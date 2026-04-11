@@ -475,10 +475,13 @@ vim.api.nvim_create_augroup("SHADA", { clear = true })
 vim.api.nvim_create_autocmd({ "TextYankPost" }, {
 	group = "SHADA",
 	callback = function()
-		-- vim.notify("TextYankPost")
+		-- :wshada -> :rshada
+    -- This may be delayed for unknown reasons. So we save an additional backup in @r.
+		vim.cmd("let @r = @\"")
 		vim.cmd("wshada")
 	end,
 })
+
 
 -- Hook paste for Shada
 -- vim.paste = (function(overridden)
@@ -527,7 +530,7 @@ if top_item.module == "ctags"
   " # define SHELL_ESC_CHARS " \t\n*?[{`$\\%#'\"|!<>();&"
   " # define BUFFER_ESC_CHARS " \t\n*?[`$\\%#'\"|!<"
 
-  let cmd = escape(cmd, "\t\n*[{`%#'\"|!<")
+  let cmd = escape(cmd, "\t\n*[]`#!")
   " let cmd = substitute(cmd, '\\\\', '\\', 'g')
   " let cmd = substitute(cmd, '\[', '\\\[', 'g')
   " let cmd = substitute(cmd, '\]', '\\\]', 'g')

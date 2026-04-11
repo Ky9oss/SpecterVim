@@ -1,3 +1,29 @@
 # Parser for Automake GNU Manual
 #
 # Author: Ky9oss
+# Usage: 
+#   ctags --options=${PWD}/optlib/automake-gnu-manual.ctags --languages=AutomakeMan -o ${PWD}/doc/automake/tags ${PWD}/doc/automake.txt
+
+--langdef=AutomakeMan
+--map-AutomakeMan=+(automake.txt)
+
+#
+# Kinds
+#
+--kinddef-AutomakeMan=h,heading,level heading
+--kinddef-AutomakeMan=s,second,second level heading
+--kinddef-AutomakeMan=t,third,third level heading
+--kinddef-AutomakeMan=d,macro,macros
+
+
+#
+# Headings
+#
+--regex-AutomakeMan=/^[[:digit:]]+[[:space:]]+(.*)$/\1/h/{scope=set}
+--regex-AutomakeMan=/^[[:digit:]]+\.[[:digit:]]+[[:space:]]+(.*)$/\1/s/{scope=ref}
+--regex-AutomakeMan=/^[[:digit:]]+\.[[:digit:]]+\.[[:digit:]]+[[:space:]]+(.*)$/\1/t/{scope=ref}
+
+#
+# Macro
+#
+--regex-AutomakeMan=/^‘([^-%.:][^\( \t]+).*’$/\1/d/
