@@ -36,10 +36,10 @@
 > Because all I need is a lighter, more customizable, and controllable index jump and code completion.
 > No more dependencies, complex configurations, inconsistent behavior, or overly heavy applications.
 
-- [ ] support GNU Manual in `:help` with `tagbar`
 - [ ] support locate in AssemblyExplorer
 - [ ] support function-like macro such as `pow` in `/usr/include/bits/mathcalls.h`
 - [x] support `makefile` in ctags
+- [x] support GNU Manual
 
 ## Others
 

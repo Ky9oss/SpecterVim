@@ -51,7 +51,7 @@ for lang in "$@"; do
 
     ctags --languages=Make \
       --tag-relative=no \
-      "$PWD/Makefile" "$PWD/*.make" && mv "$PWD/tags" $MAKE_CTAGS && printf "Done: %s\n" "$MAKE_CTAGS has generated."
+      "$PWD/Makefile" "$PWD/*.make" "$PWD/*.mak" "$PWD/makefiles/*" && mv "$PWD/tags" $MAKE_CTAGS && printf "Done: %s\n" "$MAKE_CTAGS has generated."
     ;;
   sh | bash | zsh)
     mkdir -p ./tagfiles/sh/
@@ -81,7 +81,7 @@ for lang in "$@"; do
 
     ctags --languages=Automake -R "$PWD" && mv "$PWD/tags" $AUTOMAKE_CTAGS && printf "Done: %s\n" "$AUTOMAKE_CTAGS has generated."
     ctags --languages=Autoconf -R "$PWD" && mv "$PWD/tags" $AUTOCONF_CTAGS && printf "Done: %s\n" "$AUTOCONF_CTAGS has generated."
-    ctags --languages=M4 -R "$PWD" "/usr/local/share/aclocal/" "/usr/share/aclocal/" && mv "$PWD/tags" $M4_CTAGS && printf "Done: %s\n" "$M4_CTAGS has generated."
+    ctags --languages=M4 -R "$PWD" "$PWD/m4/" "/usr/local/share/aclocal/" "/usr/share/aclocal/" && mv "$PWD/tags" $M4_CTAGS && printf "Done: %s\n" "$M4_CTAGS has generated."
 
     ;;
   lua)

@@ -10,7 +10,7 @@
 #
 # Kinds
 #
---kinddef-AutomakeMan=h,heading,level heading
+--kinddef-AutomakeMan=h,heading,first level heading
 --kinddef-AutomakeMan=s,second,second level heading
 --kinddef-AutomakeMan=t,third,third level heading
 --kinddef-AutomakeMan=d,macro,macros
