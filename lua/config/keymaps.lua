@@ -177,7 +177,7 @@ function QuickfixCtags(tags)
 	end
 
 	vim.fn.setqflist({}, " ", { title = "Tags", items = items })
-	vim.cmd("copen")
+	vim.cmd("belowright copen")
 end
 
 vim.keymap.set("n", "g]", function()
