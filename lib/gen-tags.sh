@@ -35,7 +35,7 @@ for lang in "$@"; do
     touch $C_CTAGS
 
     ctags --kinds-C=+px \
-      --fields=+iaS \
+      --fields=+iaSK \
       --extras=+q \
       -L all-includes.txt \
       --totals=yes \
@@ -50,6 +50,7 @@ for lang in "$@"; do
     fi
 
     ctags --languages=Make \
+      --fields=+K \
       --tag-relative=no \
       "$PWD/Makefile" "$PWD/*.make" "$PWD/*.mak" "$PWD/makefiles/*" && mv "$PWD/tags" $MAKE_CTAGS && printf "Done: %s\n" "$MAKE_CTAGS has generated."
     ;;
@@ -60,7 +61,9 @@ for lang in "$@"; do
       rm $SH_CTAGS
     fi
 
-    ctags --languages=Sh -R "$PWD" && mv "$PWD/tags" $SH_CTAGS && printf "Done: %s\n" "$SH_CTAGS has generated."
+    ctags --languages=Sh \
+      --fields=+K \
+      -R "$PWD" && mv "$PWD/tags" $SH_CTAGS && printf "Done: %s\n" "$SH_CTAGS has generated."
     ;;
   automake | autoconf | autotools | m4)
     mkdir -p ./tagfiles/automake/
@@ -79,9 +82,15 @@ for lang in "$@"; do
       rm $M4_CTAGS
     fi
 
-    ctags --languages=Automake -R "$PWD" && mv "$PWD/tags" $AUTOMAKE_CTAGS && printf "Done: %s\n" "$AUTOMAKE_CTAGS has generated."
-    ctags --languages=Autoconf -R "$PWD" && mv "$PWD/tags" $AUTOCONF_CTAGS && printf "Done: %s\n" "$AUTOCONF_CTAGS has generated."
-    ctags --languages=M4 -R "$PWD" "$PWD/m4/" "/usr/local/share/aclocal/" "/usr/share/aclocal/" && mv "$PWD/tags" $M4_CTAGS && printf "Done: %s\n" "$M4_CTAGS has generated."
+    ctags --languages=Automake \
+      --fields=+K \
+      -R "$PWD" && mv "$PWD/tags" $AUTOMAKE_CTAGS && printf "Done: %s\n" "$AUTOMAKE_CTAGS has generated."
+    ctags --languages=Autoconf \
+      --fields=+K \
+      -R "$PWD" && mv "$PWD/tags" $AUTOCONF_CTAGS && printf "Done: %s\n" "$AUTOCONF_CTAGS has generated."
+    ctags --languages=M4 \
+      --fields=+K \
+      -R "$PWD" "$PWD/m4/" "/usr/local/share/aclocal/" "/usr/share/aclocal/" && mv "$PWD/tags" $M4_CTAGS && printf "Done: %s\n" "$M4_CTAGS has generated."
 
     ;;
   lua)
@@ -91,7 +100,9 @@ for lang in "$@"; do
       rm $LUA_CTAGS
     fi
 
-    ctags --languages=Lua -R "$PWD" && mv "$PWD/tags" $LUA_CTAGS && printf "Done: %s\n" "$LUA_CTAGS has generated."
+    ctags --languages=Lua \
+      --fields=+K \
+      -R "$PWD" && mv "$PWD/tags" $LUA_CTAGS && printf "Done: %s\n" "$LUA_CTAGS has generated."
     ;;
   *)
     printf "Error: %s\n" "Parameters error" >&2

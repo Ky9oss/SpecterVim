@@ -415,3 +415,8 @@ vim.api.nvim_create_user_command("Help", function(opts)
 		end
 	end
 end, { desc = "Fuzzy search for custom help files", nargs = "?" })
+
+--Telescope jumplist
+vim.api.nvim_create_user_command("Ju", function()
+  require('telescope.builtin').jumplist()
+end, { desc = "Telescope jumplist" })

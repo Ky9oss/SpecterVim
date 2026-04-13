@@ -1,6 +1,6 @@
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
-vim.g.profiler = true -- a neovim lua profiler in snacks.nvim
+vim.g.profiler = 0 -- a neovim lua profiler in snacks.nvim
 vim.g.copy_to_system = true -- duplicate 'y' in keymaps.lua
 vim.g.clangd = 1 -- enable clangd lsp OR use ctags without lsp (1 or 0)
 vim.g.specter_debug = 0 -- enable debug (1 or 0)

@@ -103,6 +103,7 @@ function QuickfixCtags(tags)
 	--    name = "games",
 	--    static = 0
 	--    .....
+
 	local fields_display = {}
 	local exclude = {
 		["cmd"] = true,
@@ -135,14 +136,35 @@ function QuickfixCtags(tags)
 		end
 	end
 
+	-- vim.notify(vim.inspect(fields_display))
+
 	-- Calculate max length of every fields to be displayed
-	for _, tag in ipairs(tags) do
+	for i, tag in ipairs(tags) do
 		tag.kind = tag.kind and tag.kind or ""
 		tag.cmd = tag.cmd and tag.cmd or ""
 		for _, f in ipairs(fields_display) do
-			f.max_length = math.max(f.max_length, #tag[f.field])
+			-- We sometimes get tables in different format.
+			-- Here we just drop them if they are different from the first element in vim.fn.taglist.
+			-- In the future, we might add mutiple tables in single quickfix.
+			-- Currently, it's a good choice to drop them.
+			if tag[f.field] ~= nil then
+				local length = #tag[f.field]
+
+        -- In string.format("%-ns",xxx), n can not be greater than 99 
+				if length > 99 then
+					length = 99
+					tag[f.field] = "..." .. tag[f.field]:sub(-96, -1)
+				end
+				f.max_length = math.max(f.max_length, length)
+			else
+				table.remove(tags, i)
+				break
+			end
 		end
 	end
+
+	-- vim.notify(vim.inspect(tags))
+	-- vim.notify(vim.inspect(fields_display))
 
 	-- Concatenate titles for top row in quickfix
 	local top_row = ""
@@ -151,6 +173,8 @@ function QuickfixCtags(tags)
 		f.title = f.title == "Filename" and "File" or f.title
 		top_row = top_row .. string.format("%-" .. f.max_length .. "s | ", f.title)
 	end
+
+	-- vim.notify(top_row)
 
 	local items = {}
 	table.insert(items, {

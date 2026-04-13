@@ -1,0 +1,16 @@
+# Parser for pkgconf manual
+#
+# Author: Ky9oss
+
+--langdef=PkgconfMan
+--map-PkgconfMan=+(pkg-m4.txt)
+
+#
+# Kinds
+#
+--kinddef-PkgconfMan=d,macro,macros
+
+#
+# Macro
+#
+--regex-PkgconfMan=/^   ([^\( ]+).*$/\1/d/

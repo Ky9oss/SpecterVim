@@ -1,7 +1,7 @@
 -- return {}
 return {
 	"folke/noice.nvim",
-  dev = false,
+	dev = false,
 	event = "VeryLazy",
 	dependencies = {
 		"MunifTanjim/nui.nvim",
@@ -49,30 +49,31 @@ return {
 					},
 				},
 			},
-			-- cmdline = {
-			-- 	backend = "popup",
-			-- 	relative = "editor",
-			-- 	align = "center",
-			-- 	position = {
-			-- 		row = "100%",
-			-- 		col = 0,
-			-- 	},
-			-- 	size = {
-			-- 		height = "auto",
-			-- 		width = "100%",
-			-- 	},
-			-- 	border = {
-			-- 		style = "none",
-			-- 	},
-			-- 	win_options = {
-			-- 		winhighlight = {
-			-- 			Normal = "NoiceCmdline",
-			-- 			IncSearch = "",
-			-- 			CurSearch = "",
-			-- 			Search = "",
-			-- 		},
-			-- 	},
-			-- },
+			cmdline = {
+				backend = "popup",
+				relative = "editor",
+				align = "center",
+				focusable = true,
+				position = {
+					row = "100%",
+					col = 0,
+				},
+				size = {
+					height = "auto",
+					width = "100%",
+				},
+				border = {
+					style = "none",
+				},
+				win_options = {
+					winhighlight = {
+						Normal = "NoiceCmdline",
+						IncSearch = "",
+						CurSearch = "",
+						Search = "",
+					},
+				},
+			},
 
 			routes = {
 				-- {
