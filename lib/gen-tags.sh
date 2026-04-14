@@ -34,13 +34,15 @@ for lang in "$@"; do
     fi
     touch $C_CTAGS
 
+    # -L all-includes.txt \
     ctags --kinds-C=+px \
       --fields=+iaSK \
       --extras=+q \
-      -L all-includes.txt \
       --totals=yes \
+      -L all-includes.txt \
       --tag-relative=no \
-      -f $C_CTAGS && printf "Done: %s\n" "$C_CTAGS has generated."
+      -f $C_CTAGS \
+      -R "$PWD" && printf "Done: %s\n" "$C_CTAGS has generated."
     ;;
   make)
     mkdir -p ./tagfiles/make/
