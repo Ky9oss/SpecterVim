@@ -1,7 +1,6 @@
 #!/bin/bash
 #
-# Get all dependecies by gcc preprocessor(-M)
-#
+# GenCtags: Generate ctags for specific languages.
 # $@: languages
 #
 # By Ky9oss
@@ -20,21 +19,47 @@ for lang in "$@"; do
   case $lang in
   c)
     mkdir -p ./tagfiles/c/
+    find . -maxdepth 1 -type f -name "Makefile" | grep -q .
 
-    # Use $PWD instead of . in POSIX tools will return absolute-path results.
-    find "$PWD" -name '*.c' | while read src; do
-      gcc -M -I/usr/include -I/usr/local/include -I"$PWD/include" "$src" 2>/dev/null
-    done |
-      sed -e 's/[\\ ]/\n/g' \
-        -e '/^$/d' \
-        -e 's/^.*\.o://g' | sort -u >all-includes.txt
+    if [[ 1 -eq $? ]]; then
+      find "$PWD" -name '*.c' | while read src; do
+        gcc -M -I/usr/include -I/usr/local/include -I"$PWD/include" "$src" 2>/dev/null
+      done |
+        sed -e 's/[\\ ]/\n/g' \
+          -e '/^$/d' \
+          -e 's/^.*\.o://g' | sort -u >all-includes.txt
+    else
+      find . -maxdepth 1 -type f -name "Makefile.am" | grep -q .
+      if [[ 1 -eq $? ]]; then
+        echo "TODO"
+      else
+        # tail -n 1 Makefile.am | grep PRECIOUS
+        # if [[ 1 -eq $? ]]; then
+        #   echo ".PRECIOUS: %.h" >>Makefile.am
+        #   echo "GenCtags: Makefile.am has changed. Please recompile and run GenCtags again."
+        #   exit
+        # fi
+        #
+        # This is based on .deps from Autotools. Make sure compilation have done.
+        touch temp-all-includes.txt
+        pwd_escape=$(echo $PWD | sed -e 's/\//\\\//g')
+        find $PWD -type d -name ".deps" | while read dir; do
+          find $dir -type f -name "*.Po" | while read po_file; do
+            cat "$po_file" | sed -e 's/[\\ ]/\n/g' \
+              -e '/^$/d' \
+              -e 's/^.*\.o://g' | sed -e 's/\(^[^\/].*.[ch]\)/'"$pwd_escape"'\/\1/g' | tr -d ":" | sort -u >>temp-all-includes.txt
+          done
+        done
+        sort -u ./temp-all-includes.txt | uniq >./all-includes.txt
+        rm ./temp-all-includes.txt
+      fi
+    fi
 
     if [[ -e $C_CTAGS ]]; then
       rm $C_CTAGS
     fi
     touch $C_CTAGS
 
-    # -L all-includes.txt \
     ctags --kinds-C=+px \
       --fields=+iaSK \
       --extras=+q \

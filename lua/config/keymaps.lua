@@ -150,7 +150,7 @@ function QuickfixCtags(tags)
 			if tag[f.field] ~= nil then
 				local length = #tag[f.field]
 
-        -- In string.format("%-ns",xxx), n can not be greater than 99 
+				-- In string.format("%-ns",xxx), n can not be greater than 99
 				if length > 99 then
 					length = 99
 					tag[f.field] = "..." .. tag[f.field]:sub(-96, -1)
@@ -204,8 +204,15 @@ function QuickfixCtags(tags)
 	vim.cmd("belowright copen")
 end
 
+-- Print Ctags in Quickfix
 vim.keymap.set("n", "g]", function()
-	-- local tags = vim.fn.taglist("^" .. vim.fn.expand("<cword>") .. "$")
+	if vim.g.project_root_path then
+		local doc_tags = vim.fn.stdpath("config") .. "/doc/**/tags"
+		vim.opt.tags = { vim.g.project_root_path .. "/tagfiles/**/tags", doc_tags }
+	else
+		vim.opt.tags = "tagfiles/**/tags"
+	end
+
 	local tags = vim.fn.taglist(vim.fn.expand("<cword>"))
 	if #tags == 0 then
 		vim.notify("Tag not found")
@@ -215,6 +222,13 @@ vim.keymap.set("n", "g]", function()
 end, { desc = "Open quickfix for ctags lists in normal mode" })
 
 vim.keymap.set("v", "g]", function()
+	if vim.g.project_root_path then
+		local doc_tags = vim.fn.stdpath("config") .. "/doc/**/tags"
+		vim.opt.tags = { vim.g.project_root_path .. "/tagfiles/**/tags", doc_tags }
+	else
+		vim.opt.tags = "tagfiles/**/tags"
+	end
+
 	vim.cmd('normal! "vy')
 	local tags = vim.fn.taglist(vim.fn.getreg("v"))
 	if #tags == 0 then
@@ -223,6 +237,25 @@ vim.keymap.set("v", "g]", function()
 		QuickfixCtags(tags)
 	end
 end, { desc = "Open quickfix for ctags lists in visual mode" })
+
+vim.keymap.set("n", "g}", function()
+	-- if vim.g.project_root_path then
+	-- 	local doc_tags = vim.fn.stdpath("config") .. "/doc/**/tags"
+	-- 	local man_tags = vim.fn.stdpath("config") .. "/doc/man/**/tags"
+	-- 	vim.opt.tags = { vim.g.project_root_path .. "/tagfiles/**/tags", doc_tags, man_tags }
+	-- else
+	-- 	vim.opt.tags = "tagfiles/**/tags"
+	-- end
+
+	vim.cmd([[Sman  ]] .. vim.fn.expand("<cword>") .. [[
+  /\V]] .. vim.fn.expand("<cword>"))
+end, { desc = "Open man" })
+
+vim.keymap.set("v", "g}", function()
+	vim.cmd('normal! "vy')
+	vim.cmd([[Sman  ]] .. vim.fn.getreg("v") .. [[
+  /\V]] .. vim.fn.getreg("v"))
+end, { desc = "Open man" })
 
 -- vim.keymap.set("n", "gO", function()
 --   vim.cmd("set splitright | vert lopen | vertical resize 50")
