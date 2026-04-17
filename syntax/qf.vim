@@ -12,9 +12,9 @@ if exists("b:current_syntax")
 endif
 
 syn match	qfFileName	"^[^|]*"	   nextgroup=qfSeparator1
-syn match	qfSeparator1	"|"	 contained nextgroup=qfLineNr
+syn match	qfSeparator1	"[|]?"	 contained nextgroup=qfLineNr
 syn match	qfLineNr	"[^|]*"	 contained nextgroup=qfSeparator2
-syn match	qfSeparator2	"|"	 contained nextgroup=qfText
+syn match	qfSeparator2	"[|]?"	 contained nextgroup=qfText
 
 
 syn match	qfError		"error\|Error\|ERROR\|FAILED"
@@ -50,6 +50,7 @@ highlight qfWarning guifg=#ffaa00 gui=bold ctermfg=Yellow
 highlight qfSuccess guifg=#00ff00 gui=bold ctermfg=Green
 hi def link qfSeparator	Delimiter
 highlight qfCtags guifg=#ffaa00 gui=bold ctermfg=Yellow
+
 
 let b:current_syntax = "qf"
 

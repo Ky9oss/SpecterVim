@@ -36,12 +36,20 @@
 > Because all I need is a lighter, more customizable, and controllable index jump and code completion.
 > No more dependencies, complex configurations, inconsistent behavior, or overly heavy applications.
 
+- [ ] how to deal with token pasting(##). maybe a fuzzy matching which just drop all unknown token?
 - [ ] support locate in AssemblyExplorer
 - [ ] support function-like macro such as `pow` in `/usr/include/bits/mathcalls.h`
 - [x] support `makefile` in ctags
 - [x] support GNU Manual
 
 ## Others
+
+- hyper TODO: all TODO in one file with target's filename, line number, content instead of TODO in code comment
+  - [ ] Create
+  - [ ] Read in Quickfix
+  - [ ] Update
+  - [ ] Delete
+  - [ ] Rendering in code file
 
 - assmebly explorer:
   -  linux compatibility
