@@ -3,14 +3,14 @@
 # By Ky9oss
 
 INSTALL_MAN_PAGES=0
-CTAGS_BASE=0
+CTAGS_BASE=1
 
 if [[ $CTAGS_BASE -eq 1 ]]; then
   mkdir -p autoconf
   mkdir -p automake
 
-  mkdir -p pkg-config
-  ctags --languages=Man -o ./man/pkgconf/tags ./pkg.m4.7
+  # mkdir -p pkgconf
+  # ctags --languages=Man -o ./man/pkgconf/tags ./pkg.m4.7
 
   ctags --options=${PWD}/../optlib/autoconf-gnu-manual.ctags --languages=AutoconfMan -o ${PWD}/autoconf/tags ${PWD}/autoconf.txt
   ctags --options=${PWD}/../optlib/automake-gnu-manual.ctags --languages=AutomakeMan -o ${PWD}/automake/tags ${PWD}/automake.txt
@@ -20,7 +20,7 @@ if [[ $CTAGS_BASE -eq 1 ]]; then
   # man ./pkg.m4.7 | col -b > pkg-m4.txt
   cp /usr/share/man/man7/pkg.m4.7.gz ./ && gunzip pkg.m4.7.gz
   man ./pkg.m4.7 | col -b >pkg-m4.txt
-  rm ./pkg.m4.7
+  rm ./pkg.m4.7 ./pkg.m4.7.gz
 
   ctags --options=${PWD}/../optlib/pkgconf-manual.ctags --languages=PkgconfMan -o ${PWD}/pkgconf/tags ${PWD}/pkg-m4.txt
 fi

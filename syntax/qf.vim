@@ -44,12 +44,12 @@ hi def link qfSeparator1	Delimiter
 hi def link qfSeparator2	Delimiter
 
 " My custom highlight
-highlight qfText guifg=#c0caf5 guibg=#1a1b26 ctermfg=White
 highlight qfError   guifg=#ff0000 gui=bold ctermfg=Red
 highlight qfWarning guifg=#ffaa00 gui=bold ctermfg=Yellow
 highlight qfSuccess guifg=#00ff00 gui=bold ctermfg=Green
 hi def link qfSeparator	Delimiter
 highlight qfCtags guifg=#ffaa00 gui=bold ctermfg=Yellow
+highlight qfText guifg=#c0caf5 guibg=#1a1b26 ctermfg=White
 
 
 let b:current_syntax = "qf"

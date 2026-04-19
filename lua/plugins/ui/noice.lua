@@ -76,17 +76,22 @@ return {
 			},
 
 			routes = {
-				-- {
-				-- 	view = "cmdline",
-				-- 	filter = {
-				-- 		any = {
-				-- 			{ event = "msg_show", kind = "confirm" },
-				-- 			{ event = "msg_show", kind = "confirm_sub" },
-				-- 			{ event = "msg_show", kind = "number_prompt" },
-				-- 		},
-				-- 	},
-				-- 	-- opts = { skip = true, stop = false },
-				-- },
+				{
+					view = "cmdline",
+					filter = {
+						any = {
+							{ event = "msg_show", kind = "confirm" },
+							{ event = "msg_show", kind = "confirm_sub" },
+							{ event = "msg_show", kind = "number_prompt" },
+
+							-- To fix the repetition when <leader>mm in c
+              -- But some normal shell_out event might be banned
+              -- Because noice.lua always try to hijack every message
+							{ event = "msg_show", kind = "shell_out" },
+						},
+					},
+					opts = { skip = true },
+				},
 
 				-- {
 				-- 	filter = { event = "msg_show", kind = "confirm" },
