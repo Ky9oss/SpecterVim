@@ -23,6 +23,8 @@ if [[ $CTAGS_BASE -eq 1 ]]; then
   rm ./pkg.m4.7 ./pkg.m4.7.gz
 
   ctags --options=${PWD}/../optlib/pkgconf-manual.ctags --languages=PkgconfMan -o ${PWD}/pkgconf/tags ${PWD}/pkg-m4.txt
+
+  # ctags -R --languages=man /usr/share/man
 fi
 
 normalize() {

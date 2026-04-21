@@ -239,16 +239,17 @@ vim.keymap.set("v", "g]", function()
 end, { desc = "Open quickfix for ctags lists in visual mode" })
 
 vim.keymap.set("n", "g}", function()
-	-- if vim.g.project_root_path then
-	-- 	local doc_tags = vim.fn.stdpath("config") .. "/doc/**/tags"
-	-- 	local man_tags = vim.fn.stdpath("config") .. "/doc/man/**/tags"
-	-- 	vim.opt.tags = { vim.g.project_root_path .. "/tagfiles/**/tags", doc_tags, man_tags }
-	-- else
-	-- 	vim.opt.tags = "tagfiles/**/tags"
-	-- end
-
-	vim.cmd([[Sman  ]] .. vim.fn.expand("<cword>") .. [[
+	if vim.g.opened_with_man then
+		local word = vim.fn.expand("<cWORD>")
+		local name, section = string.match(word, "(%a+)%((%d+)%).*")
+		-- vim.notify("name:" .. name .. "\nsection" .. section)
+		vim.cmd("Man " .. section .. " " .. name)
+	else
+		vim.keymap.set("n", "g}", function()
+			vim.cmd([[Sman  ]] .. vim.fn.expand("<cword>") .. [[
   /\V]] .. vim.fn.expand("<cword>"))
+		end)
+	end
 end, { desc = "Open man" })
 
 vim.keymap.set("v", "g}", function()

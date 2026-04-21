@@ -3,16 +3,18 @@ local project = require("project_nvim.project")
 local project_root = project.get_project_root()
 
 -- auto open nvim-tree
-local function open_nvim_tree(data)
-	local opened_with_file = vim.fn.argc() > 0
-	local opened_with_man = vim.bo.filetype == "man" and vim.fn.argc() == 0
-
-	if not opened_with_file and not opened_with_man then
-		require("nvim-tree.api").tree.open()
-	end
-end
-
-vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
+vim.api.nvim_create_autocmd({ "VimEnter" }, {
+	callback = function()
+		vim.g.opened_with_file = vim.fn.argc() > 0
+		vim.g.opened_with_man = vim.bo.filetype == "man" and vim.fn.argc() == 0
+		-- if vim.g.opened_with_man then
+		-- 	vim.cmd("set relativenumber")
+		-- end
+		if not vim.g.opened_with_file and not vim.g.opened_with_man then
+			require("nvim-tree.api").tree.open()
+		end
+	end,
+})
 
 -- auto change CRLF to LF
 vim.api.nvim_create_autocmd("BufWrite", {
@@ -476,12 +478,11 @@ vim.api.nvim_create_autocmd({ "TextYankPost" }, {
 	group = "SHADA",
 	callback = function()
 		-- :wshada -> :rshada
-    -- This may be delayed for unknown reasons. So we save an additional backup in @r.
-		vim.cmd("let @r = @\"")
+		-- This may be delayed for unknown reasons. So we save an additional backup in @r.
+		vim.cmd('let @r = @"')
 		vim.cmd("wshada")
 	end,
 })
-
 
 -- Hook paste for Shada
 -- vim.paste = (function(overridden)
