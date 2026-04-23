@@ -241,7 +241,7 @@ end, { desc = "Open quickfix for ctags lists in visual mode" })
 vim.keymap.set("n", "g}", function()
 	if vim.g.opened_with_man then
 		local word = vim.fn.expand("<cWORD>")
-		local name, section = string.match(word, "(%a+)%((%d+)%).*")
+		local name, section = string.match(word, "(.+)%((%d+)%).*")
 		-- vim.notify("name:" .. name .. "\nsection" .. section)
 		vim.cmd("Man " .. section .. " " .. name)
 	else

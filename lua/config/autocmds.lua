@@ -62,12 +62,13 @@ if project_root then
 			local ft = vim.bo[ev.buf].filetype
 
 			local default_gitignore = [[
-# Vim files
+# SpectorVim files
 *~
 Session.vim
 tagfiles
 tags
 .clangd
+.editorconfig
 .r00t_here
 
 # Compiled intermediate files and dirs

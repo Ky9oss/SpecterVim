@@ -6,7 +6,7 @@ if vim.g.profiler == 1 then
 		lazy = false,
 		opts = function()
 			-- Toggle the profiler
-			Snacks.toggle.profiler():map("<leader>pp")
+			Snacks.toggle.profiler():map("<leader>pa")
 			-- Toggle the profiler highlights
 			Snacks.toggle.profiler_highlights():map("<leader>ph")
 		end,

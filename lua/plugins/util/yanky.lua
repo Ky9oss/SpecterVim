@@ -4,7 +4,7 @@ return {
   dependencies = { "folke/snacks.nvim" },
   keys = {
     {
-      "<leader>pa",
+      "<leader>pp",
       function()
           Snacks.picker.yanky()
       end,
