@@ -258,6 +258,82 @@ vim.keymap.set("v", "g}", function()
   /\V]] .. vim.fn.getreg("v"))
 end, { desc = "Open man" })
 
+local function reverse_copy(t)
+	local new_t = {}
+	for i = #t, 1, -1 do
+		table.insert(new_t, t[i])
+	end
+	return new_t
+end
+
+local function slice(tbl, start, end_)
+	local res = {}
+	start = start or 1
+	end_ = end_ or #tbl
+	for i = start, end_ do
+		if tbl[i] ~= nil then 
+			res[#res + 1] = tbl[i]
+		end
+	end
+	return res
+end
+
+-- An improved version of <C-O> and <C-I>
+-- Jump to previous of next FILE in jumplist
+vim.keymap.set("n", "<leader><C-O>", function()
+	local jumplists = vim.fn.getjumplist()
+	local current_filename = vim.api.nvim_buf_get_name(0)
+	local current_position = jumplists[2]
+	local jumplist = slice(jumplists[1], 1, current_position)
+	local count = 1
+
+	jumplist = reverse_copy(jumplist)
+	for _, jumptable in ipairs(jumplist) do
+		local filename = vim.api.nvim_buf_get_name(jumptable.bufnr)
+
+		if current_filename ~= filename then
+			-- vim.cmd([[keepjumps buffer ]] .. jumptable.bufnr .. [[
+			--
+			--    call cursor(]] .. jumptable.lnum .. "," .. jumptable.col .. ")")
+
+			local i = 1
+			while i <= count do
+				vim.api.nvim_feedkeys(vim.keycode("<C-o>"), "n", false)
+        i = i + 1
+			end
+
+			break
+		else
+			count = count + 1
+		end
+	end
+end, { desc = "Jump to previous file in jumplist" })
+
+vim.keymap.set("n", "<leader><C-I>", function()
+  vim.notify("Got it")
+	local jumplists = vim.fn.getjumplist()
+	local current_filename = vim.api.nvim_buf_get_name(0)
+	local current_position = jumplists[2]
+	local jumplist = slice(jumplists[1], current_position, #(jumplists[1]))
+	local count = 0
+  vim.notify(vim.inspect(jumplist))
+
+	for _, jumptable in ipairs(jumplist) do
+		local filename = vim.api.nvim_buf_get_name(jumptable.bufnr)
+		if current_filename ~= filename then
+			local i = 1
+			while i <= count do
+				vim.api.nvim_feedkeys(vim.keycode("<C-I>"), "n", false)
+        i = i + 1
+			end
+
+			break
+		else
+			count = count + 1
+		end
+	end
+end, { desc = "Jump to next file in jumplist" })
+
 -- vim.keymap.set("n", "gO", function()
 --   vim.cmd("set splitright | vert lopen | vertical resize 50")
 -- end, { noremap = true, silent = true, desc = "Vim-help files navigation" })
