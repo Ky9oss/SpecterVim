@@ -278,8 +278,11 @@ local function slice(tbl, start, end_)
 	return res
 end
 
--- An improved version of <C-O> and <C-I>
 -- Jump to previous of next FILE in jumplist
+-- Version: Neovim >= 0.12.0
+-- This is an improved version of <C-O> and <C-I>
+-- This depends on the improvement of shada, where jumplist separate from '0 in vim.o.shada
+-- See more: https://github.com/neovim/neovim/pull/33542 
 vim.keymap.set("n", "<leader><C-O>", function()
 	local jumplists = vim.fn.getjumplist()
 	local current_filename = vim.api.nvim_buf_get_name(0)
