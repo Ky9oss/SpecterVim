@@ -241,9 +241,13 @@ end, { desc = "Open quickfix for ctags lists in visual mode" })
 vim.keymap.set("n", "g}", function()
 	if vim.g.opened_with_man then
 		local word = vim.fn.expand("<cWORD>")
-		local name, section = string.match(word, "(.+)%((%d+)%).*")
+		local name, section = string.match(word, "(.+)%((%d*)%).*")
 		-- vim.notify("name:" .. name .. "\nsection" .. section)
-		vim.cmd("Man " .. section .. " " .. name)
+		if section then
+			vim.cmd("Sman " .. section .. " " .. name)
+		else
+			vim.cmd("Sman " .. name)
+		end
 	else
 		vim.keymap.set("n", "g}", function()
 			vim.cmd([[Sman  ]] .. vim.fn.expand("<cword>") .. [[
@@ -271,7 +275,7 @@ local function slice(tbl, start, end_)
 	start = start or 1
 	end_ = end_ or #tbl
 	for i = start, end_ do
-		if tbl[i] ~= nil then 
+		if tbl[i] ~= nil then
 			res[#res + 1] = tbl[i]
 		end
 	end
@@ -282,7 +286,7 @@ end
 -- Version: Neovim >= 0.12.0
 -- This is an improved version of <C-O> and <C-I>
 -- This depends on the improvement of shada, where jumplist separate from '0 in vim.o.shada
--- See more: https://github.com/neovim/neovim/pull/33542 
+-- See more: https://github.com/neovim/neovim/pull/33542
 vim.keymap.set("n", "<leader><C-O>", function()
 	local jumplists = vim.fn.getjumplist()
 	local current_filename = vim.api.nvim_buf_get_name(0)
@@ -302,7 +306,7 @@ vim.keymap.set("n", "<leader><C-O>", function()
 			local i = 1
 			while i <= count do
 				vim.api.nvim_feedkeys(vim.keycode("<C-o>"), "n", false)
-        i = i + 1
+				i = i + 1
 			end
 
 			break
@@ -313,13 +317,13 @@ vim.keymap.set("n", "<leader><C-O>", function()
 end, { desc = "Jump to previous file in jumplist" })
 
 vim.keymap.set("n", "<leader><C-I>", function()
-  vim.notify("Got it")
+	vim.notify("Got it")
 	local jumplists = vim.fn.getjumplist()
 	local current_filename = vim.api.nvim_buf_get_name(0)
 	local current_position = jumplists[2]
-	local jumplist = slice(jumplists[1], current_position, #(jumplists[1]))
+	local jumplist = slice(jumplists[1], current_position, #jumplists[1])
 	local count = 0
-  vim.notify(vim.inspect(jumplist))
+	vim.notify(vim.inspect(jumplist))
 
 	for _, jumptable in ipairs(jumplist) do
 		local filename = vim.api.nvim_buf_get_name(jumptable.bufnr)
@@ -327,7 +331,7 @@ vim.keymap.set("n", "<leader><C-I>", function()
 			local i = 1
 			while i <= count do
 				vim.api.nvim_feedkeys(vim.keycode("<C-I>"), "n", false)
-        i = i + 1
+				i = i + 1
 			end
 
 			break

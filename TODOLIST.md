@@ -2,6 +2,7 @@
 
 ## Normal Bugs
 
+- [ ] The first paste based on shada always overlay the current one.
 - [x] `<leader>ql` reopen other files
 - [ ] Lsp failed sometimes and :LspRestart cause error
 

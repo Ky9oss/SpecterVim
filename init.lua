@@ -68,6 +68,7 @@ vim.opt.expandtab = true
 vim.opt.shada = "'0,<1000,:0,n" .. shada_path
 -- vim.opt.jumpoptions = "stack,view,clean"
 vim.o.autoread = true
+vim.opt.tags = "tagfiles/**/tags"
 
 -- CRLF to LF
 vim.opt.fileformats = { "unix", "dos" }
