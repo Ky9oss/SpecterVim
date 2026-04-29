@@ -189,7 +189,7 @@ function AssemblyExplorerMSVC(is_remote, compile_options)
 	})
 
 	-- TODO: Add custom_command
-	-- TODO: Optimize batch file by env cache
+	-- TODO: Optimize batch file by env cache on Windows
 	if is_remote then
 		scp_push(vim.api.nvim_buf_get_name(0), "~/_temp_assembly_explorer_msvc.c", function(flag)
 			if flag then

@@ -4,6 +4,7 @@ vim.g.profiler = 0 -- a neovim lua profiler in snacks.nvim
 vim.g.copy_to_system = true -- duplicate 'y' in keymaps.lua
 vim.g.clangd = 1 -- enable clangd lsp OR use ctags without lsp (1 or 0)
 vim.g.specter_debug = 0 -- enable debug (1 or 0)
+vim.g.nvim_tree_moved = 0 -- nvim_tree has moved from left to right (1 or 0)
 
 if vim.fn.has("win32") ~= 1 then
 	if vim.env.TMUX == nil or vim.env.TMUX == "" then
@@ -69,6 +70,9 @@ vim.opt.shada = "'0,<1000,:0,n" .. shada_path
 -- vim.opt.jumpoptions = "stack,view,clean"
 vim.o.autoread = true
 vim.opt.tags = "tagfiles/**/tags"
+vim.opt.equalalways = false -- auto resize windows
+vim.opt.winwidth = 35 -- expected width
+vim.opt.winminwidth = 30 -- min width
 
 -- CRLF to LF
 vim.opt.fileformats = { "unix", "dos" }

@@ -1,3 +1,5 @@
+require("utils.buffer")
+
 -- Copy
 if vim.g.copy_to_system == true then
 	vim.keymap.set("n", "gy", '"+y')
@@ -37,7 +39,8 @@ vim.keymap.set("n", "K", function()
 end, { noremap = true, silent = true })
 
 -- NvimTree
-vim.keymap.set("n", "<leader>tr", "<cmd>NvimTreeOpen<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>no", "<cmd>NvimTreeOpen<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>nc", "<cmd>NvimTreeClose<CR>", { noremap = true, silent = true })
 
 -- Obsession
 vim.keymap.set("n", "<leader>ql", "<cmd>source Session.vim<CR>", { noremap = true, silent = true })
@@ -351,17 +354,59 @@ vim.keymap.set("n", "<leader><C-I>", function()
 end, { desc = "Jump to next file in jumplist" })
 
 -- Dap
+-- TODO: Resize all dapui-windows because do/dl/dt will disrupt the layout
 vim.keymap.set("n", "<leader>do", function()
-  -- TODO: remap nvim-tree to right
+
 	require("dapui").open()
+	local winid = GetNvimTreeWinid()
+	if winid ~= 0 then
+		vim.api.nvim_set_current_win(winid)
+		vim.cmd([[
+	wincmd L
+	vertical resize 30
+	wincmd p
+	    ]])
+		vim.g.nvim_tree_moved = 1
+	end
+
 end, { noremap = true, silent = true })
 
 vim.keymap.set("n", "<leader>dl", function()
 	require("dapui").close()
+	local winid = GetNvimTreeWinid()
+	if winid ~= 0 then
+		vim.api.nvim_set_current_win(winid)
+		vim.cmd([[
+	wincmd H
+	vertical resize 30
+	wincmd p
+	    ]])
+		vim.g.nvim_tree_moved = 0
+	end
+
 end, { noremap = true, silent = true })
 
 vim.keymap.set("n", "<leader>dt", function()
 	require("dapui").toggle()
+	local winid = GetNvimTreeWinid()
+	if winid ~= 0 then
+		vim.api.nvim_set_current_win(winid)
+		if vim.g.nvim_tree_moved == 1 then
+			vim.cmd([[
+	wincmd H
+	vertical resize 30
+	wincmd p
+	    ]])
+			vim.g.nvim_tree_moved = 0
+		elseif vim.g.nvim_tree_moved == 0 then
+			vim.cmd([[
+	wincmd L
+	vertical resize 30
+	wincmd p
+	    ]])
+			vim.g.nvim_tree_moved = 1
+		end
+	end
 end, { noremap = true, silent = true })
 
 -- vim.keymap.set("n", "gO", function()
