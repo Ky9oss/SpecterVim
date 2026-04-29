@@ -8,12 +8,9 @@ return {
 			patterns = {
 				".r00t_here",
 				".git",
-				".gitignore",
 				"package.json",
-				".editorconfig",
 				"Cargo.toml",
 				"*.sln",
-				"CMakeLists.txt",
 			},
 		})
 	end,

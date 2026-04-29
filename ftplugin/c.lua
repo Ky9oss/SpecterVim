@@ -4,6 +4,7 @@ local project = require("project_nvim.project")
 local project_root = project.get_project_root()
 
 vim.keymap.set("n", "<leader>mm", function()
+	-- Cmake
 	if project_root then
 		for name, type in vim.fs.dir(project_root) do
 			if name == "CMakeLists.txt" and type == "file" then -- Cmake
@@ -32,6 +33,36 @@ vim.keymap.set("n", "<leader>mm", function()
 		end
 	end
 
+	-- Makefile
+	local current_dir = vim.api.nvim_buf_get_name(0):match("^(%S+)/[^%/]*$")
+	if vim.fn.findfile("Makefile", current_dir) then
+		-- vim.bo.makeprg = "cd " .. current_dir .. " && make"
+		local scriptpath = vim.fn.stdpath("config") .. "/lib/make-compile.sh"
+		local stat = vim.uv.fs_stat(scriptpath)
+		if stat then -- file exists
+			if stat.mode % 128 >= 64 then -- mode is 12 bits int. owner: bits 8-6(rwx). x = 2^6 = 64
+				vim.bo.makeprg = "cd "
+					.. project_root
+					.. " && "
+					.. scriptpath
+					.. " "
+					.. current_dir
+			else
+				vim.bo.makeprg = "cd "
+					.. project_root
+					.. " && chmod +x "
+					.. scriptpath
+					.. " && "
+					.. scriptpath
+					.. " "
+					.. current_dir
+			end
+		end
+		vim.cmd("make | copen 10 | wincmd p")
+		return
+	end
+
+	-- Just gcc
 	if vim.fn.has("win32") ~= 1 then -- Linux
 		-- vim.bo.makeprg = "gcc-15 -Wall -O2 -o %< %"
 		local scriptpath = vim.fn.stdpath("config") .. "/lib/gcc-compile.sh"
@@ -67,16 +98,15 @@ vim.keymap.set("n", "<leader>mm", function()
 					.. executable_path
 			end
 		end
+		-- vim.notify("Current errorformat: " .. vim.bo.errorformat)
+		vim.cmd("compiler gcc")
+		-- vim.notify("Current errorformat: " .. vim.bo.errorformat)
+		-- vim.cmd("copen 10 | wincmd p")
+		-- TODO: A controllable compile command instaed of Make
+		-- vim.cmd("Make")
+
+		vim.cmd("make | copen 10 | wincmd p")
 	end
-
-  -- vim.notify("Current errorformat: " .. vim.bo.errorformat)
-  vim.cmd("compiler gcc")
-  -- vim.notify("Current errorformat: " .. vim.bo.errorformat)
-	-- vim.cmd("copen 10 | wincmd p")
-  -- TODO: A controllable compile command instaed of Make
-	-- vim.cmd("Make")
-
-	vim.cmd("make | copen 10 | wincmd p")
 end, { buffer = true, desc = "Make (C)" })
 
 -- Run executable binary by runscript-tmux.sh
@@ -121,5 +151,4 @@ vim.keymap.set("n", "<leader>mv", function()
 		executable_path = vim.api.nvim_buf_get_name(0):match("^(%S+)%.c$") -- This is a absolute path
 	end
 	exec_bash_scripts(executable_path)
-
 end, { buffer = true, desc = "Run C Program with Tmux" })
