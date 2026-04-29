@@ -36,8 +36,8 @@ vim.keymap.set("n", "<leader>mm", function()
 	end
 
 	-- Makefile
-	local current_dir = vim.api.nvim_buf_get_name(0):match("^(%S+)/[^%/]*$")
-	if vim.fn.findfile("Makefile", current_dir) then
+	local current_dir = vim.api.nvim_buf_get_name(0):match("^(%S+)/[^%/]*$") -- return string | ""
+	if vim.fn.findfile("Makefile", current_dir) ~= "" then
 		-- vim.bo.makeprg = "cd " .. current_dir .. " && make"
 		local scriptpath = vim.fn.stdpath("config") .. "/lib/make-compile.sh"
 		local stat = vim.uv.fs_stat(scriptpath)

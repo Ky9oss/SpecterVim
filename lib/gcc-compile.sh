@@ -6,6 +6,9 @@
 #
 # By Ky9oss
 
+CC_FLAGS="-Wall -O0 -g3"
+CC="gcc-15"
+
 if [[ -z $1 ]]; then
   printf "%s\n" "ERROR: The file's name you need to compile must be provided."
   exit 1
@@ -31,7 +34,7 @@ else
   output_path=./$output_name
 fi
 
-result=$(gcc-15 -Wall -O2 -o "$output_path" "$1" 2>&1)
+result=$($CC $CC_FLAGS -o "$output_path" "$1" 2>&1)
 if [[ $? -eq 1 ]]; then
   printf "%s\n" "--------[COMPILATION FAILED]--------"
   printf "%s" "$result"

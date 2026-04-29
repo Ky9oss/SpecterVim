@@ -58,8 +58,8 @@ vim.keymap.set("n", "to", function()
 end, { desc = "Quickfix for todo-comments" })
 
 -- Draft Paper
-vim.keymap.set("n", "<leader>dp", function()
-	vim.cmd.pedit(vim.fn.stdpath("cache") .. "/draftpaper.txt")
+vim.keymap.set("n", "<leader>dr", function()
+	vim.cmd.pedit(vim.fn.stdpath("cache") .. "/draft.txt")
 end, { noremap = true, silent = true })
 
 -- Lua Temp Script
@@ -349,6 +349,20 @@ vim.keymap.set("n", "<leader><C-I>", function()
 		end
 	end
 end, { desc = "Jump to next file in jumplist" })
+
+-- Dap
+vim.keymap.set("n", "<leader>do", function()
+  -- TODO: remap nvim-tree to right
+	require("dapui").open()
+end, { noremap = true, silent = true })
+
+vim.keymap.set("n", "<leader>dl", function()
+	require("dapui").close()
+end, { noremap = true, silent = true })
+
+vim.keymap.set("n", "<leader>dt", function()
+	require("dapui").toggle()
+end, { noremap = true, silent = true })
 
 -- vim.keymap.set("n", "gO", function()
 --   vim.cmd("set splitright | vert lopen | vertical resize 50")

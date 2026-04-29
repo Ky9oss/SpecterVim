@@ -20,10 +20,10 @@
 
 - Edit-compile-edit for all c-compilation-env by Quickfix
   - [x] normal gcc
-  - [ ] Makefile
+  - [x] Makefile
+  - [ ] autotools
   - [ ] Cmake
   - [ ] Meson
-  - [ ] Ninja
   - [ ] A controllable compile command instead of :Make
 
 ## About Tmux
@@ -44,13 +44,6 @@
 - [x] support GNU Manual
 
 ## Others
-
-- hyper TODO: all TODO in one file with target's filename, line number, content instead of TODO in code comment
-  - [ ] Create
-  - [ ] Read in Quickfix
-  - [ ] Update
-  - [ ] Delete
-  - [ ] Rendering in code file
 
 - assmebly explorer:
   -  linux compatibility

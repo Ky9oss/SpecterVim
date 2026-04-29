@@ -3,24 +3,34 @@ return {
   lazy = true,
   keys = {
     {
-      "<leader>b",
+      "<leader>db",
       "<cmd>DapToggleBreakpoint<CR>",
       desc = "Toggle Breakpoint",
     },
     {
-      "<leader>i",
+      "<leader>di",
       "<cmd>DapStepInto<CR>",
       desc = "Step Into",
     },
     {
-      "<leader>u",
+      "<leader>du",
       "<cmd>DapStepOut<CR>",
       desc = "Step Out",
     },
     {
-      "<leader>v",
+      "<leader>dv",
       "<cmd>DapStepOver<CR>",
       desc = "Step Over",
+    },
+    {
+      "<leader>dc",
+      "<cmd>DapContinue<CR>",
+      desc = "Start",
+    },
+    {
+      "<leader>dn",
+      "<cmd>DapNew<CR>",
+      desc = "Start",
     },
   },
   config = function()
