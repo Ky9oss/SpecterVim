@@ -48,6 +48,15 @@ vim.keymap.set("n", "<leader>ca", "<cmd>NoiceDismiss<CR>", { noremap = true, sil
 -- Search current word
 vim.keymap.set("n", "<leader>cw", "<cmd>SearchCurrentWord<CR>", { noremap = true, silent = true })
 
+-- todo-comments
+vim.keymap.set("n", "to", function()
+	if vim.g.project_root_path then
+		vim.cmd("TodoQuickFix cwd=" .. vim.g.project_root_path)
+	else
+		vim.cmd("TodoQuickFix")
+	end
+end, { desc = "Quickfix for todo-comments" })
+
 -- Draft Paper
 vim.keymap.set("n", "<leader>dp", function()
 	vim.cmd.pedit(vim.fn.stdpath("cache") .. "/draftpaper.txt")
