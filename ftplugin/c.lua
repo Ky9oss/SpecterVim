@@ -4,6 +4,8 @@ local project = require("project_nvim.project")
 local project_root = project.get_project_root()
 
 vim.keymap.set("n", "<leader>mm", function()
+  local current_window_width = vim.api.nvim_win_get_width(0)
+
 	-- Cmake
 	if project_root then
 		for name, type in vim.fs.dir(project_root) do
@@ -47,6 +49,8 @@ vim.keymap.set("n", "<leader>mm", function()
 					.. scriptpath
 					.. " "
 					.. current_dir
+					.. " "
+					.. current_window_width
 			else
 				vim.bo.makeprg = "cd "
 					.. project_root
@@ -56,9 +60,11 @@ vim.keymap.set("n", "<leader>mm", function()
 					.. scriptpath
 					.. " "
 					.. current_dir
+					.. " "
+					.. current_window_width
 			end
 		end
-		vim.cmd("make | copen 10 | wincmd p")
+		vim.cmd("make | belowright copen 10 | wincmd p")
 		return
 	end
 
@@ -105,7 +111,7 @@ vim.keymap.set("n", "<leader>mm", function()
 		-- TODO: A controllable compile command instaed of Make
 		-- vim.cmd("Make")
 
-		vim.cmd("make | copen 10 | wincmd p")
+		vim.cmd("make | belowright copen 10 | wincmd p")
 	end
 end, { buffer = true, desc = "Make (C)" })
 

@@ -1,7 +1,8 @@
 #!/bin/bash
 #
-# Compile for Makefile
+# Compile by Makefile for Quickfix
 # $1: dir
+# $2: width
 #
 # By Ky9oss
 
@@ -10,14 +11,33 @@ if [[ -z $1 ]]; then
   exit 1
 fi
 
-result=$(cd "$1" && make -s 2>&1)
-if [[ $? -eq 1 ]]; then
-  printf "%s\n" "--------[COMPILATION FAILED]--------"
-  printf "%s" "$result"
-else
-  printf "%s\n" "--------[COMPILATION SUCCESS]--------"
-  printf "%s" "$result"
+width=0
+# width=$(tput cols)
+
+if [[ -n $2 ]]; then
+  width=$2
 fi
+
+result=$(cd "$1" && make -s 2>&1)
+
+if [[ $? -eq 1 ]]; then
+  # printf "%s\n" "--------[COMPILATION FAILED]--------"
+  text="--------[COMPILATION FAILED]--------"
+else
+  # printf "%s\n" "--------[COMPILATION SUCCESS]--------"
+  text="--------[COMPILATION SUCCESS]--------"
+fi
+
+len=${#text}
+pad=$((((width - len) / 2) - 5))
+
+if [[ $pad -gt 0 ]]; then
+  printf "%*s%s\n" "$pad" "" "$text"
+else
+  printf "%s\n" "$text"
+fi
+
+printf "%s" "$result"
 
 #######################################################################################################
 # Use this script, you must set absolute path instead of relative path for compilation.
@@ -50,7 +70,7 @@ fi
 # ASMS       = $(patsubst %.c,%.s,$(SRCS))
 # ASMFLAGS   = -S -masm=intel -fno-asynchronous-unwind-tables -fno-exceptions
 #
-# all: $(ELFS) 
+# all: $(ELFS)
 #
 # asm: $(ASMS)
 #
@@ -65,4 +85,3 @@ fi
 #
 # .PHONY: all clean asm
 #######################################################################################################
-
