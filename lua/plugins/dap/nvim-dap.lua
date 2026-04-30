@@ -32,6 +32,11 @@ return {
       "<cmd>DapNew<CR>",
       desc = "Start",
     },
+    {
+      "<leader>de",
+      "<cmd>DapTerminate<CR>",
+      desc = "Terminate",
+    },
   },
   config = function()
     -- dap for c/c++/rust
