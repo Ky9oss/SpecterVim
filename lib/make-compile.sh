@@ -20,12 +20,12 @@ fi
 
 result=$(cd "$1" && make -s 2>&1)
 
-if [[ $? -eq 1 ]]; then
-  # printf "%s\n" "--------[COMPILATION FAILED]--------"
-  text="--------[COMPILATION FAILED]--------"
-else
+if [[ $? -eq 0 ]]; then
   # printf "%s\n" "--------[COMPILATION SUCCESS]--------"
   text="--------[COMPILATION SUCCESS]--------"
+else
+  # printf "%s\n" "--------[COMPILATION FAILED]--------"
+  text="--------[COMPILATION FAILED]--------"
 fi
 
 len=${#text}
