@@ -79,6 +79,18 @@ vim.opt.fileformats = { "unix", "dos" }
 vim.opt.fileformat = "unix"
 vim.opt.fixendofline = false
 
+-- treesitter
+vim.filetype.add({
+  extension = {
+    ASM = "asm",   -- *.ASM → asm
+    INC = "asm",
+    inc = "asm",
+  },
+})
+vim.treesitter.language.add('asm', {
+  path = vim.fn.stdpath('config') .. '/parser/asm.so'
+})
+
 vim.diagnostic.config({
 	signs = {
 		severity = { min = vim.diagnostic.severity.WARN },

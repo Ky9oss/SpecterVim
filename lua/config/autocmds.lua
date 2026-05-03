@@ -26,6 +26,14 @@ vim.api.nvim_create_autocmd("BufWrite", {
 	end,
 })
 
+-- treesitter
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'asm' },
+  callback = function()
+    vim.treesitter.start()
+  end,
+})
+
 -- auto save draftpaper and temp scripts
 vim.api.nvim_create_autocmd("WinLeave", {
 	pattern = { "draftpaper.txt", "_temp_script.*" },

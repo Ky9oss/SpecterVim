@@ -31,6 +31,8 @@ return {
 						"!tags",
 						"-g",
 						"!doc/**",
+						"-g",
+						"!snippets/**",
 					},
 				})
 			end)
@@ -47,6 +49,8 @@ return {
 						"!tags",
 						"-g",
 						"!.git/**",
+						"-g",
+						"!snippets/**",
 					},
 				})
 			end)

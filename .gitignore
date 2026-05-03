@@ -17,3 +17,5 @@ doc/*.6
 doc/*.7
 doc/*.8
 doc/*.man
+parser/**/
+parser/*.so
