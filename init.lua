@@ -90,7 +90,14 @@ vim.filetype.add({
 vim.treesitter.language.add('asm', {
   path = vim.fn.stdpath('config') .. '/parser/asm.so'
 })
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = { 'asm' },
+  callback = function()
+    vim.treesitter.start()
+  end,
+})
 
+-- diagnostic
 vim.diagnostic.config({
 	signs = {
 		severity = { min = vim.diagnostic.severity.WARN },

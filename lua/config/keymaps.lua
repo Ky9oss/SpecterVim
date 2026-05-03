@@ -329,18 +329,18 @@ vim.keymap.set("n", "<leader><C-O>", function()
 end, { desc = "Jump to previous file in jumplist" })
 
 vim.keymap.set("n", "<leader><C-I>", function()
-	vim.notify("Got it")
+	-- vim.notify("Got it")
 	local jumplists = vim.fn.getjumplist()
 	local current_filename = vim.api.nvim_buf_get_name(0)
 	local current_position = jumplists[2]
 	local jumplist = slice(jumplists[1], current_position, #jumplists[1])
 	local count = 0
-	vim.notify(vim.inspect(jumplist))
+	-- vim.notify(vim.inspect(jumplist))
 
 	for _, jumptable in ipairs(jumplist) do
 		local filename = vim.api.nvim_buf_get_name(jumptable.bufnr)
 		if current_filename ~= filename then
-			local i = 1
+			local i = 0
 			while i <= count do
 				vim.api.nvim_feedkeys(vim.keycode("<C-I>"), "n", false)
 				i = i + 1
