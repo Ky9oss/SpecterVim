@@ -117,6 +117,7 @@ temp
 bin
 *.log
 *.cache
+*.pcap
 .env
 
         ]]

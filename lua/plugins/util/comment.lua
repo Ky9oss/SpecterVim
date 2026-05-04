@@ -43,4 +43,16 @@ return {
 		---Function to call after (un)comment
 		post_hook = nil,
 	},
+	config = function()
+		local ft = require("Comment.ft")
+
+		ft.javascript = { "//%s", "/*%s*/" }
+		ft.yaml = "#%s"
+		ft.sh = "#%s"
+		ft.asm = ";%s"
+
+		-- Multiple filetypes
+		-- ft({ "go", "rust" }, ft.get("c"))
+		-- ft({ "toml", "graphql" }, "#%s")
+	end,
 }
