@@ -4,7 +4,7 @@ local project = require("project_nvim.project")
 local project_root = project.get_project_root()
 
 vim.keymap.set("n", "<leader>mm", function()
-  local current_window_width = vim.api.nvim_win_get_width(0)
+	local current_window_width = vim.api.nvim_win_get_width(0)
 
 	-- Cmake
 	if project_root then
@@ -43,28 +43,13 @@ vim.keymap.set("n", "<leader>mm", function()
 		local stat = vim.uv.fs_stat(scriptpath)
 		if stat then -- file exists
 			if stat.mode % 128 >= 64 then -- mode is 12 bits int. owner: bits 8-6(rwx). x = 2^6 = 64
-				vim.bo.makeprg = "cd "
-					.. project_root
-					.. " && "
-					.. scriptpath
-					.. " "
-					.. current_dir
-					.. " "
-					.. current_window_width
+				vim.cmd("cd " .. current_dir)
+				vim.bo.makeprg = scriptpath .. " " .. current_window_width
 			else
-				vim.bo.makeprg = "cd "
-					.. project_root
-					.. " && chmod +x "
-					.. scriptpath
-					.. " && "
-					.. scriptpath
-					.. " "
-					.. current_dir
-					.. " "
-					.. current_window_width
+				vim.notify("Permission Denied:" .. scriptpath .. " is not executable", vim.log.levels.ERROR)
 			end
 		end
-		vim.cmd("make | belowright copen 10 | wincmd p")
+		vim.cmd("make | belowright copen 10 | wincmd p | cd ..")
 		return
 	end
 

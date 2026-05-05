@@ -1,24 +1,32 @@
 #!/bin/bash
 #
 # Compile by Makefile for Quickfix
-# $1: dir
-# $2: width
+# $1: dir (droped)
+# $1: width
 #
 # By Ky9oss
 
-if [[ -z $1 ]]; then
-  printf "%s\n" "ERROR: The directory where Makefile is located must be provided."
+# if [[ -z $1 ]]; then
+#   printf "%s\n" "ERROR: The directory where Makefile is located must be provided."
+#   exit 1
+# fi
+
+is_makefile=$(ls | grep "Makefile")
+
+if [[ $? -ne 0 ]]; then
+  printf "%s\n" "ERROR: Makefile is not found."
   exit 1
 fi
 
 width=0
 # width=$(tput cols)
 
-if [[ -n $2 ]]; then
-  width=$2
+if [[ -n $1 ]]; then
+  width=$1
 fi
 
-result=$(cd "$1" && make -s 2>&1)
+# cd "$1" || exit 1
+result=$(make -s 2>&1)
 
 if [[ $? -eq 0 ]]; then
   # printf "%s\n" "--------[COMPILATION SUCCESS]--------"
