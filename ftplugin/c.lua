@@ -39,12 +39,13 @@ vim.keymap.set("n", "<leader>mm", function()
 	local current_dir = vim.api.nvim_buf_get_name(0):match("^(%S+)/[^%/]*$") -- return string | ""
 	if vim.fn.findfile("Makefile", current_dir) ~= "" then
 		-- vim.bo.makeprg = "cd " .. current_dir .. " && make"
+		local target = vim.api.nvim_buf_get_name(0):match("^%S+/([^%/]*).c$") -- return string | ""
 		local scriptpath = vim.fn.stdpath("config") .. "/lib/make-compile.sh"
 		local stat = vim.uv.fs_stat(scriptpath)
 		if stat then -- file exists
 			if stat.mode % 128 >= 64 then -- mode is 12 bits int. owner: bits 8-6(rwx). x = 2^6 = 64
 				vim.cmd("cd " .. current_dir)
-				vim.bo.makeprg = scriptpath .. " " .. current_window_width
+				vim.bo.makeprg = scriptpath .. " " .. current_window_width .. " " .. target
 			else
 				vim.notify("Permission Denied:" .. scriptpath .. " is not executable", vim.log.levels.ERROR)
 			end

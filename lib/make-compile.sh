@@ -3,6 +3,7 @@
 # Compile by Makefile for Quickfix
 # $1: dir (droped)
 # $1: width
+# $2: make target
 #
 # By Ky9oss
 
@@ -26,7 +27,7 @@ if [[ -n $1 ]]; then
 fi
 
 # cd "$1" || exit 1
-result=$(make -s 2>&1)
+result=$(make -s "$2" 2>&1)
 
 if [[ $? -eq 0 ]]; then
   # printf "%s\n" "--------[COMPILATION SUCCESS]--------"
