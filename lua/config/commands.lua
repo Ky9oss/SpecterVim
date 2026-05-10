@@ -373,10 +373,17 @@ vim.api.nvim_create_user_command("DumpPredefinedMacro", function(opts)
 	exec_bash_command(cmd)
 end, { desc = "Dump GCC predefined macros → Quickfix" })
 
+-- Syscall table
+vim.api.nvim_create_user_command("SyscallTable", function(opts)
+  local syscall_table = vim.fn.stdpath("config") .. "/lib/syscall_64.tbl"
+	vim.bo.makeprg = "cat " .. syscall_table
+	vim.cmd("make | belowright copen 10 | wincmd p")
+end, { desc = "Dump GCC predefined macros → Quickfix" })
+
 -- Search current word
 vim.api.nvim_create_user_command("SearchCurrentWord", function(opts)
 	local cursor = vim.api.nvim_win_get_cursor(0)
-  local current_word = vim.fn.expand("<cword>")
+	local current_word = vim.fn.expand("<cword>")
 	vim.api.nvim_win_set_cursor(0, { 1, 1 })
 	vim.cmd("/\\V" .. current_word)
 	vim.api.nvim_win_set_cursor(0, { cursor[1], cursor[2] })
@@ -418,5 +425,5 @@ end, { desc = "Fuzzy search for custom help files", nargs = "?" })
 
 --Telescope jumplist
 vim.api.nvim_create_user_command("Ju", function()
-  require('telescope.builtin').jumplist()
+	require("telescope.builtin").jumplist()
 end, { desc = "Telescope jumplist" })
