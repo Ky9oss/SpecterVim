@@ -112,6 +112,11 @@ all-includes.txt
 *.out
 *.app
 
+# Cmake
+_deps
+CmakeFiles
+build
+
 # Other files and dirs
 temp
 bin

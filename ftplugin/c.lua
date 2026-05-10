@@ -7,33 +7,33 @@ vim.keymap.set("n", "<leader>mm", function()
 	local current_window_width = vim.api.nvim_win_get_width(0)
 
 	-- Cmake
-	if project_root then
-		for name, type in vim.fs.dir(project_root) do
-			if name == "CMakeLists.txt" and type == "file" then -- Cmake
-				if vim.fn.has("win32") ~= 1 then -- Linux
-					local scriptpath = vim.fn.stdpath("config") .. "/lib/cmake.sh"
-					local stat = vim.uv.fs_stat(scriptpath)
-					if stat then -- file exists
-						if stat.mode % 128 >= 64 then -- mode is 12 bits int. owner: bits 8-6(rwx). x = 2^6 = 64
-							vim.bo.makeprg = "cd " .. project_root .. " && " .. scriptpath
-						else
-							vim.bo.makeprg = "cd "
-								.. project_root
-								.. " && chmod +x "
-								.. scriptpath
-								.. " && "
-								.. scriptpath
-						end
-					end
-				end
-
-				vim.cmd("Make")
-				vim.cmd("copen 10 | wincmd p")
-
-				return
-			end
-		end
-	end
+	-- if project_root then
+	-- 	for name, type in vim.fs.dir(project_root) do
+	-- 		if name == "CMakeLists.txt" and type == "file" then -- Cmake
+	-- 			if vim.fn.has("win32") ~= 1 then -- Linux
+	-- 				local scriptpath = vim.fn.stdpath("config") .. "/lib/cmake.sh"
+	-- 				local stat = vim.uv.fs_stat(scriptpath)
+	-- 				if stat then -- file exists
+	-- 					if stat.mode % 128 >= 64 then -- mode is 12 bits int. owner: bits 8-6(rwx). x = 2^6 = 64
+	-- 						vim.bo.makeprg = "cd " .. project_root .. " && " .. scriptpath
+	-- 					else
+	-- 						vim.bo.makeprg = "cd "
+	-- 							.. project_root
+	-- 							.. " && chmod +x "
+	-- 							.. scriptpath
+	-- 							.. " && "
+	-- 							.. scriptpath
+	-- 					end
+	-- 				end
+	-- 			end
+	--
+	-- 			vim.cmd("Make")
+	-- 			vim.cmd("copen 10 | wincmd p")
+	--
+	-- 			return
+	-- 		end
+	-- 	end
+	-- end
 
 	-- Makefile
 	local current_dir = vim.api.nvim_buf_get_name(0):match("^(%S+)/[^%/]*$") -- return string | ""
