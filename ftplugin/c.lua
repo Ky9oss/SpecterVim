@@ -113,22 +113,22 @@ vim.keymap.set("n", "<leader>mt", function()
 	local scriptpath = vim.fn.stdpath("config") .. "/lib/runscript-tmux.sh"
 	local params = { executable_path }
 
-	if project_root then
-		for name, type in vim.fs.dir(project_root) do
-			if name == "CMakeLists.txt" and type == "file" then -- Cmake
-				if vim.fn.has("win32") ~= 1 then -- Linux
-					-- TODO Cmake runner
-					return
-				end
-			end
-		end
-
-		-- vim.notify(
-		-- 	[=[<leader>mt: This file must in a project.
-		--   Use `git init` in your project's root path to initialize a project]=],
-		-- 	vim.log.levels.ERROR
-		-- )
-	end
+	-- if project_root then
+	-- 	for name, type in vim.fs.dir(project_root) do
+	-- 		if name == "CMakeLists.txt" and type == "file" then -- Cmake
+	-- 			if vim.fn.has("win32") ~= 1 then -- Linux
+	-- 				-- TODO Cmake runner
+	-- 				return
+	-- 			end
+	-- 		end
+	-- 	end
+	--
+	-- 	-- vim.notify(
+	-- 	-- 	[=[<leader>mt: This file must in a project.
+	-- 	--   Use `git init` in your project's root path to initialize a project]=],
+	-- 	-- 	vim.log.levels.ERROR
+	-- 	-- )
+	-- end
 
 	exec_bash_scripts(scriptpath, params)
 end, { buffer = true, desc = "Run C Program with Tmux" })

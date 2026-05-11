@@ -81,20 +81,24 @@ vim.opt.fixendofline = false
 
 -- treesitter
 vim.filetype.add({
-  extension = {
-    ASM = "asm",   -- *.ASM → asm
-    INC = "asm",
-    inc = "asm",
-  },
+	extension = {
+		ASM = "asm", -- *.ASM → asm
+		INC = "asm",
+		inc = "asm",
+	},
 })
-vim.treesitter.language.add('asm', {
-  path = vim.fn.stdpath('config') .. '/parser/asm.so'
+vim.treesitter.language.add("asm", {
+	path = vim.fn.stdpath("config") .. "/parser/asm.so",
 })
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = { 'asm' },
-  callback = function()
-    vim.treesitter.start()
-  end,
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "asm" },
+	callback = function()
+		vim.treesitter.start()
+		vim.cmd([[
+syn match asmKeyword /\vMACRO|PARAM|STACK|REF_CODE/ containedin=ALL
+hi asmKeyword gui=bold guibg=#303030
+    ]])
+	end,
 })
 
 -- diagnostic
