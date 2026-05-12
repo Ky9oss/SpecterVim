@@ -85,6 +85,7 @@ vim.filetype.add({
 		ASM = "asm", -- *.ASM → asm
 		INC = "asm",
 		inc = "asm",
+		info = "info",
 	},
 })
 vim.treesitter.language.add("asm", {
@@ -95,7 +96,7 @@ vim.api.nvim_create_autocmd("FileType", {
 	callback = function()
 		vim.treesitter.start()
 		vim.cmd([[
-syn match asmKeyword /\vMACRO|PARAM|STACK|REF_CODE/ containedin=ALL
+syn match asmKeyword /\vMACRO|PARAM|STACK|REF_CODE|RETURN/ containedin=ALL
 hi asmKeyword gui=bold guibg=#303030
     ]])
 	end,
