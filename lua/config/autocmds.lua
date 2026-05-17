@@ -514,23 +514,32 @@ else
 	end, { expr = true })
 end
 
--- Use quickfix for ctags
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = "qf",
-	callback = function()
-		vim.keymap.set("n", "<CR>", function()
-			vim.cmd([[
+-- Enter quickfix items in previous window.
+local function QuickfixEnter()
+	vim.cmd([[
 
 let qf = getqflist({'idx': 0, 'items': 1})
 let top_item = qf.items[0]
 if top_item.module == "ctags"
   " execute "normal! \<C-w>\<CR>"
   " execute "normal! \<C-w>p"
+
+  " Save the previous windows number.
+  wincmd p
+  let current_nr = winnr()
+  wincmd p
+
+  " This should be executed before getqflist.
   execute ".cc"
+
   " sleep 100m
   let qf = getqflist({'idx': 0, 'items': 1})
   let item = qf.items[qf.idx - 1]
   let cmd = item.user_data.cmd
+  let filename = item.user_data.filename
+
+  execute current_nr "wincmd w"
+  execute "edit " filename
 
   " 从Ctags到Vim search，可能有转义问题
   " 以下转义取自Neovim: src/nvim/ex_getln.c
@@ -543,7 +552,8 @@ if top_item.module == "ctags"
   " let cmd = substitute(cmd, '\[', '\\\[', 'g')
   " let cmd = substitute(cmd, '\]', '\\\]', 'g')
 
-  echo "Search:" .. cmd
+  "echo "Search: " .. cmd
+
   execute cmd
   " call search(pattern)
 else
@@ -551,32 +561,60 @@ else
 endif
 
       ]])
+end
+
+-- Use quickfix for ctags
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = "qf",
+	callback = function()
+		vim.keymap.set("n", "<CR>", function()
+			QuickfixEnter()
+		end, { buffer = true })
+
+		vim.keymap.set("n", "<C-x>", function()
+			local quickfix_winid = vim.api.nvim_get_current_win()
+			vim.cmd([[
+         execute "normal! \<C-w>p"
+         execute "normal! \<C-w>s"
+      ]])
+      vim.api.nvim_set_current_win(quickfix_winid)
+			QuickfixEnter()
+		end, { buffer = true })
+
+		vim.keymap.set("n", "<C-y>", function()
+			local quickfix_winid = vim.api.nvim_get_current_win()
+			vim.cmd([[
+         execute "normal! \<C-w>p"
+         execute "normal! \<C-w>v"
+      ]])
+      vim.api.nvim_set_current_win(quickfix_winid)
+			QuickfixEnter()
 		end, { buffer = true })
 	end,
 })
 
 -- venn.nvim: enable or disable keymappings
 function _G.Toggle_venn()
-    local venn_enabled = vim.inspect(vim.b.venn_enabled)
-    if venn_enabled == "nil" then
-        vim.b.venn_enabled = true
-        vim.cmd[[setlocal ve=all]]
-        -- draw a line on HJKL keystokes
-        vim.api.nvim_buf_set_keymap(0, "n", "J", "<C-v>j:VBox<CR>", {noremap = true})
-        vim.api.nvim_buf_set_keymap(0, "n", "K", "<C-v>k:VBox<CR>", {noremap = true})
-        vim.api.nvim_buf_set_keymap(0, "n", "L", "<C-v>l:VBox<CR>", {noremap = true})
-        vim.api.nvim_buf_set_keymap(0, "n", "H", "<C-v>h:VBox<CR>", {noremap = true})
-        -- draw a box by pressing "f" with visual selection
-        vim.api.nvim_buf_set_keymap(0, "v", "f", ":VBox<CR>", {noremap = true})
-    else
-        vim.cmd[[setlocal ve=]]
-        vim.api.nvim_buf_del_keymap(0, "n", "J")
-        vim.api.nvim_buf_del_keymap(0, "n", "K")
-        vim.api.nvim_buf_del_keymap(0, "n", "L")
-        vim.api.nvim_buf_del_keymap(0, "n", "H")
-        vim.api.nvim_buf_del_keymap(0, "v", "f")
-        vim.b.venn_enabled = nil
-    end
+	local venn_enabled = vim.inspect(vim.b.venn_enabled)
+	if venn_enabled == "nil" then
+		vim.b.venn_enabled = true
+		vim.cmd([[setlocal ve=all]])
+		-- draw a line on HJKL keystokes
+		vim.api.nvim_buf_set_keymap(0, "n", "J", "<C-v>j:VBox<CR>", { noremap = true })
+		vim.api.nvim_buf_set_keymap(0, "n", "K", "<C-v>k:VBox<CR>", { noremap = true })
+		vim.api.nvim_buf_set_keymap(0, "n", "L", "<C-v>l:VBox<CR>", { noremap = true })
+		vim.api.nvim_buf_set_keymap(0, "n", "H", "<C-v>h:VBox<CR>", { noremap = true })
+		-- draw a box by pressing "f" with visual selection
+		vim.api.nvim_buf_set_keymap(0, "v", "f", ":VBox<CR>", { noremap = true })
+	else
+		vim.cmd([[setlocal ve=]])
+		vim.api.nvim_buf_del_keymap(0, "n", "J")
+		vim.api.nvim_buf_del_keymap(0, "n", "K")
+		vim.api.nvim_buf_del_keymap(0, "n", "L")
+		vim.api.nvim_buf_del_keymap(0, "n", "H")
+		vim.api.nvim_buf_del_keymap(0, "v", "f")
+		vim.b.venn_enabled = nil
+	end
 end
 -- toggle keymappings for venn using <leader>v
-vim.api.nvim_set_keymap('n', '<leader>v', ":lua Toggle_venn()<CR>", { noremap = true})
+vim.api.nvim_set_keymap("n", "<leader>v", ":lua Toggle_venn()<CR>", { noremap = true })

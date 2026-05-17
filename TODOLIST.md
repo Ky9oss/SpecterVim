@@ -16,7 +16,7 @@
 
 ## About C/Cpp
 
-- [ ] Debugger
+- [x] Debugger
 
 - Edit-compile-edit for all c-compilation-env by Quickfix
   - [x] normal gcc
@@ -54,11 +54,14 @@
 
 - [x] encrypt password
 
+- [x] <C-'> <g-'>: Ctags jumps: auto split
+    - <C-x> and <C-y> in Quickfix
+    - <C-w><C-x> <C-w><C-y>
+
 - [ ] Ensure the libs(bash-scripts/executable) is executable and grant it if it's not.
 
 - [ ] a more grace way to replace hover() with signature_help() in roslyn
 
 # New Plugins
 
-- [ ] Homepage
 - [ ] Database connecter

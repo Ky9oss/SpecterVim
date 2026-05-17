@@ -38,6 +38,18 @@ vim.keymap.set("n", "K", function()
 	end
 end, { noremap = true, silent = true })
 
+vim.keymap.set("n", "<C-w><C-x>", function()
+	vim.cmd([[
+     execute "normal! \<C-w>s"
+  ]])
+end, { noremap = true, silent = true })
+
+vim.keymap.set("n", "<C-w><C-y>", function()
+	vim.cmd([[
+     execute "normal! \<C-w>v"
+  ]])
+end, { noremap = true, silent = true })
+
 -- NvimTree
 vim.keymap.set("n", "<leader>no", "<cmd>NvimTreeOpen<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "<leader>nc", "<cmd>NvimTreeClose<CR>", { noremap = true, silent = true })
@@ -208,6 +220,7 @@ function QuickfixCtags(tags)
 			text = tag_row,
 			user_data = {
 				cmd = tag.cmd,
+				filename = tag.filename,
 			},
 		})
 	end
@@ -356,7 +369,6 @@ end, { desc = "Jump to next file in jumplist" })
 -- Dap
 -- TODO: Resize all dapui-windows because do/dl/dt will disrupt the layout
 vim.keymap.set("n", "<leader>do", function()
-
 	require("dapui").open()
 	local winid = GetNvimTreeWinid()
 	if winid ~= 0 then
@@ -368,7 +380,6 @@ vim.keymap.set("n", "<leader>do", function()
 	    ]])
 		vim.g.nvim_tree_moved = 1
 	end
-
 end, { noremap = true, silent = true })
 
 vim.keymap.set("n", "<leader>dl", function()
@@ -383,7 +394,6 @@ vim.keymap.set("n", "<leader>dl", function()
 	    ]])
 		vim.g.nvim_tree_moved = 0
 	end
-
 end, { noremap = true, silent = true })
 
 vim.keymap.set("n", "<leader>dt", function()
