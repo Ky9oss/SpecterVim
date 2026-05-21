@@ -58,6 +58,10 @@
     - <C-x> and <C-y> in Quickfix
     - <C-w><C-x> <C-w><C-y>
 
+- [ ] hex editor with lua FFI
+
+- [ ] Refactor Edit-compile-run-edit flow
+
 - [ ] Ensure the libs(bash-scripts/executable) is executable and grant it if it's not.
 
 - [ ] a more grace way to replace hover() with signature_help() in roslyn

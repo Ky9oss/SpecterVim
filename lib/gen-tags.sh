@@ -18,42 +18,62 @@ for lang in "$@"; do
 
   case $lang in
   c)
-    mkdir -p ./tagfiles/c/
-    find . -maxdepth 1 -type f -name "Makefile" | grep -q .
+    builder=""
+    CTAGS_FLAGS=""
 
-    if [[ 1 -eq $? ]]; then
+    mkdir -p ./tagfiles/c/
+
+    is_autotools=$(find . -maxdepth 1 -type f -name "Makefile.am")
+    is_makefile=$(find . -maxdepth 1 -type f -name "Makefile")
+
+    if [[ -n $is_autotools ]]; then
+      builder="autotools"
+    elif [[ -n $is_makefile ]]; then
+      builder="makefile"
+    else
+      builder="gcc"
+    fi
+
+    # Generate all includes from autotools/makeifle/gcc
+    case $builder in
+    autotools)
+      touch temp-all-includes.txt
+      pwd_escape=$(echo $PWD | sed -e 's/\//\\\//g')
+      find $PWD -type d -name ".deps" | while read dir; do
+        find $dir -type f -name "*.Po" | while read po_file; do
+          cat "$po_file" | sed -e 's/[\\ ]/\n/g' \
+            -e '/^$/d' \
+            -e 's/^.*\.o://g' | sed -e 's/\(^[^\/].*.[ch]\)/'"$pwd_escape"'\/\1/g' | tr -d ":" | sort -u >>temp-all-includes.txt
+        done
+      done
+      sort -u ./temp-all-includes.txt | uniq >./all-includes.txt
+      rm ./temp-all-includes.txt
+
+      CTAGS_FLAGS="-L all-includes.txt"
+      ;;
+    makefile)
+      # CTAGS_FLAGS=""
       find "$PWD" -name '*.c' | while read src; do
         gcc -M -I/usr/include -I/usr/local/include -I"$PWD/include" "$src" 2>/dev/null
       done |
         sed -e 's/[\\ ]/\n/g' \
           -e '/^$/d' \
           -e 's/^.*\.o://g' | sort -u >all-includes.txt
-    else
-      find . -maxdepth 1 -type f -name "Makefile.am" | grep -q .
-      if [[ 1 -eq $? ]]; then
-        echo "TODO"
-      else
-        # tail -n 1 Makefile.am | grep PRECIOUS
-        # if [[ 1 -eq $? ]]; then
-        #   echo ".PRECIOUS: %.h" >>Makefile.am
-        #   echo "GenCtags: Makefile.am has changed. Please recompile and run GenCtags again."
-        #   exit
-        # fi
-        #
-        # This is based on .deps from Autotools. Make sure compilation have done.
-        touch temp-all-includes.txt
-        pwd_escape=$(echo $PWD | sed -e 's/\//\\\//g')
-        find $PWD -type d -name ".deps" | while read dir; do
-          find $dir -type f -name "*.Po" | while read po_file; do
-            cat "$po_file" | sed -e 's/[\\ ]/\n/g' \
-              -e '/^$/d' \
-              -e 's/^.*\.o://g' | sed -e 's/\(^[^\/].*.[ch]\)/'"$pwd_escape"'\/\1/g' | tr -d ":" | sort -u >>temp-all-includes.txt
-          done
-        done
-        sort -u ./temp-all-includes.txt | uniq >./all-includes.txt
-        rm ./temp-all-includes.txt
-      fi
-    fi
+
+      CTAGS_FLAGS="-L all-includes.txt"
+      ;;
+    gcc)
+
+      find "$PWD" -name '*.c' | while read src; do
+        gcc -M -I/usr/include -I/usr/local/include -I"$PWD/include" "$src" 2>/dev/null
+      done |
+        sed -e 's/[\\ ]/\n/g' \
+          -e '/^$/d' \
+          -e 's/^.*\.o://g' | sort -u >all-includes.txt
+
+      CTAGS_FLAGS="-L all-includes.txt"
+      ;;
+    esac
 
     if [[ -e $C_CTAGS ]]; then
       rm $C_CTAGS
@@ -64,11 +84,12 @@ for lang in "$@"; do
       --fields=+iaSK \
       --extras=+q \
       --totals=yes \
-      -L all-includes.txt \
+      $CTAGS_FLAGS \
       --tag-relative=no \
       -f $C_CTAGS \
       -R "$PWD" && printf "Done: %s\n" "$C_CTAGS has generated."
     ;;
+
   make)
     mkdir -p ./tagfiles/make/
 
@@ -81,6 +102,7 @@ for lang in "$@"; do
       --tag-relative=no \
       "$PWD/Makefile" "$PWD/*.make" "$PWD/*.mak" "$PWD/makefiles/*" && mv "$PWD/tags" $MAKE_CTAGS && printf "Done: %s\n" "$MAKE_CTAGS has generated."
     ;;
+
   sh | bash | zsh)
     mkdir -p ./tagfiles/sh/
 
@@ -92,6 +114,7 @@ for lang in "$@"; do
       --fields=+K \
       -R "$PWD" && mv "$PWD/tags" $SH_CTAGS && printf "Done: %s\n" "$SH_CTAGS has generated."
     ;;
+
   automake | autoconf | autotools | m4)
     mkdir -p ./tagfiles/automake/
     mkdir -p ./tagfiles/autoconf/
@@ -120,6 +143,7 @@ for lang in "$@"; do
       -R "$PWD" "$PWD/m4/" "/usr/local/share/aclocal/" "/usr/share/aclocal/" && mv "$PWD/tags" $M4_CTAGS && printf "Done: %s\n" "$M4_CTAGS has generated."
 
     ;;
+
   lua)
     mkdir -p ./tagfiles/lua/
 
@@ -131,6 +155,7 @@ for lang in "$@"; do
       --fields=+K \
       -R "$PWD" && mv "$PWD/tags" $LUA_CTAGS && printf "Done: %s\n" "$LUA_CTAGS has generated."
     ;;
+
   *)
     printf "Error: %s\n" "Parameters error" >&2
     exit 1
