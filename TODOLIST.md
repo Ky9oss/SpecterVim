@@ -3,7 +3,6 @@
 ## Normal Bugs
 
 - [ ] The first paste based on shada always overlay the current one.
-- [x] `<leader>ql` reopen other files
 - [ ] Lsp failed sometimes and :LspRestart cause error
 
 # New Features
@@ -25,10 +24,6 @@
   - [ ] Cmake
   - [ ] Meson
   - [ ] A controllable compile command instead of :Make
-
-## About Tmux
-
-- [x] restore neovim pages(`<leader>ql`) when restore tmux
 
 ## From Lsp to Ctags
 

@@ -13,6 +13,8 @@ AUTOMAKE_CTAGS="./tagfiles/automake/tags"
 AUTOCONF_CTAGS="./tagfiles/autoconf/tags"
 M4_CTAGS="./tagfiles/m4/tags"
 
+ADDITIONAL_SRC_LUA="$HOME/.spectervim/lua/"
+
 for lang in "$@"; do
   lang=$(echo "$lang" | tr '[:upper:]' '[:lower:]')
 
@@ -110,8 +112,8 @@ for lang in "$@"; do
       rm $SH_CTAGS
     fi
 
+    # --fields=+K \
     ctags --languages=Sh \
-      --fields=+K \
       -R "$PWD" && mv "$PWD/tags" $SH_CTAGS && printf "Done: %s\n" "$SH_CTAGS has generated."
     ;;
 
@@ -153,7 +155,7 @@ for lang in "$@"; do
 
     ctags --languages=Lua \
       --fields=+K \
-      -R "$PWD" && mv "$PWD/tags" $LUA_CTAGS && printf "Done: %s\n" "$LUA_CTAGS has generated."
+      -R "$PWD" "$ADDITIONAL_SRC_LUA" && mv "$PWD/tags" $LUA_CTAGS && printf "Done: %s\n" "$LUA_CTAGS has generated."
     ;;
 
   *)

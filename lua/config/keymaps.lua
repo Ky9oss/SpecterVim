@@ -229,14 +229,79 @@ function QuickfixCtags(tags)
 	vim.cmd("belowright copen")
 end
 
+-- WARNING: LSP(lua_ls) will reset vim.opt.tags / vim.o.tags. This will cause tags files not being found.
+local function LoadCtags()
+	vim.o.tags = ""
+
+	local filetypes = {
+		["c"] = function()
+			if vim.g.project_root_path then
+				vim.o.tags = vim.o.tags .. vim.g.project_root_path .. "/tagfiles/c/tags,"
+			else
+				vim.o.tags = vim.o.tags .. "tagfiles/c/tags,"
+			end
+		end,
+		["lua"] = function()
+			if vim.g.project_root_path then
+				vim.o.tags = vim.o.tags .. vim.g.project_root_path .. "/tagfiles/lua/tags,"
+			else
+				vim.o.tags = vim.o.tags .. "tagfiles/lua/tags,"
+			end
+		end,
+		["sh"] = function()
+			if vim.g.project_root_path then
+				vim.o.tags = vim.o.tags .. vim.g.project_root_path .. "/tagfiles/sh/tags,"
+			else
+				vim.o.tags = vim.o.tags .. "tagfiles/sh/tags,"
+			end
+		end,
+		["make"] = function()
+			if vim.g.project_root_path then
+				vim.o.tags = vim.o.tags .. vim.g.project_root_path .. "/tagfiles/make/tags,"
+			else
+				vim.o.tags = vim.o.tags .. "tagfiles/make/tags,"
+			end
+		end,
+		["autotools"] = function()
+			local doc_tags = vim.fn.stdpath("config") .. "/doc/**/tags,"
+			vim.o.tags = vim.o.tags .. doc_tags
+			if vim.g.project_root_path then
+				vim.o.tags = vim.o.tags .. vim.g.project_root_path .. "/tagfiles/automake/tags,"
+				vim.o.tags = vim.o.tags .. vim.g.project_root_path .. "/tagfiles/autoconf/tags,"
+				vim.o.tags = vim.o.tags .. vim.g.project_root_path .. "/tagfiles/m4/tags,"
+			else
+				vim.o.tags = vim.o.tags .. "tagfiles/automake/tags,"
+				vim.o.tags = vim.o.tags .. "tagfiles/autoconf/tags,"
+				vim.o.tags = vim.o.tags .. "tagfiles/m4/tags,"
+			end
+		end,
+	}
+
+	local ft = vim.bo[vim.api.nvim_get_current_buf()].filetype
+	if ft == "automake" or ft == "autoconf" then
+		ft = "autotools"
+	end
+
+	-- local ext = vim.fn.expand('%:e')
+	if filetypes[ft] then
+		filetypes[ft]()
+	else
+		if vim.g.project_root_path then
+			vim.o.tags = vim.o.tags .. vim.g.project_root_path .. "tagfiles/**/tags,"
+		else
+			vim.o.tags = vim.o.tags .. "tagfiles/**/tags,"
+		end
+	end
+end
+
+vim.keymap.set("n", "<C-]>", function()
+	LoadCtags()
+	return "<C-]>"
+end, { expr = true })
+
 -- Print Ctags in Quickfix
 vim.keymap.set("n", "g]", function()
-	if vim.g.project_root_path then
-		local doc_tags = vim.fn.stdpath("config") .. "/doc/**/tags"
-		vim.opt.tags = { vim.g.project_root_path .. "/tagfiles/**/tags", doc_tags }
-	else
-		vim.opt.tags = "tagfiles/**/tags"
-	end
+	LoadCtags()
 
 	local tags = vim.fn.taglist(vim.fn.expand("<cword>"))
 	if #tags == 0 then
@@ -247,12 +312,7 @@ vim.keymap.set("n", "g]", function()
 end, { desc = "Open quickfix for ctags lists in normal mode" })
 
 vim.keymap.set("v", "g]", function()
-	if vim.g.project_root_path then
-		local doc_tags = vim.fn.stdpath("config") .. "/doc/**/tags"
-		vim.opt.tags = { vim.g.project_root_path .. "/tagfiles/**/tags", doc_tags }
-	else
-		vim.opt.tags = "tagfiles/**/tags"
-	end
+	LoadCtags()
 
 	vim.cmd('normal! "vy')
 	local tags = vim.fn.taglist(vim.fn.getreg("v"))
@@ -264,21 +324,21 @@ vim.keymap.set("v", "g]", function()
 end, { desc = "Open quickfix for ctags lists in visual mode" })
 
 vim.keymap.set("n", "g}", function()
-	if vim.g.opened_with_man then
-		local word = vim.fn.expand("<cWORD>")
-		local name, section = string.match(word, "(.+)%((%d*)%).*")
-		-- vim.notify("name:" .. name .. "\nsection" .. section)
-		if section then
-			vim.cmd("Sman " .. section .. " " .. name)
-		else
-			vim.cmd("Sman " .. name)
-		end
+	-- if vim.g.opened_with_man then
+	local word = vim.fn.expand("<cWORD>")
+	local name, section = string.match(word, "(.+)%((%d*).*%).*")
+	-- vim.notify("name:" .. name .. "\nsection" .. section)
+	if section then
+		vim.cmd("Sman " .. section .. " " .. name)
 	else
-		vim.keymap.set("n", "g}", function()
-			vim.cmd([[Sman  ]] .. vim.fn.expand("<cword>") .. [[
-  /\V]] .. vim.fn.expand("<cword>"))
-		end)
+		vim.cmd("Sman " .. name)
 	end
+	-- else
+	-- 	vim.keymap.set("n", "g}", function()
+	-- 		vim.cmd([[Sman  ]] .. vim.fn.expand("<cword>") .. [[
+	--  /\V]] .. vim.fn.expand("<cword>"))
+	-- 	end)
+	-- end
 end, { desc = "Open man" })
 
 vim.keymap.set("v", "g}", function()

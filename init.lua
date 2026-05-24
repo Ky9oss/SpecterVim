@@ -69,7 +69,8 @@ vim.opt.expandtab = true
 vim.opt.shada = "'0,<1000,:0,n" .. shada_path
 -- vim.opt.jumpoptions = "stack,view,clean"
 vim.o.autoread = true
-vim.opt.tags = "tagfiles/**/tags"
+-- vim.opt.tags = "tagfiles/**/tags"
+vim.opt.tags = nil
 vim.opt.equalalways = false -- auto resize windows
 vim.opt.winwidth = 35 -- expected width
 vim.opt.winminwidth = 30 -- min width
@@ -85,6 +86,7 @@ vim.filetype.add({
 		ASM = "asm", -- *.ASM → asm
 		INC = "asm",
 		inc = "asm",
+    m4 = "autotools",
 		info = "info",
 	},
 })

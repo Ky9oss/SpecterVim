@@ -19,3 +19,4 @@ doc/*.8
 doc/*.man
 parser/**/
 parser/*.so
+lib/lua
