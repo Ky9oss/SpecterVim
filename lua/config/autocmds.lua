@@ -432,6 +432,10 @@ indent_size = 4
 tab_width = 4
 end_of_line = lf
 insert_final_newline = true
+
+[*.py]
+indent_size = 4
+tab_width = 4
         ]]
 				create_file(".editorconfig", default_editorconfig)
 			end
