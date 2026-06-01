@@ -1,4 +1,5 @@
 require("utils.buffer")
+require("utils.shell")
 
 -- Copy
 if vim.g.copy_to_system == true then
@@ -482,3 +483,9 @@ end, { noremap = true, silent = true })
 -- vim.keymap.set("n", "gO", function()
 --   vim.cmd("set splitright | vert lopen | vertical resize 50")
 -- end, { noremap = true, silent = true, desc = "Vim-help files navigation" })
+
+-- Open Tmux
+vim.keymap.set("n", "<leader>tm", function()
+	local scriptpath = vim.fn.stdpath("config") .. "/scripts/loader/tmux.sh"
+	exec_bash_scripts(scriptpath)
+end, { noremap = true, silent = true })

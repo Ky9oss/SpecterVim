@@ -47,7 +47,7 @@ vim.keymap.set("n", "<leader>mt", function()
 		end
 	end
 
-	local scriptpath = vim.fn.stdpath("config") .. "/lib/runscript-tmux.sh"
+	local scriptpath = vim.fn.stdpath("config") .. "/scripts/loader/tmux.sh"
 	local params = { exe_abpath }
 
 	exec_bash_scripts(scriptpath, params)

@@ -101,7 +101,7 @@ vim.keymap.set("n", "<leader>mm", function()
 	end
 end, { buffer = true, desc = "Make (C)" })
 
--- Run executable binary by runscript-tmux.sh
+-- Run executable binary in tmux
 -- If we are in a Project. Then run executable binary in project_root/bin. Else run exectubale binary in current dir.
 vim.keymap.set("n", "<leader>mt", function()
 	local executable_path
@@ -110,7 +110,7 @@ vim.keymap.set("n", "<leader>mt", function()
 	else
 		executable_path = vim.api.nvim_buf_get_name(0):match("^(%S+)%.c$") -- This is a absolute path
 	end
-	local scriptpath = vim.fn.stdpath("config") .. "/lib/runscript-tmux.sh"
+	local scriptpath = vim.fn.stdpath("config") .. "/scripts/loader/tmux.sh"
 	local params = { executable_path }
 
 	-- if project_root then

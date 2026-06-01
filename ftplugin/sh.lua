@@ -3,7 +3,7 @@ require("utils.shell")
 -- A better choice than <leader>mm
 vim.keymap.set("n", "<leader>mt", function()
 	if vim.fn.has("win32") ~= 1 then -- Linux
-		local scriptpath = vim.fn.stdpath("config") .. "/lib/runscript-tmux.sh"
+		local scriptpath = vim.fn.stdpath("config") .. "/scripts/loader/tmux.sh"
 		local filename = vim.api.nvim_buf_get_name(0)
 		local params = { filename }
 		exec_bash_scripts(scriptpath, params)
