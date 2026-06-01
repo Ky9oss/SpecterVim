@@ -5,6 +5,7 @@ vim.g.copy_to_system = true -- duplicate 'y' in keymaps.lua
 vim.g.clangd = 1 -- enable clangd lsp OR use ctags without lsp (1 or 0)
 vim.g.specter_debug = 0 -- enable debug (1 or 0)
 vim.g.nvim_tree_moved = 0 -- nvim_tree has moved from left to right (1 or 0)
+vim.g.fix_osc52 = 1 -- try this config when osc52 copy is unavailable
 
 if vim.fn.has("win32") ~= 1 then
 	if vim.env.TMUX == nil or vim.env.TMUX == "" then
@@ -21,29 +22,12 @@ if vim.fn.has("win32") ~= 1 then
 		}
 	else
 		-- This was valid until I upgraded Debian from 12 to 13. :-(
-		--
-		-- vim.g.clipboard = {
-		--   name = "tmux-osc52-fallback",
-		--   copy = {
-		--     ["+"] = { "tmux", "load-buffer", "-w", "-" },
-		--     ["*"] = { "tmux", "load-buffer", "-w", "-" },
-		--   },
-		--   paste = {
-		--     ["+"] = { "tmux", "save-buffer", "-" },
-		--     ["*"] = { "tmux", "save-buffer", "-" },
-		--   },
-		--   cache_enabled = true,
-		-- }
-		--
-		local command = vim.fn.stdpath("config") .. "/lib/osc52-fixed.sh"
 
 		vim.g.clipboard = {
-			name = "tmux-osc52-fixed",
-
-			-- neovim -> stdin-pipe -> command
+			name = "tmux-osc52-fallback",
 			copy = {
-				["+"] = { command },
-				["*"] = { command },
+				["+"] = { "tmux", "load-buffer", "-w", "-" },
+				["*"] = { "tmux", "load-buffer", "-w", "-" },
 			},
 			paste = {
 				["+"] = { "tmux", "save-buffer", "-" },
@@ -51,6 +35,25 @@ if vim.fn.has("win32") ~= 1 then
 			},
 			cache_enabled = true,
 		}
+
+		if vim.g.fix_osc52 == 1 then
+			local command = vim.fn.stdpath("config") .. "/lib/osc52-fixed.sh"
+
+			vim.g.clipboard = {
+				name = "tmux-osc52-fixed",
+
+				-- neovim -> stdin-pipe -> command
+				copy = {
+					["+"] = { command },
+					["*"] = { command },
+				},
+				paste = {
+					["+"] = { "tmux", "save-buffer", "-" },
+					["*"] = { "tmux", "save-buffer", "-" },
+				},
+				cache_enabled = true,
+			}
+		end
 	end
 end
 
@@ -86,23 +89,14 @@ vim.filetype.add({
 		ASM = "asm", -- *.ASM → asm
 		INC = "asm",
 		inc = "asm",
-    m4 = "autotools",
+		m4 = "autotools",
 		info = "info",
 	},
 })
 vim.treesitter.language.add("asm", {
 	path = vim.fn.stdpath("config") .. "/parser/asm.so",
 })
-vim.api.nvim_create_autocmd("FileType", {
-	pattern = { "asm" },
-	callback = function()
-		vim.treesitter.start()
-		vim.cmd([[
-syn match asmKeyword /\vMACRO|PARAM|STACK|REF_CODE|RETURN/ containedin=ALL
-hi asmKeyword gui=bold guibg=#303030
-    ]])
-	end,
-})
+
 
 -- diagnostic
 vim.diagnostic.config({

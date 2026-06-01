@@ -1,0 +1,7 @@
+[ssh]
+server=
+port=
+password=
+
+[edit-compile-run]
+builder=

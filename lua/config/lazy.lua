@@ -1,17 +1,17 @@
 -- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
-  local lazyrepo = "https://github.com/folke/lazy.nvim.git"
-  local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
-  if vim.v.shell_error ~= 0 then
-    vim.api.nvim_echo({
-      { "Failed to clone lazy.nvim:\n", "ErrorMsg" },
-      { out,                            "WarningMsg" },
-      { "\nPress any key to exit..." },
-    }, true, {})
-    vim.fn.getchar()
-    os.exit(1)
-  end
+	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+	local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+	if vim.v.shell_error ~= 0 then
+		vim.api.nvim_echo({
+			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+			{ out, "WarningMsg" },
+			{ "\nPress any key to exit..." },
+		}, true, {})
+		vim.fn.getchar()
+		os.exit(1)
+	end
 end
 vim.opt.rtp:prepend(lazypath)
 
@@ -21,32 +21,35 @@ vim.opt.rtp:prepend(lazypath)
 vim.g.mapleader = "\\"
 vim.g.maplocalleader = "\\"
 
-
 -- Setup lazy.nvim
 require("lazy").setup({
-  spec = {
-    { import = "plugins" },
-    { import = "plugins.lsp" },
-    { import = "plugins.linter" },
-    { import = "plugins.dap" },
-    { import = "plugins.ui" },
-    { import = "plugins.util" },
-    { import = "plugins.code" },
-    { import = "plugins.formatter" },
-  },
+	spec = {
+		{ import = "plugins" },
+		{ import = "plugins.lsp" },
+		{ import = "plugins.linter" },
+		{ import = "plugins.dap" },
+		{ import = "plugins.ui" },
+		{ import = "plugins.util" },
+		{ import = "plugins.code" },
+		{ import = "plugins.formatter" },
+	},
 
-  dev = {
-    path = vim.fn.stdpath("data") .. "/dev",
-    fallback = false, -- Fallback to git when local plugin doesn't exist
-  },
+	dev = {
+		path = vim.fn.stdpath("data") .. "/dev",
+		fallback = false, -- Fallback to git when local plugin doesn't exist
+	},
 
-  -- performance = {
-  --   reset_packpath = false,  -- true will clean all packpath suck as ~/.config/nvim/
-  -- },
+	-- performance = {
+	--   reset_packpath = false,  -- true will clean all packpath suck as ~/.config/nvim/
+	-- },
 
-  -- Configure any other settings here. See the documentation for more details.
-  -- colorscheme that will be used when installing plugins.
-  install = { colorscheme = { "tokyonight-night" } },
-  -- automatically check for plugin updates
-  checker = { enabled = true },
+	-- Configure any other settings here. See the documentation for more details.
+	-- colorscheme that will be used when installing plugins.
+	install = { colorscheme = { "tokyonight-night" } },
+	-- automatically check for plugin updates
+	checker = {
+		enabled = true,
+    notify = false,
+		frequency = 86400, -- 24 hours
+	},
 })

@@ -53,6 +53,7 @@
     - <C-x> and <C-y> in Quickfix
     - <C-w><C-x> <C-w><C-y>
 
+- [ ] Edit-compile-run config with toml.lua to select builder
 - [ ] hex editor with lua FFI
 
 - [ ] Refactor Edit-compile-run-edit flow

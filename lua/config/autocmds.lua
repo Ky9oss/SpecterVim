@@ -620,5 +620,18 @@ function _G.Toggle_venn()
 		vim.b.venn_enabled = nil
 	end
 end
+
 -- toggle keymappings for venn using <leader>v
 vim.api.nvim_set_keymap("n", "<leader>v", ":lua Toggle_venn()<CR>", { noremap = true })
+
+-- asm treesitter
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "asm" },
+	callback = function()
+		vim.treesitter.start()
+		vim.cmd([[
+syn match asmKeyword /\vMACRO|PARAM|STACK|REF_CODE|RETURN/ containedin=ALL
+hi asmKeyword gui=bold guibg=#303030
+    ]])
+	end,
+})
