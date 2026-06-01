@@ -12,8 +12,8 @@ if [[ $CTAGS_BASE -eq 1 ]]; then
   # mkdir -p pkgconf
   # ctags --languages=Man -o ./man/pkgconf/tags ./pkg.m4.7
 
-  ctags --options=${PWD}/../optlib/autoconf-gnu-manual.ctags --languages=AutoconfMan -o ${PWD}/autoconf/tags ${PWD}/autoconf.txt
-  ctags --options=${PWD}/../optlib/automake-gnu-manual.ctags --languages=AutomakeMan -o ${PWD}/automake/tags ${PWD}/automake.txt
+  ctags --options=${PWD}/../scripts/ctags/optlib/autoconf-gnu-manual.ctags --languages=AutoconfMan -o ${PWD}/autoconf/tags ${PWD}/autoconf.txt
+  ctags --options=${PWD}/../scripts/ctags/optlib/automake-gnu-manual.ctags --languages=AutomakeMan -o ${PWD}/automake/tags ${PWD}/automake.txt
 
   # groff -Tascii -man pkg.m4.7 > pkg.m4
   # nroff -man yourfile.1 > output.txt
@@ -22,7 +22,7 @@ if [[ $CTAGS_BASE -eq 1 ]]; then
   man ./pkg.m4.7 | col -b >pkg-m4.txt
   rm ./pkg.m4.7 ./pkg.m4.7.gz
 
-  ctags --options=${PWD}/../optlib/pkgconf-manual.ctags --languages=PkgconfMan -o ${PWD}/pkgconf/tags ${PWD}/pkg-m4.txt
+  ctags --options=${PWD}/../scripts/ctags/optlib/pkgconf-manual.ctags --languages=PkgconfMan -o ${PWD}/pkgconf/tags ${PWD}/pkg-m4.txt
 
   # ctags -R --languages=man /usr/share/man
 fi

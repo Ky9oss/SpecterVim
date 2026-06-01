@@ -356,7 +356,7 @@ end, { desc = "Get assembly for current buffer.", nargs = "+" })
 vim.api.nvim_create_user_command("GenCtags", function(opts)
 	if project_root_path then
 		local params = opts.fargs or { "c" }
-		local scriptpath = vim.fn.stdpath("config") .. "/lib/gen-tags.sh"
+		local scriptpath = vim.fn.stdpath("config") .. "/scripts/ctags/generator.sh"
 		exec_bash_scripts(scriptpath, params, project_root_path)
 	else
 		vim.notify(

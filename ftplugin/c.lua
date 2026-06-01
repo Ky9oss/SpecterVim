@@ -11,7 +11,7 @@ vim.keymap.set("n", "<leader>mm", function()
 	-- 	for name, type in vim.fs.dir(project_root) do
 	-- 		if name == "CMakeLists.txt" and type == "file" then -- Cmake
 	-- 			if vim.fn.has("win32") ~= 1 then -- Linux
-	-- 				local scriptpath = vim.fn.stdpath("config") .. "/lib/cmake.sh"
+	-- 				local scriptpath = vim.fn.stdpath("config") .. "/scripts/compile/cmake.sh"
 	-- 				local stat = vim.uv.fs_stat(scriptpath)
 	-- 				if stat then -- file exists
 	-- 					if stat.mode % 128 >= 64 then -- mode is 12 bits int. owner: bits 8-6(rwx). x = 2^6 = 64

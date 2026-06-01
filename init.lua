@@ -37,7 +37,7 @@ if vim.fn.has("win32") ~= 1 then
 		}
 
 		if vim.g.fix_osc52 == 1 then
-			local command = vim.fn.stdpath("config") .. "/lib/osc52-fixed.sh"
+			local command = vim.fn.stdpath("config") .. "/scripts/osc52/osc52-fixed.sh"
 
 			vim.g.clipboard = {
 				name = "tmux-osc52-fixed",
