@@ -10,11 +10,20 @@
     <br>
 </div>
 
-A personal Neovim setup built on Lazy.nvim with curated plugins. It's lightweight and continuously updated for my own workflow, offering an easy plug-and-play experience.
+A personal Neovim setup built on Lazy.nvim with curated plugins. It's not a user-facing "Neovim distribution" like [LazyVim](https://github.com/LazyVim/LazyVim), but rather some configurations and extensions I use in my daily work.
+
+## Requirements
+- neovim >= 0.12
+- Git >= 2.19.0 (for partial clones support)
+- luarocks >= 3.13.0
+- C compiler && Make (for treesitter parsers)
+- [toml.lua](https://github.com/LebJe/toml.lua)
+- [tmux](https://github.com/tmux/tmux) (optional)
+- a [Nerd Font](https://www.nerdfonts.com/) (optional)
 
 ## Installation
 
-### Linux
+### Linux (recommand)
 
 ```bash
 mv ~/.config/nvim ~/.config/nvim_bak
@@ -23,7 +32,7 @@ git clone https://github.com/Ky9oss/SpecterVim ~/.config/nvim
 
 ### Windows
 
-```powershell
+```ps1
 
 # Stylua encountered an unexpected error when installed via Mason on Windows, so we install it using cargo
 cargo install stylua --features luajit
@@ -39,12 +48,22 @@ After that, just open Neovim. All pluggins will be installed automatically.
 > If you need a proxy to access Github, you can install [proxychains-ng](https://github.com/rofl0r/proxychains-ng) on linux or [proxychains-windows](https://github.com/shunf4/proxychains-windows) on windows, and use `proxychains -q nvim` to install the plugins.
 
 
-## Configure
+## Configurations
 
-In your neovim's config path (Use `:lua vim.fn.stdpath("config")` to show it), add `.env`: 
+### Global configuration
+In your neovim's config path (Use :lua vim.fn.stdpath("config") to show it), add `.env`:
 ```txt
+# This is used for AssemblyExplorer
 SSHSERVER=user@ip
 SSHPORT=2222
 SSHPASS=xxxx
+```
+
+### Project configuration
+In your project's root path, add `specterv.toml`: 
+```toml
+[edit-compile-run]
+builder = "gcc" # gcc clang make autotools cmake custom
+custom_compile = 
 ```
 

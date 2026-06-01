@@ -1,7 +1,3 @@
-[ssh]
-server=
-port=
-password=
-
 [edit-compile-run]
-builder=
+builder = "gcc" # gcc clang make autotools cmake custom
+custom_compile = 

@@ -12,6 +12,7 @@
 - [ ] Debugger
 - [ ] Add PDB support for source link to audit source code instead of decompiled code in .NET runtime / aspnetcore
 - [ ] (?) Performance Analyzer like Visual Studio 2026
+- [ ] a more grace way to replace hover() with signature_help() in roslyn
 
 ## About C/Cpp
 
@@ -23,7 +24,7 @@
   - [ ] autotools
   - [ ] Cmake
   - [ ] Meson
-  - [ ] A controllable compile command instead of :Make
+  - [ ] Custom
 
 ## From Lsp to Ctags
 
@@ -53,14 +54,16 @@
     - <C-x> and <C-y> in Quickfix
     - <C-w><C-x> <C-w><C-y>
 
+- [ ] Requirements init and checker
+  - [ ] Mason init
+  - [ ] Ensure the libs(bash-scripts/executable) is executable and grant it if it's not.
+  - [ ] Test ( See [mini.test](https://github.com/nvim-mini/mini.nvim/blob/main/readmes/mini-test.md) )
+
 - [ ] Edit-compile-run config with toml.lua to select builder
-- [ ] hex editor with lua FFI
+
+- [ ] hex editor with lua FFI (lua_CFunction)
 
 - [ ] Refactor Edit-compile-run-edit flow
-
-- [ ] Ensure the libs(bash-scripts/executable) is executable and grant it if it's not.
-
-- [ ] a more grace way to replace hover() with signature_help() in roslyn
 
 # New Plugins
 
