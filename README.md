@@ -31,6 +31,8 @@ git clone https://github.com/Ky9oss/SpecterVim ~/.config/nvim
 ```
 
 ### Windows
+> [!WARNING]
+> Some new features have become dependent on Linux, including certain Bash scripts and optimizations that involve Linux system calls.
 
 ```ps1
 

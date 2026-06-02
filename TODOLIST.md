@@ -16,8 +16,6 @@
 
 ## About C/Cpp
 
-- [x] Debugger
-
 - Edit-compile-edit for all c-compilation-env by Quickfix
   - [x] normal gcc
   - [x] Makefile
@@ -51,8 +49,6 @@
     - [x] msvc
   - [x] accept more compile options
   - [ ] optimize msvc by env cache
-
-- [x] encrypt password
 
 - [x] <C-'> <g-'>: Ctags jumps: auto split
     - <C-x> and <C-y> in Quickfix

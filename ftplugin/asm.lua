@@ -9,7 +9,7 @@ vim.keymap.set("n", "<leader>mm", function()
 	local current_dir = vim.api.nvim_buf_get_name(0):match("^(%S+)/[^%/]*$") -- return string | ""
 	local target_file = vim.api.nvim_buf_get_name(0)
 	local output_name = vim.api.nvim_buf_get_name(0):match(".*/(%S+)%.asm$")
-	local scriptpath = vim.fn.stdpath("config") .. "/lib/asm-compile.sh"
+	local scriptpath = vim.fn.stdpath("config") .. "/scripts/compile/main.sh"
 	local stat = vim.uv.fs_stat(scriptpath)
 	local output_dir = "./"
 
@@ -21,13 +21,13 @@ vim.keymap.set("n", "<leader>mm", function()
 		if stat.mode % 128 >= 64 then -- mode is 12 bits int. owner: bits 8-6(rwx). x = 2^6 = 64
 			vim.cmd("cd " .. current_dir)
 			vim.bo.makeprg = scriptpath
+				.. " fasm "
+				.. target_file
 				.. " "
 				.. current_window_width
 				.. " "
-				.. target_file
-				.. " "
 				.. output_dir
-				.. " "
+				.. "/"
 				.. output_name
 			exe_abpath = output_dir .. output_name
 		else
