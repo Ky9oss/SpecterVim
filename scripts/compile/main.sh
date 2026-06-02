@@ -43,7 +43,7 @@ fasm | asm)
 gcc)
   CC="gcc-15"
   CC_FLAGS="-Wall -O0 -g3"
-  result=$($CC $CC_FLAGS -o "$output_path" "$2" 2>&1)
+  result=$($CC $CC_FLAGS -o "$output_path" "$2" 2>&1) # gcc always output in stderr
   status=$?
   ;;
 clang)
@@ -64,7 +64,7 @@ cmake)
   status=$?
   ;;
 custom)
-  result=$($custom_command)
+  result=$($custom_command 2>&1)
   status=$?
   ;;
 *)

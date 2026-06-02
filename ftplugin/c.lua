@@ -6,10 +6,10 @@ local project_root = project.get_project_root()
 
 -- Get builder for c
 -- @return string
-local function get_builder()
-  local builder = "gcc" -- default
+local function get_builder4c()
+	local builder = "gcc" -- default
 
-  -- Read config
+	-- Read config
 	if project_root then
 		local config_file = project_root .. "/specterv.toml"
 		local stat = vim.uv.fs_stat(config_file)
@@ -17,22 +17,44 @@ local function get_builder()
 			content = read_config(config_file)
 		end
 
-    if content["edit-compile-run"].builder and content["edit-compile-run"].builder ~= "" then
-      builder = content["edit-compile-run"].builder
-      return builder
-    end
+		if content["edit-compile-run"].builder and content["edit-compile-run"].builder ~= "" then
+			builder = content["edit-compile-run"].builder
+			return builder
+		end
 	end
 
-  -- Automatic check
-  --
+	-- Automatic check
+	--
 	-- TODO: pwd search Makefile
-  return builder
+	return builder
+end
+
+local function get_command4c()
+	local command
+
+	-- Read config
+	if project_root then
+		local config_file = project_root .. "/specterv.toml"
+		local stat = vim.uv.fs_stat(config_file)
+		if stat then -- file exists
+			content = read_config(config_file)
+		end
+
+		if content["edit-compile-run"].custom_command and content["edit-compile-run"].custom_command ~= "" then
+			command = content["edit-compile-run"].custom_command
+			return command
+		end
+	end
+
+	return command
 end
 
 vim.keymap.set("n", "<leader>mm", function()
-  local content = {}
-  local builder = get_builder()
+	local content = {}
+	local builder = get_builder4c()
 	local current_window_width = vim.api.nvim_win_get_width(0)
+	local scriptpath = vim.fn.stdpath("config") .. "/scripts/compile/main.sh"
+	local filepath = vim.api.nvim_buf_get_name(0)
 
 	-- Makefile
 	-- local current_dir = vim.api.nvim_buf_get_name(0):match("^(%S+)/[^%/]*$") -- return string | ""
@@ -54,11 +76,39 @@ vim.keymap.set("n", "<leader>mm", function()
 	-- 	return
 	-- end
 
-  if builder == "make" then
-    local a 
-  elseif vim.fn.has("win32") ~= 1 and builder == "gcc" then -- Linux
-		local scriptpath = vim.fn.stdpath("config") .. "/scripts/compile/main.sh"
-		local filepath = vim.api.nvim_buf_get_name(0)
+	if builder == "make" then
+    local bin_path
+	  -- TODO: pwd search Makefile
+	elseif builder == "custom" then -- Or use <leader>mc to compile custom
+		local bin_path
+		if vim.g.project_root_path then
+			bin_path = vim.g.project_root_path .. "/bin"
+		else
+			bin_path = vim.api.nvim_buf_get_name(0):match("^(%S+)/.+$") -- This is a absolute path
+		end
+
+		-- $@ is current file's absolute path
+		-- $bin is project's bin folder
+		local command = get_command4c()
+		if command then
+			command = string.gsub(command, "$@", filepath)
+			command = string.gsub(command, "$bin", bin_path)
+
+			local stat = vim.uv.fs_stat(scriptpath)
+			if stat then -- file exists
+				if stat.mode % 128 >= 64 then -- mode is 12 bits int. owner: bits 8-6(rwx). x = 2^6 = 64
+					vim.bo.makeprg =
+						-- "cd " .. vim.g.project_root_path
+						-- .. " && " ..
+						scriptpath .. " " .. builder .. ' "' .. command .. '" ' .. current_window_width
+				end
+			end
+
+			vim.cmd("make | belowright copen 10 | wincmd p")
+		else
+			vim.notify("Specterv: `custom` set but `command` not found", vim.log.levels.ERROR)
+		end
+	elseif vim.fn.has("win32") ~= 1 and builder == "gcc" then -- Linux
 		local executable_path
 		if project_root then
 			executable_path = project_root .. "/bin/" .. vim.api.nvim_buf_get_name(0):match(".*/(%S+)%.c$")
@@ -73,7 +123,9 @@ vim.keymap.set("n", "<leader>mm", function()
 					.. project_root
 					.. " && "
 					.. scriptpath
-					.. " gcc "
+					.. " "
+					.. builder
+					.. " "
 					.. filepath
 					.. " "
 					.. current_window_width
@@ -83,8 +135,8 @@ vim.keymap.set("n", "<leader>mm", function()
 		end
 
 		vim.cmd("make | belowright copen 10 | wincmd p")
-  else
-		vim.notify("The builder \"" .. builder .. "\" is not support on your os", vim.log.levels.ERROR)
+	else
+		vim.notify('The builder "' .. builder .. '" is not support on your os', vim.log.levels.ERROR)
 	end
 end, { buffer = true, desc = "Make (C)" })
 

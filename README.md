@@ -65,7 +65,16 @@ SSHPASS=xxxx
 In your project's root path, add `specterv.toml`: 
 ```toml
 [edit-compile-run]
-builder = "gcc" # gcc clang make autotools cmake custom
-custom_compile = 
+
+# Optional: gcc clang make autotools cmake custom
+builder = "gcc" 
+
+# Reuqired: builder = "custom"
+# Description: 
+#   $@ is current file's absolute path
+#   $bin is project's bin folder
+# Example:
+#   custom_command = "gcc $@ -o $bin/hello" 
+custom_command = "" 
 ```
 

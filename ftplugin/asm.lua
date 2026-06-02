@@ -5,6 +5,7 @@ local project_root = project.get_project_root()
 local exe_abpath = nil
 
 vim.keymap.set("n", "<leader>mm", function()
+	local builder = "fasm"
 	local current_window_width = vim.api.nvim_win_get_width(0)
 	local current_dir = vim.api.nvim_buf_get_name(0):match("^(%S+)/[^%/]*$") -- return string | ""
 	local target_file = vim.api.nvim_buf_get_name(0)
@@ -21,7 +22,9 @@ vim.keymap.set("n", "<leader>mm", function()
 		if stat.mode % 128 >= 64 then -- mode is 12 bits int. owner: bits 8-6(rwx). x = 2^6 = 64
 			vim.cmd("cd " .. current_dir)
 			vim.bo.makeprg = scriptpath
-				.. " fasm "
+				.. " "
+				.. builder
+				.. " "
 				.. target_file
 				.. " "
 				.. current_window_width

@@ -489,3 +489,42 @@ vim.keymap.set("n", "<leader>tm", function()
 	local scriptpath = vim.fn.stdpath("config") .. "/scripts/loader/tmux.sh"
 	exec_bash_scripts(scriptpath)
 end, { noremap = true, silent = true })
+
+-- Custom compilation
+vim.keymap.set("n", "<leader>mc", function()
+  local builder = "custom"
+	local current_window_width = vim.api.nvim_win_get_width(0)
+	local scriptpath = vim.fn.stdpath("config") .. "/scripts/compile/main.sh"
+	local filepath = vim.api.nvim_buf_get_name(0)
+
+	local bin_path
+	if vim.g.project_root_path then
+		bin_path = vim.g.project_root_path .. "/bin"
+	else
+		bin_path = vim.api.nvim_buf_get_name(0):match("^(%S+)/.+$") -- This is a absolute path
+	end
+
+  -- $@ is current file's absolute path
+  -- $bin is project's bin folder
+  local command = vim.fn.input("Custom Compilation")
+  command = string.gsub(command, "$@", filepath)
+  command = string.gsub(command, "$bin", bin_path)
+
+	local stat = vim.uv.fs_stat(scriptpath)
+	if stat then -- file exists
+		if stat.mode % 128 >= 64 then -- mode is 12 bits int. owner: bits 8-6(rwx). x = 2^6 = 64
+			vim.bo.makeprg = 
+				-- "cd " .. vim.g.project_root_path
+				-- .. " && " .. 
+        scriptpath
+				.. " "
+				.. builder
+				.. " \""
+				.. command
+				.. "\" "
+				.. current_window_width
+		end
+	end
+
+	vim.cmd("make | belowright copen 10 | wincmd p")
+end, { noremap = true, silent = true, desc = "Customize compilation" })
