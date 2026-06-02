@@ -12,7 +12,7 @@ if vim.fn.has("win32") == 1 then
           powershell = {
             scriptAnalysis = {
               enable = true,
-              settingsPath = vim.fn.stdpath("config") .. "\\lib\\PSScriptAnalyzerSettings.psd1", -- (optional)
+              settingsPath = vim.fn.stdpath("config") .. "\\scripts\\pwsh\\PSScriptAnalyzerSettings.psd1", -- (optional)
             },
             codeFormatting = {
               Preset = "OTBS",

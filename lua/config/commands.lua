@@ -194,7 +194,7 @@ function AssemblyExplorerMSVC(is_remote, compile_options)
 		scp_push(vim.api.nvim_buf_get_name(0), "~/_temp_assembly_explorer_msvc.c", function(flag)
 			if flag then
 				scp_push(
-					vim.fn.stdpath("config") .. "/lib/AssemblyExplorer.bat",
+					vim.fn.stdpath("config") .. "/scripts/asm/AssemblyExplorer.bat",
 					"~/AssemblyExplorer.bat",
 					function(flag)
 						if flag then
@@ -375,7 +375,7 @@ end, { desc = "Dump GCC predefined macros → Quickfix" })
 
 -- Syscall table
 vim.api.nvim_create_user_command("SyscallTable", function(opts)
-  local syscall_table = vim.fn.stdpath("config") .. "/lib/syscall_64.tbl"
+	local syscall_table = vim.fn.stdpath("config") .. "/docs/syscall_64.tbl"
 	vim.bo.makeprg = "cat " .. syscall_table
 	vim.cmd("make | belowright copen 10 | wincmd p")
 end, { desc = "Dump GCC predefined macros → Quickfix" })

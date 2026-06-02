@@ -69,7 +69,7 @@ return {
 				"-g",
 				"!snippets/**",
 				"-g",
-				"!doc/**",
+				"!docs/**",
 				"-g",
 				"!**.txt",
 				"-g",

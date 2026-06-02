@@ -21,3 +21,4 @@ parser/**/
 parser/*.so
 lib/lua
 specterv.toml
+bin

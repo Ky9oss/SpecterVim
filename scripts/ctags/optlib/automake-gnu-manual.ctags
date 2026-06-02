@@ -2,7 +2,7 @@
 #
 # Author: Ky9oss
 # Usage: 
-#   ctags --options=${PWD}/optlib/automake-gnu-manual.ctags --languages=AutomakeMan -o ${PWD}/doc/automake/tags ${PWD}/doc/automake.txt
+#   ctags --options=${PWD}/optlib/automake-gnu-manual.ctags --languages=AutomakeMan -o ${PWD}/docs/automake/tags ${PWD}/docs/automake.txt
 
 --langdef=AutomakeMan
 --map-AutomakeMan=+(automake.txt)

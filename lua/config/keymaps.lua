@@ -264,7 +264,7 @@ local function LoadCtags()
 			end
 		end,
 		["autotools"] = function()
-			local doc_tags = vim.fn.stdpath("config") .. "/doc/**/tags,"
+			local doc_tags = vim.fn.stdpath("config") .. "/docs/**/tags,"
 			vim.o.tags = vim.o.tags .. doc_tags
 			if vim.g.project_root_path then
 				vim.o.tags = vim.o.tags .. vim.g.project_root_path .. "/tagfiles/automake/tags,"

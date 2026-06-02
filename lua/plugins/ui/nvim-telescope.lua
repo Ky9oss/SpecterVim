@@ -30,7 +30,7 @@ return {
 						"-g",
 						"!tags",
 						"-g",
-						"!doc/**",
+						"!docs/**",
 						"-g",
 						"!snippets/**",
 					},

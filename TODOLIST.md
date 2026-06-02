@@ -19,10 +19,10 @@
 - Edit-compile-edit for all c-compilation-env by Quickfix
   - [x] normal gcc
   - [x] Makefile
+  - [x] Custom
   - [ ] autotools
   - [ ] Cmake
   - [ ] Meson
-  - [ ] Custom
 
 ## From Lsp to Ctags
 
@@ -54,12 +54,14 @@
     - <C-x> and <C-y> in Quickfix
     - <C-w><C-x> <C-w><C-y>
 
+- [ ] Close `vim.cmd(make)` notify
+
 - [ ] Requirements init and checker
   - [ ] Mason init
   - [ ] Ensure the libs(bash-scripts/executable) is executable and grant it if it's not.
   - [ ] Test ( See [mini.test](https://github.com/nvim-mini/mini.nvim/blob/main/readmes/mini-test.md) )
 
-- [ ] Edit-compile-run config with toml.lua to select builder
+- [x] Edit-compile-run config with toml.lua to select builder
 
 - [ ] hex editor with lua FFI (lua_CFunction)
 
