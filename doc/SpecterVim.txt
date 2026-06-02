@@ -1,5 +1,5 @@
 *SpecterVim.txt*
-                                 For NVIM v0.11.4    Last change: 2026 June 01
+                                 For NVIM v0.11.4    Last change: 2026 June 02
 
 ==============================================================================
 Table of Contents                               *SpecterVim-table-of-contents*
@@ -38,6 +38,9 @@ LINUX (RECOMMAND) ~
 
 WINDOWS ~
 
+
+  [!WARNING] Some new features have become dependent on Linux, including certain
+  Bash scripts and optimizations that involve Linux system calls.
 >ps1
     
     # Stylua encountered an unexpected error when installed via Mason on Windows, so we install it using cargo
