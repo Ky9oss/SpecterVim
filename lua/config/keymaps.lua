@@ -110,14 +110,6 @@ vim.keymap.set("t", "<Esc>", "<C-\\><C-n>:q<CR>")
 -- Assembly Explorer
 vim.keymap.set("n", "<leader>as", "<cmd>AssemblyExplorer<CR>")
 
--- Nvim-tree Custom Keymap
-local api = require("nvim-tree.api")
-local function opts(desc)
-	return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
-end
-vim.keymap.set("n", "<C-y>", api.node.open.vertical, opts("Open: Vertical Split"))
-vim.keymap.set("n", "<C-x>", api.node.open.horizontal, opts("Open: Horizontal Split"))
-
 -- Open quickfix for ctags lists
 --- @param tags table
 function QuickfixCtags(tags)
@@ -492,7 +484,7 @@ end, { noremap = true, silent = true })
 
 -- Custom compilation
 vim.keymap.set("n", "<leader>mc", function()
-  local builder = "custom"
+	local builder = "custom"
 	local current_window_width = vim.api.nvim_win_get_width(0)
 	local scriptpath = vim.fn.stdpath("config") .. "/scripts/compile/main.sh"
 	local filepath = vim.api.nvim_buf_get_name(0)
@@ -504,27 +496,25 @@ vim.keymap.set("n", "<leader>mc", function()
 		bin_path = vim.api.nvim_buf_get_name(0):match("^(%S+)/.+$") -- This is a absolute path
 	end
 
-  -- $@ is current file's absolute path
-  -- $bin is project's bin folder
-  local command = vim.fn.input("Custom Compilation")
-  command = string.gsub(command, "$@", filepath)
-  command = string.gsub(command, "$bin", bin_path)
+	-- $@ is current file's absolute path
+	-- $bin is project's bin folder
+	local command = vim.fn.input("Custom Compilation")
+	command = string.gsub(command, "$@", filepath)
+	command = string.gsub(command, "$bin", bin_path)
 
 	local stat = vim.uv.fs_stat(scriptpath)
 	if stat then -- file exists
 		if stat.mode % 128 >= 64 then -- mode is 12 bits int. owner: bits 8-6(rwx). x = 2^6 = 64
-			vim.bo.makeprg = 
+			vim.bo.makeprg =
 				-- "cd " .. vim.g.project_root_path
-				-- .. " && " .. 
-        scriptpath
-				.. " "
-				.. builder
-				.. " \""
-				.. command
-				.. "\" "
-				.. current_window_width
+				-- .. " && " ..
+				scriptpath .. " " .. builder .. ' "' .. command .. '" ' .. current_window_width
 		end
 	end
 
 	vim.cmd("make | belowright copen 10 | wincmd p")
 end, { noremap = true, silent = true, desc = "Customize compilation" })
+
+vim.keymap.set("n", "<leader>te", function()
+	vim.cmd("PlenaryBustedFile %:p")
+end, { noremap = true, silent = true })

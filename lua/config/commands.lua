@@ -2,8 +2,8 @@ require("utils.buffer")
 require("utils.remote")
 require("utils.shell")
 
-local project = require("project_nvim.project")
-local project_root_path = project.get_project_root()
+-- local project = require("project_nvim.project")
+-- local project_root_path = project.get_project_root()
 
 -- Git Push
 -- Example: :GitPush this is a commit infomation
@@ -11,7 +11,7 @@ vim.api.nvim_create_user_command("GitPush", function(opts)
 	if opts.args == nil then
 		vim.notify("GitPush need 1 argument at least.", vim.log.levels.ERROR)
 	else
-		if project_root_path == nil then
+		if vim.g.project_root_path == nil then
 			vim.notify("Can't find the project's root path", vim.log.levels.ERROR)
 		else
 			if vim.fn.has("win32") == 1 then
@@ -20,7 +20,7 @@ vim.api.nvim_create_user_command("GitPush", function(opts)
 					"cmd",
 					"/c",
 					"cd",
-					project_root_path,
+					vim.g.project_root_path,
 					"&&",
 					"git",
 					"add",
@@ -49,7 +49,7 @@ vim.api.nvim_create_user_command("GitPush", function(opts)
 					end
 				end)
 			else
-				local cwd = vim.split(project_root_path, "%s+")[1]
+				local cwd = vim.split(vim.g.project_root_path, "%s+")[1]
 				-- Linux with proxychains
 				exec_bash_command("git add .", cwd, function(success)
 					if success then
@@ -354,10 +354,10 @@ end, { desc = "Get assembly for current buffer.", nargs = "+" })
 -- Generate Ctags
 -- Usage: GenCtags c make
 vim.api.nvim_create_user_command("GenCtags", function(opts)
-	if project_root_path then
+	if vim.g.project_root_path then
 		local params = opts.fargs or { "c" }
 		local scriptpath = vim.fn.stdpath("config") .. "/scripts/ctags/generator.sh"
-		exec_bash_scripts(scriptpath, params, project_root_path)
+		exec_bash_scripts(scriptpath, params, vim.g.project_root_path)
 	else
 		vim.notify(
 			[=[GenCtags: This file must in a project.

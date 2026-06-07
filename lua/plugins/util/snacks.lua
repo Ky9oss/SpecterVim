@@ -1,5 +1,5 @@
 -- A neovim lua profiler
-if vim.g.profiler == 1 then
+-- if vim.g.profiler == 1 then
 	return {
 		"folke/snacks.nvim",
 		priority = 1000,
@@ -20,6 +20,6 @@ if vim.g.profiler == 1 then
 			},
 		},
 	}
-else
-	return {}
-end
+-- else
+-- 	return {}
+-- end

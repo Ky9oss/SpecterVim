@@ -55,7 +55,7 @@ for lang in "$@"; do
       ;;
     makefile)
       # CTAGS_FLAGS=""
-      find "$PWD" -name '*.c' | while read src; do
+      find "$PWD" -name '*.c' -o -name '*.h' | while read src; do
         gcc -M -I/usr/include -I/usr/local/include -I"$PWD/include" "$src" 2>/dev/null
       done |
         sed -e 's/[\\ ]/\n/g' \
@@ -66,7 +66,7 @@ for lang in "$@"; do
       ;;
     gcc)
 
-      find "$PWD" -name '*.c' | while read src; do
+      find "$PWD" -name '*.c' -o -name '*.h' | while read src; do
         gcc -M -I/usr/include -I/usr/local/include -I"$PWD/include" "$src" 2>/dev/null
       done |
         sed -e 's/[\\ ]/\n/g' \
