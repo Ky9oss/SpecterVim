@@ -6,6 +6,8 @@ vim.g.specter_debug = 0 -- enable debug (1 or 0)
 vim.g.nvim_tree_moved = 0 -- nvim_tree has moved from left to right (1 or 0)
 vim.g.fix_osc52 = 1 -- try this config when osc52 copy is unavailable
 
+vim.g.debug_comment = 1
+
 -- vim.g.profiler = 0 -- a neovim lua profiler with Snacks.nvim
 --
 if vim.fn.has("win32") ~= 1 then
@@ -117,3 +119,14 @@ require("config.lsp")
 if vim.g.specter_debug == 1 then
 	require("config.debug")
 end
+
+-- Color
+vim.api.nvim_set_hl(0, "WinSeparator", {
+    fg = "#565f89",
+    bg = "NONE",
+})
+
+vim.api.nvim_set_hl(0, "VertSplit", {
+    fg = "#565f89",
+    bg = "NONE",
+})

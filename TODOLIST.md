@@ -56,6 +56,8 @@
 
 - [ ] Close `vim.cmd(make)` notify
 
+- [ ] Persistent storage modified-history to use `u` undo whenever you want
+
 - [ ] Requirements init and checker
   - [ ] Mason init
   - [ ] Ensure the libs(bash-scripts/executable) is executable and grant it if it's not.

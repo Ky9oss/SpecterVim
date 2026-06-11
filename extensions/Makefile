@@ -17,7 +17,7 @@ SHARED_OBJ = $(patsubst $(SRC_DIR)/share/%.c,lib%.so,$(SHARES))
 
 CC         = gcc-15
 CFLAGS    += -Wall -g
-SO_CFLAGS  = -shared -fPIC -O2 -Wall
+SO_CFLAGS  = -shared -fPIC -O2 -Wall -fvisibility=hidden
 
 LIBS_CFLAGS = -L$(LIB_DIR) -lmylib
 

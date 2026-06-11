@@ -627,14 +627,29 @@ end
 -- toggle keymappings for venn using <leader>v
 vim.api.nvim_set_keymap("n", "<leader>v", ":lua Toggle_venn()<CR>", { noremap = true })
 
--- asm treesitter
+-- asm config
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = { "asm" },
 	callback = function()
+    -- treesitter
 		vim.treesitter.start()
 		vim.cmd([[
 syn match asmKeyword /\vMACRO|PARAM|STACK|REF_CODE|RETURN/ containedin=ALL
 hi asmKeyword gui=bold guibg=#303030
     ]])
+
+    -- comment
+    vim.bo.commentstring = ';%s'
+    vim.api.nvim_command('set commentstring=;%s')
+	end,
+})
+
+-- asm config
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "sh" },
+	callback = function()
+    -- comment
+    vim.bo.commentstring = '#%s'
+    vim.api.nvim_command('set commentstring=#%s')
 	end,
 })
