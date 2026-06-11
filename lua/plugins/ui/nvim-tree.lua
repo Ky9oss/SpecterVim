@@ -3,6 +3,7 @@ return {
 	lazy = true,
 	cmd = { "NvimTreeOpen" },
 	config = function()
+    require("utils.str")
 		-- Nvim-tree Custom Keymap
 		local api = require("nvim-tree.api")
 		local function opts(desc)
@@ -31,13 +32,13 @@ return {
 		-- vim.keymap.set("n", "<c-y>", api.node.open.vertical, opts("Open: Vertical Split"))
 
 		-- Custom Decorator
-		---@class MyCustomDecorator : UserDecorator
+		---@class MyDecorator : UserDecorator
 		---@field enabled boolean
 		---@field highlight_range string
 		---@field icon_placement string
-		local MyCustomDecorator = require("nvim-tree.api").decorator.UserDecorator:extend()
+		local MyDecorator = require("nvim-tree.api").decorator.UserDecorator:extend()
 
-		function MyCustomDecorator:new()
+		function MyDecorator:new()
 			self.enabled = true
 			self.highlight_range = "all" -- or "all", "icon", "none"
 			self.icon_placement = "after"
@@ -47,7 +48,7 @@ return {
 		-- Custom Highlight
 		---@param node any
 		---@return string|nil
-		function MyCustomDecorator:highlight_group(node)
+		function MyDecorator:highlight_group(node)
 			local target_files = {
 				vim.api.nvim_buf_get_name(0),
 			}
@@ -59,7 +60,7 @@ return {
 			return nil
 		end
 
-		function MyCustomDecorator:icon_node(node)
+		function MyDecorator:icon_node(node)
 			local target_files = {
 				vim.api.nvim_buf_get_name(0),
 			}
@@ -106,7 +107,6 @@ return {
 					"readme.md",
 				},
 				root_folder_label = function(path)
-					require("../../utils.str")
 					return LimitStr(vim.fn.fnamemodify(path, ":p"), 20)
 				end,
 				icons = {
@@ -122,12 +122,12 @@ return {
 					"Open",
 					"Hidden",
 					"Modified",
-					"Bookmark",
-					"Diagnostics",
 					"Copied",
 					"Cut",
-					MyCustomDecorator,
+					MyDecorator,
 				},
+					-- "Bookmark",
+					-- "Diagnostics",
 			},
 			filters = {
 				dotfiles = false, -- show hidden files

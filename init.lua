@@ -5,6 +5,7 @@ vim.g.clangd = 1 -- enable clangd lsp OR use ctags without lsp (1 or 0)
 vim.g.specter_debug = 0 -- enable debug (1 or 0)
 vim.g.nvim_tree_moved = 0 -- nvim_tree has moved from left to right (1 or 0)
 vim.g.fix_osc52 = 1 -- try this config when osc52 copy is unavailable
+vim.g.use_lsp = 0
 
 vim.g.debug_comment = 1
 

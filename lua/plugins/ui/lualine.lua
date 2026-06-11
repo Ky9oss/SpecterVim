@@ -7,10 +7,10 @@ return {
       require("../../utils.str")
       return LimitStr(vim.fn.expand("%:p"), 30)
     end
-    local function lsp_info()
-      require("../../utils.lsp")
-      return GetLspInfo()
-    end
+    -- local function lsp_info()
+    --   require("../../utils.lsp")
+    --   return GetLspInfo()
+    -- end
     local function visual_length()
       local mode = vim.fn.mode()
       if mode:find("[v]") then

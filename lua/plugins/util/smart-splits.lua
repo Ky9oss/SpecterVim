@@ -1,5 +1,6 @@
 return {
   "mrjones2014/smart-splits.nvim",
+  lazy = false,
   otps = {
     ignored_buftypes = {
       "nofile",

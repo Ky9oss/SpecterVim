@@ -1,4 +1,4 @@
-if vim.fn.has("win32") == 1 then
+if vim.fn.has("win32") == 1 and vim.g.use_lsp == 1 then
   return {
     "TheLeoP/powershell.nvim",
     lazy = true,
@@ -42,5 +42,8 @@ if vim.fn.has("win32") == 1 then
     end,
   }
 else
-  return {}
+  return {
+    "TheLeoP/powershell.nvim",
+    lazy = true,
+  }
 end
