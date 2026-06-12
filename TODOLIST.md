@@ -54,6 +54,8 @@
     - <C-x> and <C-y> in Quickfix
     - <C-w><C-x> <C-w><C-y>
 
+- [ ] Debug comment
+
 - [ ] Close `vim.cmd(make)` notify
 
 - [ ] Persistent storage modified-history to use `u` undo whenever you want

@@ -3,7 +3,7 @@ return {
 	lazy = true,
 	cmd = { "NvimTreeOpen" },
 	config = function()
-    require("utils.str")
+		require("utils.str")
 		-- Nvim-tree Custom Keymap
 		local api = require("nvim-tree.api")
 		local function opts(desc)
@@ -45,31 +45,63 @@ return {
 			self.my_icon_node = { str = ">", hl = { "DevIconNushell" } }
 		end
 
+    -- TODO: Optimize the search algorithms
+    -- 1. Do not query any nodes when in NvimTree_*
+    -- 2. Do not query more nodes when we find the only highlight file we need
+    --
 		-- Custom Highlight
 		---@param node any
 		---@return string|nil
 		function MyDecorator:highlight_group(node)
-			local target_files = {
-				vim.api.nvim_buf_get_name(0),
-			}
-			for _, target_path in ipairs(target_files) do
-				if node.absolute_path == target_path then
-					return "Substitute" -- highlight format
-				end
+			local target_file
+			local current_file = vim.api.nvim_buf_get_name(0)
+			if current_file:find("NvimTree_") then
+				target_file = vim.api.nvim_buf_get_name(vim.g.last_buf)
+			else
+				target_file = current_file
 			end
-			return nil
+
+			if node.absolute_path == target_file then
+				return "Substitute" -- highlight format
+			else
+				return nil
+			end
+
+			-- More than one highlight
+			-- local target_files = {
+			-- 	current_file,
+			-- }
+			-- for _, target_path in ipairs(target_files) do
+			-- 	if node.absolute_path == target_path then
+			-- 		return "Substitute" -- highlight format
+			-- 	end
+			-- end
 		end
 
 		function MyDecorator:icon_node(node)
-			local target_files = {
-				vim.api.nvim_buf_get_name(0),
-			}
-			for _, target_path in ipairs(target_files) do
-				if node.absolute_path == target_path then
-					return self.my_icon_node
-				end
+			local target_file
+			local current_file = vim.api.nvim_buf_get_name(0)
+			if current_file:find("NvimTree_") then
+				target_file = vim.api.nvim_buf_get_name(vim.g.last_buf)
+			else
+				target_file = current_file
 			end
-			return nil
+
+			if node.absolute_path == target_file then
+				return self.my_icon_node
+			else
+				return nil
+			end
+
+			-- local target_files = {
+			-- 	current_file,
+			-- }
+			-- for _, target_path in ipairs(target_files) do
+			-- 	if node.absolute_path == target_path then
+			-- 		return self.my_icon_node
+			-- 	end
+			-- end
+			-- return nil
 		end
 
 		require("nvim-tree").setup({
@@ -126,8 +158,8 @@ return {
 					"Cut",
 					MyDecorator,
 				},
-					-- "Bookmark",
-					-- "Diagnostics",
+				-- "Bookmark",
+				-- "Diagnostics",
 			},
 			filters = {
 				dotfiles = false, -- show hidden files

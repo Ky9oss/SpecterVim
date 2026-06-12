@@ -90,20 +90,6 @@ vim.keymap.set("n", "<leader>sr", function()
 	end
 end, { noremap = true, silent = true })
 
--- Lua Runner
-vim.keymap.set("n", "<leader>lu", function()
-	vim.system({
-		"luajit",
-		vim.fn.expand("%:p"),
-	}, { text = true }, function(obj)
-		if obj.code == 0 then
-			vim.notify(obj.stdout:gsub("^%s*(.-)%s*$", "%1"), vim.log.levels.INFO) -- %1 is the first pattern in (.-)
-		else
-			vim.notify("[Lua Runner Error]" .. (obj.stderr or "?"), vim.log.levels.ERROR)
-		end
-	end)
-end, { noremap = true, silent = true })
-
 -- This can fix vim-floaterm
 vim.keymap.set("t", "<Esc>", "<C-\\><C-n>:q<CR>")
 
