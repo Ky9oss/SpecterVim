@@ -56,6 +56,9 @@ return {
 			local target_file
 			local current_file = vim.api.nvim_buf_get_name(0)
 			if current_file:find("NvimTree_") then
+        if not vim.g.last_buf then
+          return nil
+        end
 				target_file = vim.api.nvim_buf_get_name(vim.g.last_buf)
 			else
 				target_file = current_file
@@ -82,6 +85,10 @@ return {
 			local target_file
 			local current_file = vim.api.nvim_buf_get_name(0)
 			if current_file:find("NvimTree_") then
+        if not vim.g.last_buf then
+          return nil
+        end
+
 				target_file = vim.api.nvim_buf_get_name(vim.g.last_buf)
 			else
 				target_file = current_file
