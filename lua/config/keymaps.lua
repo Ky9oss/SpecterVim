@@ -452,3 +452,7 @@ end, { noremap = true, silent = true, desc = "Customize compilation" })
 vim.keymap.set("n", "<leader>te", function()
 	vim.cmd("PlenaryBustedFile %:p")
 end, { noremap = true, silent = true })
+
+vim.keymap.set("n", "<leader>nt", function()
+	vim.cmd("NvimTreeToggle")
+end, { noremap = true, silent = true })

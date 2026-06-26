@@ -427,3 +427,8 @@ end, { desc = "Fuzzy search for custom help files", nargs = "?" })
 vim.api.nvim_create_user_command("Ju", function()
 	require("telescope.builtin").jumplist()
 end, { desc = "Telescope jumplist" })
+
+--LspInfo
+vim.api.nvim_create_user_command("LspInfo", function()
+  vim.cmd("checkhealth vim.lsp")
+end, { desc = "Telescope jumplist" })
