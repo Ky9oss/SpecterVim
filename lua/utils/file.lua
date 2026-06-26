@@ -3,7 +3,7 @@ require("utils.debug")
 --- Find file by traversing upward through parent directories from current_path.
 ---
 --- @param files table
----   Search by table order in files.
+---   Search files by the order in table.
 --- @param current_path string | nil
 --- @param project_path string | nil
 --- @return string | nil

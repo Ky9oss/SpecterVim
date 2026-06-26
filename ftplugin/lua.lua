@@ -1,8 +1,8 @@
-vim.keymap.set("n", "<leader>mm", function()
+vim.keymap.set("n", "<leader>rr", function()
   vim.cmd("%lua")
 end, { buffer = true, desc = "Run Lua in Neovim" })
 
-vim.keymap.set("n", "<leader>mv", function()
+vim.keymap.set("n", "<leader>rv", function()
 	vim.system({
 		"luajit",
 		vim.fn.expand("%:p"),

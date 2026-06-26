@@ -1,7 +1,7 @@
 require("utils.shell")
 
 -- A better choice than <leader>mm
-vim.keymap.set("n", "<leader>mt", function()
+vim.keymap.set("n", "<leader>rt", function()
 	if vim.fn.has("win32") ~= 1 then -- Linux
 		local scriptpath = vim.fn.stdpath("config") .. "/scripts/loader/tmux.sh"
 		local filename = vim.api.nvim_buf_get_name(0)
@@ -10,7 +10,7 @@ vim.keymap.set("n", "<leader>mt", function()
 	end
 end, { buffer = true, desc = "Run Bash Scripts with Tmux" })
 
-vim.keymap.set("n", "<leader>mm", function()
+vim.keymap.set("n", "<leader>rr", function()
 	if vim.fn.has("win32") ~= 1 then -- Linux
 		local filename = vim.api.nvim_buf_get_name(0)
 		local stat = vim.uv.fs_stat(filename)
@@ -47,7 +47,7 @@ vim.keymap.set("n", "<leader>mm", function()
 	-- end, 300) -- 0.3s
 end, { buffer = true, desc = "Make (Bash)" })
 
-vim.keymap.set("n", "<leader>mv", function()
+vim.keymap.set("n", "<leader>rv", function()
 	local executable_path = vim.api.nvim_buf_get_name(0)
 	exec_bash_scripts(executable_path)
 end, { buffer = true, desc = "Run C Program with Tmux" })

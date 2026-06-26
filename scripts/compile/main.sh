@@ -29,7 +29,10 @@ else
   exit 1
 fi
 
-if [[ -z $4 ]]; then
+
+if [[ -n $4 && "make" = "$1" ]]; then
+  makefile_path="$4"
+elif [[ -z $4 ]]; then
   output_path="$output_dir/$output_name"
 else
   output_path="$4"
@@ -49,8 +52,11 @@ gcc)
 clang)
   ;;
 make)
-  # result=$(make -s "$output_name" -f makefilepath 2>&1)
-  result=$(make -s "$output_name" 2>&1)
+  if [[ -n "$makefile_path" ]]; then
+    result=$(make -s "$output_name" -f "$makefile_path" 2>&1)
+  else
+    result=$(make -s "$output_name" 2>&1)
+  fi
   status=$?
   ;;
 autotools)
