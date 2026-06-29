@@ -2,7 +2,7 @@ require("utils.buffer")
 require("utils.shell")
 
 -- Copy
-if vim.g.copy_to_system == true then
+if vim.g.copy_to_system == 1 then
 	vim.keymap.set("n", "gy", '"+y')
 	vim.keymap.set("n", "gY", '"+Y')
 	vim.keymap.set("v", "gy", '"+y')

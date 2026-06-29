@@ -1,18 +1,18 @@
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
-vim.g.copy_to_system = true -- duplicate 'y' in keymaps.lua
+vim.g.copy_to_system = 1 -- duplicate 'y' in keymaps.lua
 vim.g.clangd = 1 -- enable clangd lsp OR use ctags without lsp (1 or 0)
 vim.g.specter_debug = 0 -- enable debug (1 or 0)
 vim.g.nvim_tree_moved = 0 -- nvim_tree has moved from left to right (1 or 0)
-vim.g.fix_osc52 = 1 -- try this config when osc52 copy is unavailable
+vim.g.fix_osc52 = 1 -- set this when copy osc52 have some troubles
 vim.g.use_lsp = 1
 
 vim.g.debug_comment = 1
 
 -- vim.g.profiler = 0 -- a neovim lua profiler with Snacks.nvim
---
-if vim.fn.has("win32") ~= 1 then
-	if vim.env.TMUX == nil or vim.env.TMUX == "" then
+
+if vim.env.TMUX == nil or vim.env.TMUX == "" then
+	if vim.g.fix_osc52 == 0 then
 		vim.g.clipboard = {
 			name = "OSC 52",
 			copy = {
@@ -25,13 +25,37 @@ if vim.fn.has("win32") ~= 1 then
 			},
 		}
 	else
-		-- This was valid until I upgraded Debian from 12 to 13. :-(
+    -- TODO: 
+    --  find out what happens to osc52
+    --  find a way to fix osc52 when not in tmux
+		vim.g.copy_to_system = 0
+	end
+else
+	-- This was valid until I upgraded Debian from 12 to 13. :-(
+
+	vim.g.clipboard = {
+		name = "tmux-osc52-fallback",
+		copy = {
+			["+"] = { "tmux", "load-buffer", "-w", "-" },
+			["*"] = { "tmux", "load-buffer", "-w", "-" },
+		},
+		paste = {
+			["+"] = { "tmux", "save-buffer", "-" },
+			["*"] = { "tmux", "save-buffer", "-" },
+		},
+		cache_enabled = true,
+	}
+
+	if vim.g.fix_osc52 == 1 then
+		local command = vim.fn.stdpath("config") .. "/scripts/osc52/osc52-fixed.sh"
 
 		vim.g.clipboard = {
-			name = "tmux-osc52-fallback",
+			name = "tmux-osc52-fixed",
+
+			-- neovim -> stdin-pipe -> command
 			copy = {
-				["+"] = { "tmux", "load-buffer", "-w", "-" },
-				["*"] = { "tmux", "load-buffer", "-w", "-" },
+				["+"] = { command },
+				["*"] = { command },
 			},
 			paste = {
 				["+"] = { "tmux", "save-buffer", "-" },
@@ -39,25 +63,6 @@ if vim.fn.has("win32") ~= 1 then
 			},
 			cache_enabled = true,
 		}
-
-		if vim.g.fix_osc52 == 1 then
-			local command = vim.fn.stdpath("config") .. "/scripts/osc52/osc52-fixed.sh"
-
-			vim.g.clipboard = {
-				name = "tmux-osc52-fixed",
-
-				-- neovim -> stdin-pipe -> command
-				copy = {
-					["+"] = { command },
-					["*"] = { command },
-				},
-				paste = {
-					["+"] = { "tmux", "save-buffer", "-" },
-					["*"] = { "tmux", "save-buffer", "-" },
-				},
-				cache_enabled = true,
-			}
-		end
 	end
 end
 
@@ -101,7 +106,6 @@ vim.treesitter.language.add("asm", {
 	path = vim.fn.stdpath("config") .. "/parser/asm.so",
 })
 
-
 -- diagnostic
 vim.diagnostic.config({
 	signs = {
@@ -123,11 +127,11 @@ end
 
 -- Color
 vim.api.nvim_set_hl(0, "WinSeparator", {
-    fg = "#565f89",
-    bg = "NONE",
+	fg = "#565f89",
+	bg = "NONE",
 })
 
 vim.api.nvim_set_hl(0, "VertSplit", {
-    fg = "#565f89",
-    bg = "NONE",
+	fg = "#565f89",
+	bg = "NONE",
 })
