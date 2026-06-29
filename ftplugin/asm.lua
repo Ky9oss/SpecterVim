@@ -41,7 +41,7 @@ vim.keymap.set("n", "<leader>mm", function()
 	vim.cmd("make | belowright copen 10 | wincmd p ")
 end, { buffer = true, desc = "Compile (fasm)" })
 
-vim.keymap.set("n", "<leader>mt", function()
+vim.keymap.set("n", "<leader>rt", function()
 	if not exe_abpath then
 		if project_root then
 			exe_abpath = project_root .. "/bin/" .. vim.api.nvim_buf_get_name(0):match(".*/(%S+)%.asm$")
