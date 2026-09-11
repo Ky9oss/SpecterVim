@@ -17,14 +17,14 @@ if [[ -z $2 || $2 -eq 0 ]]; then
   list_panes=$(tmux list-panes -F "#{pane_width}:#{pane_id}")
   readarray arr <<<"$list_panes"
   for item in "${arr[@]}"; do
-    if [[ "$item" =~ 45:([^[:space:]]+) ]]; then
+    if [[ "$item" =~ 35:([^[:space:]]+) ]]; then
       new_pane=${BASH_REMATCH[1]}
     fi
   done
 
   # Create a new pane if there is not any pane
   if [[ -z $new_pane ]]; then
-    new_pane=$(tmux split-window -h -l 45 -P -F "#{pane_id}")
+    new_pane=$(tmux split-window -h -l 35 -P -F "#{pane_id}")
     tmux select-pane -t "$old_pane"
   fi
 

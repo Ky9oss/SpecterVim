@@ -56,6 +56,9 @@
 
 - [ ] Debug comment
 
+- [ ] Bug: Scroll bar will cover the code
+- [ ] Scroll bar smoothly scroll in C-F/C-B
+
 - [ ] Close `vim.cmd(make)` notify
 
 - [ ] Persistent storage modified-history to use `u` undo whenever you want
