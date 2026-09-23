@@ -7,7 +7,7 @@ vim.g.nvim_tree_moved = 0 -- nvim_tree has moved from left to right (1 or 0)
 vim.g.fix_osc52 = 1 -- set this when copy osc52 have some troubles
 vim.g.use_lsp = 1
 
-vim.g.debug_comment = 1
+vim.g.debug_comment = 0
 
 -- vim.g.profiler = 0 -- a neovim lua profiler with Snacks.nvim
 

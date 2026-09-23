@@ -65,11 +65,11 @@ vim.keymap.set("n", "<leader>ca", "<cmd>NoiceDismiss<CR>", { noremap = true, sil
 vim.keymap.set("n", "<leader>cw", "<cmd>SearchCurrentWord<CR>", { noremap = true, silent = true })
 
 -- todo-comments
-vim.keymap.set("n", "to", function()
+vim.keymap.set("n", "<leader>to", function()
 	if vim.g.project_root_path then
-		vim.cmd("TodoQuickFix cwd=" .. vim.g.project_root_path)
+		vim.cmd("TodoQuickFix keywords=TODO,HACK cwd=" .. vim.g.project_root_path)
 	else
-		vim.cmd("TodoQuickFix")
+		vim.cmd("TodoQuickFix keywords=TODO,HACK")
 	end
 end, { desc = "Quickfix for todo-comments" })
 

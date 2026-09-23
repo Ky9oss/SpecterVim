@@ -4,6 +4,8 @@
 
 - [ ] The first paste based on shada always overlay the current one.
 - [ ] Lsp failed sometimes and :LspRestart cause error
+- [ ] ui layout is borken in lazy.nvim.txt
+  - 🛠️的在neovim中的实际宽度（1格）和界面渲染宽度（2格）为何不一致？
 
 # New Features
 
@@ -16,6 +18,9 @@
 
 ## About C/Cpp
 
+- Code Completion:
+  - [ ] important macros such as STDIN_FILENO
+
 - Edit-compile-edit for all c-compilation-env by Quickfix
   - [x] normal gcc
   - [x] Makefile
@@ -23,6 +28,11 @@
   - [ ] autotools
   - [ ] Cmake
   - [ ] Meson
+
+## About Man
+
+- [ ] Man page with relative line number and fixed page width
+- [ ] tagbar
 
 ## From Lsp to Ctags
 
@@ -43,6 +53,9 @@
 
 ## Others
 
+- [ ] Homepage 
+- [ ] Auto-switch Input Method
+
 - assmebly explorer:
   -  linux compatibility
     - [x] gcc
@@ -54,10 +67,15 @@
     - <C-x> and <C-y> in Quickfix
     - <C-w><C-x> <C-w><C-y>
 
+
 - [ ] Debug comment
+
+- [ ] Support tagbar in Man
 
 - [ ] Bug: Scroll bar will cover the code
 - [ ] Scroll bar smoothly scroll in C-F/C-B
+
+- [ ] keymap to Quickfix Bar hide and replay
 
 - [ ] Close `vim.cmd(make)` notify
 
