@@ -25,9 +25,9 @@ if vim.env.TMUX == nil or vim.env.TMUX == "" then
 			},
 		}
 	else
-    -- TODO: 
-    --  find out what happens to osc52
-    --  find a way to fix osc52 when not in tmux
+		-- TODO:
+		--  find out what happens to osc52
+		--  find a way to fix osc52 when not in tmux
 		vim.g.copy_to_system = 0
 	end
 else
@@ -102,9 +102,12 @@ vim.filetype.add({
 		info = "info",
 	},
 })
-vim.treesitter.language.add("asm", {
-	path = vim.fn.stdpath("config") .. "/parser/asm.so",
-})
+
+if vim.fn.has("win32") ~= 1 then -- Linux
+	vim.treesitter.language.add("asm", {
+		path = vim.fn.stdpath("config") .. "/parser/asm.so",
+	})
+end
 
 -- diagnostic
 vim.diagnostic.config({
