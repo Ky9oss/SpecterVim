@@ -53,7 +53,14 @@
 
 ## Others
 
-- [ ] Homepage 
+- [ ] Dashboard
+  - projects lists
+  - lists classification
+  - projects search
+  - open new projects (Windows: File Explorer)
+  - open new projects (Linux: fzf)
+  - delete projects from lists
+  - Return to homepage from current project, quit everything, restore env, and then open new projects
 - [ ] Auto-switch Input Method
 
 - assmebly explorer:
