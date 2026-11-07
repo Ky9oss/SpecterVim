@@ -11,6 +11,18 @@ if vim.g.copy_to_system == 1 then
 	vim.keymap.set("n", "gP", '"+P')
 end
 
+-- Insert/Command Mode: Left, Right, Down, Up
+vim.keymap.set('i', '<C-h>', '<Left>',  { noremap = true, silent = true })
+vim.keymap.set('i', '<C-j>', '<Down>',  { noremap = true, silent = true })
+vim.keymap.set('i', '<C-k>', '<Up>',    { noremap = true, silent = true })
+vim.keymap.set('i', '<C-l>', '<Right>', { noremap = true, silent = true })
+
+-- TODO: Fix bug: no output in Command-Mode
+vim.keymap.set('c', '<C-h>', '<Left>',  { noremap = true, silent = true })
+vim.keymap.set('c', '<C-j>', '<Down>',  { noremap = true, silent = true })
+vim.keymap.set('c', '<C-k>', '<Up>',    { noremap = true, silent = true })
+vim.keymap.set('c', '<C-l>', '<Right>', { noremap = true, silent = true })
+
 -- Hover action: Use signature_help in csharp with roslyn; Otherwise use LspSaga's hover
 vim.keymap.set("n", "K", function()
 	local filetype = vim.bo[vim.api.nvim_get_current_buf()].filetype

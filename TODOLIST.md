@@ -7,6 +7,9 @@
 - [ ] ui layout is borken in lazy.nvim.txt
   - 🛠️的在neovim中的实际宽度（1格）和界面渲染宽度（2格）为何不一致？
 
+- [ ] `:checkhealth` stuck
+- [ ] Command-Mode keymaps error (keymaps.lua 20)
+
 # New Features
 
 ## About .NET
@@ -17,7 +20,6 @@
 - [ ] a more grace way to replace hover() with signature_help() in roslyn
 
 ## About C/Cpp
-
 - Code Completion:
   - [ ] important macros such as STDIN_FILENO
 
@@ -30,29 +32,35 @@
   - [ ] Meson
 
 ## About Man
-
 - [ ] Man page with relative line number and fixed page width
 - [ ] tagbar
 
-## From Lsp to Ctags
-
-> [!TIP]
-> Why?
-> Because all I need is a lighter, more customizable, and controllable index jump and code completion.
-> No more dependencies, complex configurations, inconsistent behavior, or overly heavy applications.
-
-### Lua
+## About Lua
+- [ ] LSP
 - [ ] Lua neovim API
 
-### C
+## About Java / Cpp / Python / Rust / Go / Powershell
+- To be determined
+
+## About C
+
+### Ctags
 - [ ] how to deal with token pasting(##). maybe a fuzzy matching which just drop all unknown token?
 - [ ] support locate in AssemblyExplorer
 - [ ] support function-like macro such as `pow` in `/usr/include/bits/mathcalls.h`
 - [x] support `makefile` in ctags
 - [x] support GNU Manual
 
-## Others
+## Plugins
 
+### jump
+- [ ] a jump plugin
+  - Self-developed: jump by ctags
+  - https://github.com/obsidian-nvim/obsidian.nvim
+  - https://github.com/nvim-telekasten/telekasten.nvim
+  - https://github.com/echaya/neowiki.nvim
+
+### dashboard
 - [ ] Dashboard
   - projects lists
   - lists classification
@@ -61,8 +69,14 @@
   - open new projects (Linux: fzf)
   - delete projects from lists
   - Return to homepage from current project, quit everything, restore env, and then open new projects
+
+### auto-switch srf
 - [ ] Auto-switch Input Method
 
+### line number
+- [ ] line number operation for every windows
+
+### assmebly explorer
 - assmebly explorer:
   -  linux compatibility
     - [x] gcc
@@ -74,31 +88,41 @@
     - <C-x> and <C-y> in Quickfix
     - <C-w><C-x> <C-w><C-y>
 
-
+### comment.nvim
 - [ ] Debug comment
 
-- [ ] Support tagbar in Man
+### tagbar
+- [ ] Support tagbar in Man and help
+- [ ] Fix Lua tags with too many meaningless "callback"
 
+### scroll bar
 - [ ] Bug: Scroll bar will cover the code
 - [ ] Scroll bar smoothly scroll in C-F/C-B
 
-- [ ] keymap to Quickfix Bar hide and replay
-
+### edit-compile-run
+- [x] Edit-compile-run config with toml.lua to select builder
 - [ ] Close `vim.cmd(make)` notify
+- [ ] Refactor Edit-compile-run-edit flow
 
+### persistent u
 - [ ] Persistent storage modified-history to use `u` undo whenever you want
 
+### specter vim init
 - [ ] Requirements init and checker
   - [ ] Mason init
   - [ ] Ensure the libs(bash-scripts/executable) is executable and grant it if it's not.
   - [ ] Test ( See [mini.test](https://github.com/nvim-mini/mini.nvim/blob/main/readmes/mini-test.md) )
 
-- [x] Edit-compile-run config with toml.lua to select builder
-
+### hex editor
 - [ ] hex editor with lua FFI (lua_CFunction)
 
-- [ ] Refactor Edit-compile-run-edit flow
-
-# New Plugins
-
+### database
 - [ ] Database connecter
+
+### Others
+- [ ] Sessions.vim never pushed
+
+## Keymaps
+- [ ] keymap to Quickfix Bar hide and replay
+
+

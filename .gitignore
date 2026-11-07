@@ -24,3 +24,5 @@ specterv.toml
 bin
 lib/*.so
 *.json
+THINK.md
+tests/minimal/

@@ -1,0 +1,9 @@
+# Parser for vimdoc manual
+#
+# Author: Ky9oss
+
+--langdef=vimdoc
+--map-vimdoc=+*.txt
+--map-vimdoc=+*.vimdoc
+--kinddef-vimdoc=h,heading,headings
+--regex-vimdoc=/^([A-Z0-9 ]+)\t\+\*/\1/h/

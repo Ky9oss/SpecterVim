@@ -32,6 +32,8 @@ require("lazy").setup({
 		{ import = "plugins.util" },
 		{ import = "plugins.code" },
 		{ import = "plugins.formatter" },
+
+		{ import = "plugins.game" },
 	},
 
 	dev = {

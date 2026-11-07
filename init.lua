@@ -1,3 +1,4 @@
+-- custom
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 vim.g.copy_to_system = 1 -- duplicate 'y' in keymaps.lua
@@ -8,6 +9,9 @@ vim.g.fix_osc52 = 1 -- set this when copy osc52 have some troubles
 vim.g.use_lsp = 1
 
 vim.g.debug_comment = 0
+
+-- global
+vim.g.health = { style = "float" }
 
 -- vim.g.profiler = 0 -- a neovim lua profiler with Snacks.nvim
 
@@ -24,8 +28,7 @@ if vim.env.TMUX == nil or vim.env.TMUX == "" then
 				["*"] = require("vim.ui.clipboard.osc52").paste("*"),
 			},
 		}
-	else
-		-- TODO:
+	else -- TODO:
 		--  find out what happens to osc52
 		--  find a way to fix osc52 when not in tmux
 		vim.g.copy_to_system = 0
@@ -137,4 +140,19 @@ vim.api.nvim_set_hl(0, "WinSeparator", {
 vim.api.nvim_set_hl(0, "VertSplit", {
 	fg = "#565f89",
 	bg = "NONE",
+})
+
+-- Global Highlight
+vim.api.nvim_set_hl(0, "MyNote", { fg = "#FFA500", bg = "NONE", italic = true })
+vim.api.nvim_create_autocmd({ "WinEnter" }, {
+  pattern = "*",
+  callback = function()
+    if vim.w.my_note_match_id then
+      -- pcall(vim.fn.matchdelete, vim.w.my_note_match_id)
+      return
+    end
+
+    local pattern = "Ky9:"
+    vim.w.my_note_match_id = vim.fn.matchadd("MyNote", pattern, 100)
+  end,
 })
