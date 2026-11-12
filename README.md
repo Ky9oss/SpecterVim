@@ -17,6 +17,7 @@ A personal Neovim setup built on Lazy.nvim with curated plugins. It's not a user
 - Git >= 2.19.0 (for partial clones support)
 - luarocks >= 3.13.0
 - C compiler && Make (for treesitter parsers)
+- [tree-sitter-cli](https://github.com/tree-sitter/tree-sitter/blob/master/crates/cli/README.md) >= 0.26.1
 - [toml.lua](https://github.com/LebJe/toml.lua)
 - [tmux](https://github.com/tmux/tmux) (optional)
 - a [Nerd Font](https://www.nerdfonts.com/) (optional)
@@ -76,6 +77,5 @@ builder = "gcc"
 custom_command = "" 
 ```
 
-## THANS
+## Thanks To
 - https://github.com/ya2s/nvim-cursorline
-

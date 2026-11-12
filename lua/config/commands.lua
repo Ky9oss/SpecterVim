@@ -430,5 +430,60 @@ end, { desc = "Telescope jumplist" })
 
 --LspInfo
 vim.api.nvim_create_user_command("LspInfo", function()
-  vim.cmd("checkhealth vim.lsp")
+	vim.cmd("checkhealth vim.lsp")
 end, { desc = "Telescope jumplist" })
+
+--TSInstallAll
+vim.api.nvim_create_user_command("TSInstallAll", function()
+	require("nvim-treesitter").install({
+		"awk",
+		"bash",
+		"c",
+		"c_sharp",
+		"cmake",
+		"cpp",
+		"editorconfig",
+		"git_config",
+		"git_rebase",
+		"gitattributes",
+		"gitcommit",
+		"gitignore",
+		"go",
+		"html",
+		"java",
+		"javadoc",
+		"javascript",
+    "jq",
+    "json",
+		"kotlin",
+		"latex",
+    "llvm",
+		"lua",
+		"luadoc",
+		"make",
+		"markdown",
+		"markdown_inline",
+		"nasm",
+    "nginx",
+    "nim",
+    "perl",
+    "php",
+		"powershell",
+		"python",
+		"requirements",
+		"ruby",
+		"rust",
+		"sql",
+		"svelte",
+		"strace",
+    "swift",
+		"toml",
+		"typescript",
+		"tsx",
+		"vim",
+		"vimdoc",
+		"vue",
+		"xml",
+		"yaml",
+	})
+end, { desc = "Install all treesitters I need" })
