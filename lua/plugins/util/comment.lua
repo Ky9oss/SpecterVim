@@ -1,4 +1,4 @@
-if vim.g.debug_comment == 0 then
+if vim.g.debug== false then
 	return {
 		"numToStr/Comment.nvim",
 		lazy = false,

@@ -102,8 +102,9 @@ vim.keymap.set("n", "<leader>sr", function()
 	end
 end, { noremap = true, silent = true })
 
--- This can fix vim-floaterm
-vim.keymap.set("t", "<Esc>", "<C-\\><C-n>:q<CR>")
+-- vim-floaterm
+vim.keymap.set("t", "<leader><Esc>", "<C-\\><C-n>:q<CR>")
+vim.keymap.set("t", "<Esc>", "<C-\\><C-n>")
 
 -- Assembly Explorer
 vim.keymap.set("n", "<leader>as", "<cmd>AssemblyExplorer<CR>")
@@ -151,8 +152,6 @@ function QuickfixCtags(tags)
 		end
 	end
 
-	-- vim.notify(vim.inspect(fields_display))
-
 	-- Calculate max length of every fields to be displayed
 	for i, tag in ipairs(tags) do
 		tag.kind = tag.kind and tag.kind or ""
@@ -178,9 +177,6 @@ function QuickfixCtags(tags)
 		end
 	end
 
-	-- vim.notify(vim.inspect(tags))
-	-- vim.notify(vim.inspect(fields_display))
-
 	-- Concatenate titles for top row in quickfix
 	local top_row = ""
 	for _, f in ipairs(fields_display) do
@@ -188,8 +184,6 @@ function QuickfixCtags(tags)
 		f.title = f.title == "Filename" and "File" or f.title
 		top_row = top_row .. string.format("%-" .. f.max_length .. "s | ", f.title)
 	end
-
-	-- vim.notify(top_row)
 
 	local items = {}
 	table.insert(items, {
@@ -216,7 +210,7 @@ function QuickfixCtags(tags)
 		})
 	end
 
-	vim.fn.setqflist({}, " ", { title = "Tags", items = items })
+	vim.fn.setqflist({}, " ", { title = "CTags", items = items })
 	vim.cmd("belowright copen")
 end
 

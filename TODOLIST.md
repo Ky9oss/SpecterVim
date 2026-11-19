@@ -119,6 +119,12 @@
 ### database
 - [ ] Database connecter
 
+### fold
+- [ ] Better fold
+
+### floaterm
+- [ ] Replace `\sh` with tmux float term
+
 ### Others
 - [ ] Sessions.vim never pushed
 

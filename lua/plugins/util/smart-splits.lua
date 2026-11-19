@@ -83,10 +83,10 @@ return {
     log_level = "info",
   },
   config = function()
-    vim.keymap.set("n", "<C-w>H", require("smart-splits").resize_left)
-    vim.keymap.set("n", "<C-w>J", require("smart-splits").resize_down)
-    vim.keymap.set("n", "<C-w>K", require("smart-splits").resize_up)
-    vim.keymap.set("n", "<C-w>L", require("smart-splits").resize_right)
+    vim.keymap.set("n", "<C-w>h", require("smart-splits").resize_left)
+    vim.keymap.set("n", "<C-w>j", require("smart-splits").resize_down)
+    vim.keymap.set("n", "<C-w>k", require("smart-splits").resize_up)
+    vim.keymap.set("n", "<C-w>l", require("smart-splits").resize_right)
 
     vim.keymap.set("n", "<C-h>", require("smart-splits").move_cursor_left)
     vim.keymap.set("n", "<C-j>", require("smart-splits").move_cursor_down)

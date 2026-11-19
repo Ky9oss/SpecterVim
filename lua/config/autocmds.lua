@@ -505,17 +505,9 @@ vim.api.nvim_create_autocmd({ "TextYankPost" }, {
 	end,
 })
 
--- Hook paste for Shada
--- vim.paste = (function(overridden)
--- 	return function(lines, phase)
--- 		print("SpecterVim: hook paste")
--- 		vim.cmd("rshada")
--- 		return overridden(lines, phase)
--- 	end
--- end)(vim.paste)
 
 -- Hook p for Shada
-if vim.g.specter_debug == 1 then
+if vim.g.debug == true then
 	vim.keymap.set("n", "p", function()
 		print("SpecterVim: hook p")
 		vim.cmd("rshada")
@@ -581,6 +573,12 @@ end
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "qf",
 	callback = function()
+    vim.cmd("setlocal nowrap")
+    local title = vim.fn.getqflist({ title = 0 }).title
+    if not title:match("CTags") then
+      return
+    end
+
 		vim.keymap.set("n", "<CR>", function()
 			QuickfixEnter()
 		end, { buffer = true })
@@ -595,7 +593,7 @@ vim.api.nvim_create_autocmd("FileType", {
 			QuickfixEnter()
 		end, { buffer = true })
 
-		vim.keymap.set("n", "<C-y>", function()
+		vim.keymap.set("n", "<C-v>", function()
 			local quickfix_winid = vim.api.nvim_get_current_win()
 			vim.cmd([[
          execute "normal! \<C-w>p"

@@ -50,6 +50,7 @@ return {
 			default = { "Identifier", "#7C3AED" },
 			test = { "Identifier", "#FF00FF" },
 		},
+    -- TODO: Merge this into telescope.nvim
 		search = {
 			command = "rg",
 			args = {

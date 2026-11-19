@@ -3,12 +3,10 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 vim.g.copy_to_system = 1 -- duplicate 'y' in keymaps.lua
 vim.g.clangd = 1 -- enable clangd lsp OR use ctags without lsp (1 or 0)
-vim.g.specter_debug = 0 -- enable debug (1 or 0)
+vim.g.debug = false -- enable debug
 vim.g.nvim_tree_moved = 0 -- nvim_tree has moved from left to right (1 or 0)
 vim.g.fix_osc52 = 1 -- set this when copy osc52 have some troubles
 vim.g.use_lsp = 1
-
-vim.g.debug_comment = 0
 
 -- global
 vim.g.health = { style = "float" }
@@ -81,14 +79,28 @@ vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.softtabstop = 4
 vim.opt.expandtab = true
-vim.opt.shada = "'0,<1000,:0,n" .. shada_path
--- vim.opt.jumpoptions = "stack,view,clean"
+
+-- '0 to prevent jumplist from overwriting each other
+-- s100 means any file smaller than 100kb will share successfully
+vim.opt.shada = "'0,<1000,s100,:0,n" .. shada_path
+
 vim.o.autoread = true
--- vim.opt.tags = "tagfiles/**/tags"
 vim.opt.tags = nil
 vim.opt.equalalways = false -- auto resize windows
 vim.opt.winwidth = 35 -- expected width
 vim.opt.winminwidth = 30 -- min width
+
+-- fold
+vim.opt.foldenable = true
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 99
+vim.opt.foldmethod = "expr"
+vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+-- vim.opt.foldmethod = "indent"
+-- vim.opt.foldlevel = 99
+
+-- vim.opt.jumpoptions = "stack,view,clean"
+-- vim.opt.tags = "tagfiles/**/tags"
 
 -- CRLF to LF
 vim.opt.fileformats = { "unix", "dos" }
@@ -127,7 +139,7 @@ require("config.autocmds")
 require("config.lsp")
 
 -- Used for debug
-if vim.g.specter_debug == 1 then
+if vim.g.debug == true then
 	require("config.debug")
 end
 

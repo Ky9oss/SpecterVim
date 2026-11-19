@@ -1,6 +1,7 @@
 return {
   "petertriho/nvim-scrollbar",
   lazy = false,
+  branch = "refactor/v2",
   dependencies = {
     "folke/tokyonight.nvim",
   },

@@ -1,32 +1,35 @@
-function log_error(message)
+--- Print debug informations
+--- @param message string
+--- @param level number log level
+--- @return nil
+function debug_print(message, level)
+	--[[ vim.log.levels = {
+    DEBUG = 1,
+    ERROR = 4,
+    INFO = 2,
+    OFF = 5,
+    TRACE = 0,
+    WARN = 3,
+  } ]]
 	info = debug.getinfo(2, "Sl")
-
-	vim.notify(
-		string.format("[SPECTERV] %s:%d\nMessage: %s", info.source, info.currentline, message),
-		vim.log.levels.ERROR
-	)
+	vim.notify(string.format("^_^ %s:%d\nMessage: %s", info.source, info.currentline, message), level)
 end
 
-function log_warning(message)
-	info = debug.getinfo(2, "Sl")
+-- vim.api.nvim_create_augroup("DEBUG", { clear = true })
+-- vim.api.nvim_create_user_command("SpecterDebug", function(opts)
+-- 	vim.api.nvim_create_autocmd({ "CursorHold" }, {
+-- 		group = "DEBUG",
+-- 		callback = function(args)
+-- 			print("DEBUG: Buf Event:", args.event, args.buf)
+-- 		end,
+-- 	})
+-- end, { desc = "Get events", nargs = "?" })
 
-	vim.notify(
-		string.format("[SPECTERV] %s:%d\nMessage: %s", info.source, info.currentline, message),
-		vim.log.levels.WARN
-	)
-end
-
-function log_info(message)
-	info = debug.getinfo(2, "Sl")
-
-	vim.notify(
-		string.format("[SPECTERV] %s:%d\nMessage: %s", info.source, info.currentline, message),
-		vim.log.levels.INFO
-	)
-end
-
-function test()
-	log_error("Hello")
-	log_warning("Hello")
-	log_info("Hello")
-end
+-- Hook paste for Shada
+-- vim.paste = (function(overridden)
+-- 	return function(lines, phase)
+-- 		print("SpecterVim: hook paste")
+-- 		vim.cmd("rshada")
+-- 		return overridden(lines, phase)
+-- 	end
+-- end)(vim.paste)
