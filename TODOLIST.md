@@ -33,7 +33,6 @@
 
 ## About Man
 - [ ] Man page with relative line number and fixed page width
-- [ ] tagbar
 
 ## About Lua
 - [ ] LSP
@@ -94,6 +93,7 @@
 ### tagbar
 - [ ] Support tagbar in Man and help
 - [ ] Fix Lua tags with too many meaningless "callback"
+- [ ] Mutiple windows tags list in one tagbar
 
 ### scroll bar
 - [ ] Bug: Scroll bar will cover the code
