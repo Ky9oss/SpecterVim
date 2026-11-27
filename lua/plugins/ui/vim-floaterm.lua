@@ -15,7 +15,7 @@ return {
 		{
 			"<leader>nsh",
 			function()
-				if vim.fn.has("win32") == 1 then
+				if vim.g.is_windows == 1 then
 					vim.cmd("FloatermKill default")
 					vim.cmd("FloatermNew --name=default --height=0.8 --width=0.7 --autoclose=never powershell.exe")
 				else
@@ -28,7 +28,7 @@ return {
 		{
 			"<leader>nms",
 			function()
-				if vim.fn.has("win32") == 1 then
+				if vim.g.is_windows == 1 then
 					vim.cmd("FloatermKill msvc")
 					vim.cmd("FloatermNew --name=msvc --height=0.8 --width=0.7 --autoclose=never cmd.exe")
 					vim.cmd(
@@ -51,7 +51,7 @@ return {
 		},
 	},
 	config = function()
-		if vim.fn.has("win32") == 1 then
+		if vim.g.is_windows == 1 then
 			-- Default
 			vim.cmd("FloatermNew --name=default --height=0.8 --width=0.7 --autoclose=never powershell.exe")
 			vim.cmd("FloatermHide default")

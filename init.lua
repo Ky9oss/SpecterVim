@@ -7,6 +7,7 @@ vim.g.debug = false -- enable debug
 vim.g.nvim_tree_moved = 0 -- nvim_tree has moved from left to right (1 or 0)
 vim.g.fix_osc52 = 1 -- set this when copy osc52 have some troubles
 vim.g.use_lsp = 1
+vim.g.is_windows = vim.fn.has("win32")
 
 -- global
 vim.g.health = { style = "float" }
@@ -118,7 +119,7 @@ vim.filetype.add({
 	},
 })
 
-if vim.fn.has("win32") ~= 1 then -- Linux
+if vim.g.is_windows ~= 1 then -- Linux
 	vim.treesitter.language.add("asm", {
 		path = vim.fn.stdpath("config") .. "/parser/asm.so",
 	})

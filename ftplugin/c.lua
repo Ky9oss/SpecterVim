@@ -149,7 +149,7 @@ local function build(builder, builder_config_path)
 		else
 			vim.notify("Specterv: `custom` set but `command` not found", vim.log.levels.ERROR)
 		end
-	elseif vim.fn.has("win32") ~= 1 and builder == "gcc" then -- Linux
+	elseif vim.g.is_windows ~= 1 and builder == "gcc" then -- Linux
 		local executable_path
 		if project_root then
 			executable_path = project_root .. "/bin/" .. vim.api.nvim_buf_get_name(0):match(".*/(%S+)%.c$")

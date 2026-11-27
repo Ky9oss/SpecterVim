@@ -45,10 +45,10 @@ return {
 			self.my_icon_node = { str = ">", hl = { "DevIconNushell" } }
 		end
 
-    -- TODO: Optimize the search algorithms
-    -- 1. Do not query any nodes when in NvimTree_*
-    -- 2. Do not query more nodes when we find the only highlight file we need
-    --
+		-- TODO: Optimize the search algorithms
+		-- 1. Do not query any nodes when in NvimTree_*
+		-- 2. Do not query more nodes when we find the only highlight file we need
+		--
 		-- Custom Highlight
 		---@param node any
 		---@return string|nil
@@ -56,9 +56,9 @@ return {
 			local target_file
 			local current_file = vim.api.nvim_buf_get_name(0)
 			if current_file:find("NvimTree_") then
-        if not vim.g.last_buf then
-          return nil
-        end
+				if not vim.g.last_buf then
+					return nil
+				end
 				target_file = vim.api.nvim_buf_get_name(vim.g.last_buf)
 			else
 				target_file = current_file
@@ -85,9 +85,9 @@ return {
 			local target_file
 			local current_file = vim.api.nvim_buf_get_name(0)
 			if current_file:find("NvimTree_") then
-        if not vim.g.last_buf then
-          return nil
-        end
+				if not vim.g.last_buf then
+					return nil
+				end
 
 				target_file = vim.api.nvim_buf_get_name(vim.g.last_buf)
 			else
@@ -180,6 +180,11 @@ return {
 			git = {
 				enable = true,
 				timeout = 2000, -- (in ms)
+			},
+			modified = {
+				enable = true,
+				show_on_dirs = true,
+				show_on_open_dirs = false,
 			},
 		})
 	end,

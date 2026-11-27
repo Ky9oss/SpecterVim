@@ -14,7 +14,7 @@ vim.api.nvim_create_user_command("GitPush", function(opts)
 		if vim.g.project_root_path == nil then
 			vim.notify("Can't find the project's root path", vim.log.levels.ERROR)
 		else
-			if vim.fn.has("win32") == 1 then
+			if vim.g.is_windows == 1 then
 				-- Windows with proxychains
 				vim.system({
 					"cmd",
@@ -156,7 +156,7 @@ end
 --- @param is_remote bool
 --- @param compile_options table
 function AssemblyExplorerMSVC(is_remote, compile_options)
-	local asm_path = vim.fn.has("win32") == 1 and vim.fn.stdpath("cache") .. "\\_temp_assembly_explorer_msvc.asm"
+	local asm_path = vim.g.is_windows == 1 and vim.fn.stdpath("cache") .. "\\_temp_assembly_explorer_msvc.asm"
 		or vim.fn.stdpath("cache") .. "/_temp_assembly_explorer_msvc.asm"
 	local old_win = vim.api.nvim_get_current_win()
 	local asm_bufnr = IsFileVisible("_temp_assembly_explorer_msvc.asm")
@@ -341,10 +341,10 @@ vim.api.nvim_create_user_command("AssemblyExplorer", function(opts)
 		local filetype = vim.bo[vim.api.nvim_get_current_buf()].filetype
 		if filetype == "c" or filetype == "cpp" then
 			if string.lower(compiler) == "msvc" then
-				local is_remote = vim.fn.has("win32") ~= 1
+				local is_remote = vim.g.is_windows ~= 1
 				AssemblyExplorerMSVC(is_remote, compile_options)
 			elseif string.lower(compiler) == "gcc" then
-				local is_remote = vim.fn.has("win32") == 1
+				local is_remote = vim.g.is_windows == 1
 				AssemblyExplorerGCC(is_remote, compile_options)
 			end
 		end

@@ -6,10 +6,10 @@ return {
 			require("../../utils.str")
 			return LimitStr(vim.fn.expand("%:p"), 30)
 		end
-		-- local function lsp_info()
-		--   require("../../utils.lsp")
-		--   return GetLspInfo()
-		-- end
+		local function lsp_info()
+		  require("../../utils.lsp")
+		  return GetLspInfo()
+		end
 		local function visual_length()
 			local mode = vim.fn.mode()
 			if mode:find("[v]") then
@@ -56,7 +56,9 @@ return {
 				lualine_a = { "mode" },
 				lualine_b = { "branch", "diff", "diagnostics" },
 				-- lualine_c = { "lsp_status" },
-				lualine_c = { lsp_info },
+				lualine_c = {
+					lsp_info,
+				},
 				lualine_x = { abs_path, "encoding", "fileformat", "filetype" },
 				lualine_y = { visual_length, "progress" },
 				lualine_z = { "location" },

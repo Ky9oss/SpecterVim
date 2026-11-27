@@ -87,9 +87,6 @@
     - <C-x> and <C-y> in Quickfix
     - <C-w><C-x> <C-w><C-y>
 
-### comment.nvim
-- [ ] Debug comment
-
 ### tagbar
 - [ ] Support tagbar in Man and help
 - [ ] Fix Lua tags with too many meaningless "callback"

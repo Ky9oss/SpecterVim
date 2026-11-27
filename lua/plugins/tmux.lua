@@ -1,4 +1,4 @@
-if vim.fn.has("win32") == 1 then -- Windows
+if vim.g.is_windows == 1 then -- Windows
 	return {
 		-- "aserowy/tmux.nvim",
 		-- lazy = true

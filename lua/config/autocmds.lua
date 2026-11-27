@@ -391,7 +391,7 @@ WhitespaceSensitiveMacros:
 
 			if CheckLspHealth("clangd") then
 				local clangd
-				if vim.fn.has("win32") == 1 then
+				if vim.g.is_windows == 1 then
 					clangd = [[
 CompileFlags:
     Add:
@@ -414,7 +414,7 @@ CompileFlags:
 				create_file(".clangd", clangd, vim.g.project_root_path)
 			end
 
-			if vim.fn.has("win32") == 1 then
+			if vim.g.is_windows == 1 then
 				local compile_flags = [[
 -isystem
 C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.29.30133/include

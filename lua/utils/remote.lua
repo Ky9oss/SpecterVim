@@ -1,4 +1,4 @@
-sshpass = vim.fn.has("win32") == 1 and vim.fn.stdpath("config") .. "\\lib\\sshpass.exe" or "sshpass"
+sshpass = vim.g.is_windows == 1 and vim.fn.stdpath("config") .. "\\lib\\sshpass.exe" or "sshpass"
 
 -- SCP: push file from local to remote by `sshpass`
 --

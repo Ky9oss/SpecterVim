@@ -19,7 +19,7 @@ if vim.g.use_lsp == 1 then
 
 	vim.lsp.config("pylsp", {
 		-- on_new_config = function(new_config, root_dir) -- use python with pyenv
-		--   if not vim.fn.has("win32") == 1 then
+		--   if not vim.g.is_windows == 1 then
 		--     local python_path = vim.fn.systemlist("pyenv which python")[1]
 		--     if vim.fn.filereadable(python_path) == 1 then
 		--       new_config.settings.pylsp.configurationSources = { "pycodestyle" }
