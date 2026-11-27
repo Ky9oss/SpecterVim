@@ -53,8 +53,8 @@ return {
 	config = function()
 		if vim.g.is_windows == 1 then
 			-- Default
-			vim.cmd("FloatermNew --name=default --height=0.8 --width=0.7 --autoclose=never powershell.exe")
-			vim.cmd("FloatermHide default")
+			-- vim.cmd("FloatermNew --name=default --height=0.8 --width=0.7 --autoclose=never powershell.exe")
+			-- vim.cmd("FloatermHide default")
 
 			-- MSVC
 			-- vim.cmd("FloatermNew --name=msvc --height=0.8 --width=0.7 --autoclose=never cmd.exe")
@@ -66,10 +66,9 @@ return {
 		else
 			vim.cmd("FloatermNew --name=default --height=0.8 --width=0.7 --autoclose=never")
 			vim.cmd("FloatermHide default")
+
+			-- After FloatermHide, current buffer enter modified mode unexpected. So we auto execute <ESC> to fix that.
+			vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", false)
 		end
-
-		-- After FloatermHide, current buffer enter modified mode unexpected. So we auto execute <ESC> to fix that.
-		vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<Esc>", true, false, true), "n", false)
-
 	end,
 }
