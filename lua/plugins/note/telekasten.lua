@@ -1,4 +1,4 @@
-if vim.g.is_windows == 1 then
+if vim.g.is_windows ~= 1 then
 	return {
 		"renerocksai/telekasten.nvim",
 		dependencies = { "nvim-telescope/telescope.nvim" },

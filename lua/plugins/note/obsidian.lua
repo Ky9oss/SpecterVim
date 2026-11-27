@@ -1,4 +1,4 @@
-if vim.g.is_windows == 1 then
+if vim.g.is_windows ~= 1 then
 	return {
 		"obsidian-nvim/obsidian.nvim",
 		version = "*", -- use latest release, remove to use latest commit
