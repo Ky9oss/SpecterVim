@@ -57,12 +57,12 @@ return {
 			vim.cmd("FloatermHide default")
 
 			-- MSVC
-			vim.cmd("FloatermNew --name=msvc --height=0.8 --width=0.7 --autoclose=never cmd.exe")
-			vim.cmd("FloatermHide msvc")
-			vim.cmd(
-				-- 'FloatermSend --name=msvc "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Auxiliary\\Build\\vcvars64.bat"'
-				"FloatermSend --name=msvc vcvars64.bat"
-			)
+			-- vim.cmd("FloatermNew --name=msvc --height=0.8 --width=0.7 --autoclose=never cmd.exe")
+			-- vim.cmd("FloatermHide msvc")
+			-- vim.cmd(
+			-- 	-- 'FloatermSend --name=msvc "C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Auxiliary\\Build\\vcvars64.bat"'
+			-- 	"FloatermSend --name=msvc vcvars64.bat"
+			-- )
 		else
 			vim.cmd("FloatermNew --name=default --height=0.8 --width=0.7 --autoclose=never")
 			vim.cmd("FloatermHide default")
